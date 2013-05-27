@@ -1,8 +1,13 @@
 package HighExplosives.Game
 {
 
-	public class Controller {
+	import Loom.GameFramework.TickedComponent;
+
+	public class Controller extends TickedComponent {
 	
+		public function onTick()
+		{
+		}
 	}
 
 }
