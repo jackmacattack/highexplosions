@@ -4,10 +4,10 @@
 package
 {
     import cocos2d.Cocos2DApplication;
-
+	
     static class Main extends Cocos2DApplication
     {
-        protected static var game:HighExplosives = new HighExplosives();
+        protected static var game:HighExplosives = new HighExplosives(); 
 
         public static function main()
         {
