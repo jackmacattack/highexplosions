@@ -1,10 +1,11 @@
 package HighExplosives.Game
 {
 	import Loom.GameFramework.LoomComponent;
+	import Loom.GameFramework.TickedComponent;
 	import Loom.Animation.Tween;
 	import Loom.Animation.EaseType;
 	
-	public class Entity extends LoomComponent {
+	public class Entity extends TickedComponent {
 	
 		//The level this entity inhabits
    		//private HiExLevel level;
@@ -40,23 +41,6 @@ package HighExplosives.Game
 			x = x_;
 			y = y_;
 		}
-		
-		public function move(newX:Number, newY:Number)
-		{
-			Tween.to(renderer.sprite, .5, {"x": newX, "y": newY, "ease":EaseType.EASE_OUT});
-		}
-		
-		public function onCollide(otherEntity:Entity) 
-		{
-			Tween.killTweensOf(this);
-		}
 	}
-
-	public class TestEntity extends Entity {
 	
-		public function TestEntity(x_:Number, y_:Number)	
-		{
-			super(x_, y_);
-		}
-	}
 }

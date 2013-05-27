@@ -6,18 +6,31 @@ package HighExplosives.Game
     import cocos2d.CCScaledLayer;
 
 	import Loom.GameFramework.LoomGroup;
+	import Loom.GameFramework.TickedComponent;
+	import Loom.GameFramework.ITicked;
+	import Loom.GameFramework.TimeManager;
 	import Loom.GameFramework.LoomGameObject;
 	import Loom.Animation.Tween;
 	import Loom.Animation.EaseType;
 	
-	public class HiExLevel {
+	public class HiExLevel extends LoomGroup implements ITicked {
 	
+		//[Inject]
+		//public var timeManager:TimeManager;
+		
 		public var layer:CCScaledLayer;
 		public var group:LoomGroup;
 		
-		public var entityList:Vector.<Entity> = new Vector.<Entity>();
+		public var entityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		
-		public function HiExLevel(layer:CCScaledLayer) {
+		public function HiExLevel(layer_:CCScaledLayer) {
+			layer = layer_;
+		}
+		
+      	public function initialize(_name:String = null):void
+      	{
+         	super.initialize(_name);
+		
             // Setup anything else, like UI, or game objects.
             var bg = CCSprite.createFromFile("assets/bg.png");
             bg.x = Cocos2D.getDisplayWidth() / 2;
@@ -26,15 +39,17 @@ package HighExplosives.Game
             layer.addChild(bg);
             
             spawnTestEntity("assets/logo.png", 240, 240);
-            
+			
             layer.onTouchBegan = function(id:int, x:int, y:int) 
             {
-            	entityList[0].move(x, y);
-            }
+            	entityList[0].setTarget(x, y);
+			}
+			
+			//timeManager.addTickedObject(this);
 		}
 		
-      	public function spawnTestEntity(name:String, x:Number, y:Number)//:LoomGameObject
-      	{
+		public function spawnTestEntity(name:String, x:Number, y:Number)//:LoomGameObject
+		{
 			//var lgo = new LoomGameObject();
 			//lgo.owningGroup = this;
 
@@ -58,7 +73,18 @@ package HighExplosives.Game
 			//lgo.initialize();
 
 			//return lgo;
-      }
+		}
+		
+		override public function onTick() 
+		{
+			var dt:Number = .01; 
+            entityList[0].move(dt);
+		}
+		
+		public function move(dt:Number) 
+		{
+            entityList[0].move(dt);
+		}
 	}
 
 }
