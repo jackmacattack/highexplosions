@@ -30,5 +30,7 @@
    eJztljdPA0EQRu8OF8Se2BN7YkM22A0VwW7J/FOgQXRgkICOJEFJeifZOrNi2dtwS3F80tPKHu/czKfTjIPgXzq6CoPgOkzOQmSfK5ZNHh2dhfY5jslxAqeKXE/En8PktOmxkSOWL69uHHh1QY5LqClyfcbxKDltemzkiOXLqxcHXt2T4wEeNXO56vGnPNuwBjuSO63U2gbt0AGd0KWov8VBvW884x0+HHlViPQRVamfVcmzu6m1B3qhD/phQFH/rSSedgZlId33zcSrQfoagmEYgVEYU/T6KomnnUE6moW5FL/z4dU4fU3AJEzBNMwoej2XxE1nULPmYaHp8yIspbjnw6tl+irCCqxCCcqKXu8kcdMZ9K0eKBrc8+HVOn1twCZsQQWqhu+VD/0222Xfu5rtu/S9B/twAIdwZPheZSFxX2T5v0jllU+Z7ElxX+TFK5M9Ke6LvHhlsifFfZEXr1zsySxVqp/lP63CTF9/Clbz
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="75" height="16" visible="0"/>
+ <objectgroup name="Object Layer 1" width="75" height="16">
+  <object name="player" x="47" y="211" width="34" height="61"/>
+ </objectgroup>
 </map>
