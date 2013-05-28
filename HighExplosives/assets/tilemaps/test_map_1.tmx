@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="75" height="16" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="template_1" tilewidth="32" tileheight="32">
-  <image source="../../Downloads/template_1.png" width="256" height="256"/>
+  <image source="template_1.png" width="256" height="256"/>
  </tileset>
  <tileset firstgid="65" name="water" tilewidth="32" tileheight="32">
-  <image source="../water.png" width="32" height="32"/>
+  <image source="water.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="66" name="pbe_psk_outdoor_tiles" tilewidth="32" tileheight="32">
-  <image source="../pbe_psk_outdoor_tiles.png" width="320" height="608"/>
+ <tileset firstgid="66" name="portals" tilewidth="32" tileheight="32">
+  <image source="portals.png" width="128" height="64"/>
  </tileset>
- <tileset firstgid="256" name="mountain_landscape_23" tilewidth="32" tileheight="32">
-  <image source="../../Downloads/mountain_landscape_23.png" width="512" height="512"/>
+ <tileset firstgid="74" name="pbe_psk_outdoor_tiles" tilewidth="32" tileheight="32">
+  <image source="pbe_psk_outdoor_tiles.png" width="320" height="608"/>
  </tileset>
- <tileset firstgid="512" name="RockTile" tilewidth="32" tileheight="32">
-  <image source="../../Downloads/RockTile.png" width="192" height="192"/>
- </tileset>
- <tileset firstgid="548" name="portals" tilewidth="32" tileheight="32">
-  <image source="../portals.png" width="128" height="64"/>
+ <tileset firstgid="264" name="mountain_landscape_23" tilewidth="32" tileheight="32">
+  <image source="mountain_landscape_23.png" width="512" height="512"/>
  </tileset>
  <layer name="bg" width="75" height="16">
   <data encoding="base64" compression="zlib">
-   eJzNls1qw0AQg90WCk2gEPveWw9NX6J9/5eqDTaIr9LsmvyQw7CO453RyBqtn4ZheO6Il3D9SHErXEve1zne5jiEOOJaI+25VmidR1jfV67GEA7/tIbra4veXG5vb7T2jitOt+55/1vP5GrCvqpfvaccMgefZy7ureISjtOcONzsTXW19cI9zMV+W++J73iJjzk+5/iW/MpZ0oHi6eGXPbh8rt4UnlOu2BPrjcij3LX0oXmWmr9r3T0zRn3x/9QD61ezprOlPVFX27PUmNZTfibsOQ7/9ebykCvXf8v3mTv5U9WLasD5E/kjV251mPRe8mtqkFydOrhIMQ0em9MYPcLNDn3U5VJvP5i8+o6JcTTX1Uw5riou3G9dq5mrPI/YyRe9sdLViN/kihxxFlve5XSlvrDnu4e4HIfpHGw9RzyOK+YhL8pJOjsclu0edZW+Z6rvo+Sb1blDv3U6oC/36sp5VvLN5DXuvnLFWSNnLV2leUoe4M4NznrStzsHE/bqLOr1Y86g00FP7UuiwlbpOOkq4W9x0eMzylX13J7at8DpcJ8kR4vzHv5ba6UrXff41j3WBffXHOc7xs/K1b3rXgP3H3tCSf8=
+   eJzNlt1KBDEMhUcFYaew4My9d16oL+G+/0tZYQrx4+SnrLt4EarTpE1PTk72YVmWx39mT1i9b2rvVvbc7dRt7dZutEbWin7K/5pV3ZvFnQ+stiQ/9W0/4tQ6/LbA1qKfFzODLY13Z/7bgdVLkLP6nuWyOr6Ms2fugTHnGfPu93ybuH/UfmCV1XvkTIy8t7Fm9vzXbm/dPoEB+Zlh6OFZxVbhwbixN3hl9SqrCzGyfjxb8W7ceTlqlOmP7Wnuz+Cp8OO5lhNq3/JK1ZNvZg6Ms/cp/wasiEmkf+QrcdoQ5/VF5X0qD6tXxHxmnkW9znsVVpWVvWwx5ExReCrs2hJj7s1Be16U47UzSvWgqqOnxTMYeVxkXTNeK16t+Ju8jjSyOpvIq8qsovZW+RbNW497Fb3yclWaQ03YEae4rLCa/T2Q4dmW32+03FD8U3Mj4tXJxCqcOCPUu5S+e/PQYuXNqmguKt1WWLK3PZysb4Sj7UGVg9I+xWHFH1VL6lVV44i30inWucJBYhTpP7Xd8+O36MyMgxarqsZlb49q5mmJmn2eL/WKM8H7X/Vz5Ms91YNKH7hW3l45Z+Y+e+5P3u/dPu5oXwdW9773L/L+BvkeTEU=
   </data>
  </layer>
  <layer name="angles" width="75" height="16">
   <data encoding="base64" compression="zlib">
-   eJztl8EKgCAQROfbpC4Fdalr/f9fJHjMrdU2s5oHc5HFiYeIjQB65jSDz4w9LrKWg9U+NTCBrrTQlZ4nXC0+nc9q1FGKVFcuI7FOJ/TWjORKIvW80dW1ebrSz9OVfv5rro7udmn9r3f7ne8iukrrpCt9J13pO9/qqkX45yiVBsFV6V6L794A7sRKGg==
+   eJztls0KwjAQhPf5gj9QoWpbr3qt738xwSyG2G2y2SSgzcAQaGWmfKmbngHg1Bx0r33TPmgfnVVBujADhDkc5ejZ2Zw9cX+CN6uL9tVZJd2YAcIcjnL0KMdLQlaD9uiskm7MwP4aqsmqRLc0p7Mu3YMabM5I3OeyUgmmcijdFzIeK79fywvNII4oVpS4+5fCaoJvVqFnjNlbqRqreP07q9AM4uhXWD0zP1eKUmY7dT3XbJ8jM2LzcglZ+edF6e5a310hcc5JZOXv4VZYcd7dxorPyj8vtsKKc04aVua/2lU0wIdVzV6pzWx7AdLgbEY=
   </data>
  </layer>
  <layer name="fg" width="75" height="16">
   <data encoding="base64" compression="zlib">
-   eJztlrlPwzAcheMAO+XYOcK9cO60lJ1z5/xPgQWxcUnABgUJRihIdODLUKWKQhz7lxik9EmfEtV+L/WTHMfzujLRjfK8WxVdW0qeFUqSY6Jz4XNO8J/CWYacZ+a8qOgqWWM7I5Srru6Ez7nEfwXXGXI+mfOloqtkje2MUK66ehU+5xH/EzQscvJao1UOHgU+9EAv9GlyvhPGTfbVO3M+oJljVy1ljqn68VRgAAZhCIY1ORcJ4yb7qgiZrt2mqxE8ozAG4xDAhCbnIWFcsq/SFPj8H18/z0VX83gWYBGWYBlWNDn3CeOSfdWpSXqZ6uhmmvuZf9LVKp4q1GAN6rCuyXkrcJ/N0stchm7ictHVBp5N2IJt2IFdTY70+0qitHf7b7/n9W7fw7MPB3AIR3CsybH5vjI5J9N8rr6L/lK252TcV4aubM/JuK8MXdmek3FfGbrqqlj9ABazduY=
+   eJztljdPA0EQRu8OF8Se2BN7YkM22A0VwW7J/FOgQXRgkICOJEFJeifZOrNi2dtwS3F80tPKHu/czKfTjIPgXzq6CoPgOkzOQmSfK5ZNHh2dhfY5jslxAqeKXE/En8PktOmxkSOWL69uHHh1QY5LqClyfcbxKDltemzkiOXLqxcHXt2T4wEeNXO56vGnPNuwBjuSO63U2gbt0AGd0KWov8VBvW884x0+HHlViPQRVamfVcmzu6m1B3qhD/phQFH/rSSedgZlId33zcSrQfoagmEYgVEYU/T6KomnnUE6moW5FL/z4dU4fU3AJEzBNMwoej2XxE1nULPmYaHp8yIspbjnw6tl+irCCqxCCcqKXu8kcdMZ9K0eKBrc8+HVOn1twCZsQQWqhu+VD/0222Xfu5rtu/S9B/twAIdwZPheZSFxX2T5v0jllU+Z7ElxX+TFK5M9Ke6LvHhlsifFfZEXr1zsySxVqp/lP63CTF9/Clbz
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="75" height="16">
-  <object name="hero" type="player" x="77" y="229" width="32" height="48"/>
- </objectgroup>
+ <objectgroup name="Object Layer 1" width="75" height="16" visible="0"/>
 </map>
