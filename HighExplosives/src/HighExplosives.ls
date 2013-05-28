@@ -22,31 +22,27 @@ package
 		[Inject]
 		public var timeManager:TimeManager;
 		
-		//[Inject]
-		//public var group:LoomGroup;
-		
         public var level:HiExLevel;
         
         override public function run():void
         {
         
+            super.run();
+            
             // Comment out this line to turn off automatic scaling.
             layer.scaleMode = ScaleMode.LETTERBOX;
 
 			var gameField:CCScaledLayer = new CCScaledLayer();
 			Cocos2D.addLayer(gameField);
 
-			level = new HiExLevel(gameField);
+			level = new HiExLevel(gameField, timeManager);
 			//level.owningGroup = group;
 			level.initialize();
-            super.run();
+  		
+            
+			//timeManager.addTickedObject(level);
+            
         }
         
-        
-        override public function onTick()
-        {
-			var dt:Number = timeManager.TICK_RATE; 
-        	level.move(dt);
-        }
     }
 }

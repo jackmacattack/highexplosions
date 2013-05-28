@@ -16,14 +16,15 @@ package HighExplosives.Game
 		public var y:Number;
 		
 		//The scale of the entity sprite. Should most likely remain 1
-		private var scale:Number = 1;
+		private var scale:Number;
 		
 		//The object's hitbox for collision detection
 		//private var hitbox:Rectangle;
 		
-		public function Entity(x_:Number, y_:Number)	
+		public function Entity(x_:Number, y_:Number, scale_:Number = 1)	
 		{
 			setPosition(x_, y_);
+			scale = scale_;
 		}
 		
 		public function getX():Number 

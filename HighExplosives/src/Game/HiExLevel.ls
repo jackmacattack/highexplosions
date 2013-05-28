@@ -13,18 +13,25 @@ package HighExplosives.Game
 	import Loom.Animation.Tween;
 	import Loom.Animation.EaseType;
 	
+	import com.rmc.data.types.GestureManagerOptions;
+    import com.rmc.managers.GestureManager;
+    import com.rmc.data.types.GestureDelegateData;
+    import com.rmc.applications.AbstractLoomDemo;
+    
 	public class HiExLevel extends LoomGroup implements ITicked {
 	
-		//[Inject]
-		//public var timeManager:TimeManager;
+		public var timeManager:TimeManager;
 		
+  		
 		public var layer:CCScaledLayer;
-		public var group:LoomGroup;
 		
-		public var entityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
+		public var controllerList:Vector.<Controller> = new Vector.<Controller>();
+		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
+		public var worldList:Vector.<Entity> = new Vector.<Entity>();
 		
-		public function HiExLevel(layer_:CCScaledLayer) {
+		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) {
 			layer = layer_;
+			timeManager = timeManager_;
 		}
 		
       	public function initialize(_name:String = null):void
@@ -40,51 +47,42 @@ package HighExplosives.Game
             
             spawnTestEntity("assets/logo.png", 240, 240);
 			
-            layer.onTouchBegan = function(id:int, x:int, y:int) 
-            {
-            	entityList[0].setTarget(x, y);
-			}
 			
-			//timeManager.addTickedObject(this);
+			timeManager.addTickedObject(this);
 		}
 		
-		public function spawnTestEntity(name:String, x:Number, y:Number)//:LoomGameObject
+		public function spawnTestEntity(name:String, x:Number, y:Number)
 		{
-			//var lgo = new LoomGameObject();
-			//lgo.owningGroup = this;
-
-			var mover = new TestEntity(x, y);
-			//mover.scale = 0.5;
-			entityList.push(mover);
-
-			//lgo.addComponent(mover, "mover");
-
+		
+			var e = new TestEntity(x, y);
+			dynamicEntityList.push(e);
+			
+  			var gestureManager:GestureManager = new GestureManager(layer);
+			var control = new PlayerController(this, e, gestureManager);
+		
 			var renderer = new TestRenderer(name, x, y);
 			renderer.addBinding("x", "@mover.x");
 			renderer.addBinding("y", "@mover.y");
 			renderer.addBinding("scale", "@mover.scale");
-			//renderer.mover = mover;
-			mover.renderer = renderer;
-
-			//lgo.addComponent(renderer, "renderer");
-
+			e.renderer = renderer;
 			layer.addChild(renderer.sprite);
 
-			//lgo.initialize();
-
-			//return lgo;
 		}
 		
 		override public function onTick() 
 		{
-			var dt:Number = .01; 
-            entityList[0].move(dt);
+			var dt:Number = timeManager.TICK_RATE; 
+			
+			for(var i:int = 0; i < controllerList.length; i++) {
+				controllerList[i].update();
+			}
+			
+			for(var j:int = 0; j < dynamicEntityList.length; j++) {
+				dynamicEntityList[j].move(dt);
+			}
+			
 		}
-		
-		public function move(dt:Number) 
-		{
-            entityList[0].move(dt);
-		}
+
 	}
 
 }

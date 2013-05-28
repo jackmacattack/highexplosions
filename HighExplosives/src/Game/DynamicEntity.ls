@@ -22,8 +22,11 @@ package HighExplosives.Game
 		
 		//The current velocity of the entity
 		public var speed:Number = 0;
-		public var xDir:Number = 0;
-		public var yDir:Number = 0;
+		
+		public var angle:Number = 0;
+		
+		//public var xDir:Number = 0;
+		//public var yDir:Number = 0;
 		
 		//The position of the current target
 		public var targetX:Number = 0;
@@ -32,16 +35,33 @@ package HighExplosives.Game
 		public function DynamicEntity(x_:Number, y_:Number)	
 		{
 			super(x_, y_);
+			
 		}
 		
 		public function setTarget(newX:Number, newY:Number)
 		{
-			targetX = newX;
+			targetX = newX; 
 			targetY = newY;
 			
-			var mag:Number = Math.pow((targetX - x) * (targetX - x) + (targetY - y) * (targetY - y), .5);
-			xDir = (targetX - x)/mag;
-			yDir = (targetY - y)/mag;
+			var offset:Number = x > targetX ? Math.PI /2 : 0;
+			
+			var aTan = Math.atan(Math.abs((targetY - y)/(targetX - x)));
+			
+			var xCheck = x < targetX;
+			var yCheck = y < targetY;
+			
+			if(xCheck && yCheck) {
+				angle = aTan;
+			}
+			else if(xCheck) {
+				angle = 2 * Math.PI - aTan;
+			}
+			else if(yCheck) {
+				angle = Math.PI - aTan;
+			}
+			else {
+				angle = Math.PI + aTan;
+			}
 			
 			speed = speed * agility;
 			moving = true;
@@ -59,8 +79,8 @@ package HighExplosives.Game
 			}
 			
 			speed = speed * (1 - accel) + maxSpeed * accel;
-			var dx:Number = speed * xDir;
-			var dy:Number = speed * yDir;
+			var dx:Number = speed * Math.cos(angle);
+			var dy:Number = speed * Math.sin(angle);
 			
 			x += dx * dt;
 			y += dy * dt;
