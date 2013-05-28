@@ -1,0 +1,51 @@
+package HighExplosives.View
+{   
+
+    import cocos2d.CCNode;
+    import cocos2d.Cocos2D;
+    import cocos2d.CCSprite;
+    import cocos2d.CCScaledLayer;
+    import cocos2d.ScaleMode;
+    import UI.Label;
+  //  import View.View;
+    import UI.Label;
+
+    public class SelectLevelView extends View
+    {
+        override public function  start(layer:CCScaledLayer):void
+        {
+        
+       	 var bg = CCSprite.createFromFile("assets/bg.png");
+            bg.x = Cocos2D.getDisplayWidth() / 2;
+            bg.y = Cocos2D.getDisplayHeight() / 2;
+            bg.scale = 0.5;
+            layer.addChild(bg);
+            
+          var leval_1 = CCSprite.createFromFile("assets/Leval_1.png");
+              leval_1.x = Cocos2D.getDisplayWidth() / 2;
+              leval_1.y = 3 * Cocos2D.getDisplayHeight() / 4;
+              leval_1.onTouchBegan += goLevel_1;
+              layer.addChild(leval_1);
+            
+            var back = CCSprite.createFromFile("assets/back.png");
+            back.x = 55*Cocos2D.getDisplayWidth() / 100;
+            back.y = Cocos2D.getDisplayHeight() / 5;
+            back.onTouchBegan += goMainMenu;
+            back.scale = 0.75;
+            layer.addChild(back);
+        
+        }
+        
+        public function goLevel_1(){
+        	trace("Level 1");
+        }
+        
+         public function goMainMenu(){
+         	var  test  = new MainMenu(null);
+         	var testLayer = new CCScaledLayer();
+        	Cocos2D.addLayer(testLayer);
+        	test.start(testLayer);
+         }
+       
+    }
+}

@@ -31,13 +31,13 @@ package HighExplosives.Game
         public function onGestureSwipe(data:GestureDelegateData)
         {
 			var point:CCPoint = data.positionDelta.deltaPoint;
-			Console.print ("swipe: " + point);
+			Console.print ("swipe: " + "(" + point.x + "," + point.y + ")");
         }
         
         public function onGestureDoubleTap(data:GestureDelegateData)
         {
 			var point:CCPoint = data.positionDelta.toPoint;
-			Console.print ("tap: " + point);
+			Console.print ("tap: " + "(" + point.x + "," + point.y + ")");
 			e.setTarget(point.x, point.y);
         }
         
