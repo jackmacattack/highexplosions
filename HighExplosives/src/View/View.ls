@@ -1,13 +1,13 @@
 package HighExplosives.View
 {
-    import cocos2d.CCNode;
-    import cocos2d.Cocos2D;
-    import cocos2d.CCSprite;
-    import cocos2d.CCScaledLayer;
-    import cocos2d.ScaleMode;
+    import Loom.GameFramework.*;
+    import cocos2d.*;
+    import HighExplosives.*;
+    import HighExplosives;
+    
     import UI.Label;
 
-    public delegate ViewCallback():void;
+    //public delegate ViewCallback():void;
 
     /**
      * Base view class; convenience callbacks to trigger transitions and 
@@ -15,21 +15,21 @@ package HighExplosives.View
      */
     class View extends CCNode
     {
-        public var onEnter:ViewCallback;
-        public var onExit:ViewCallback;
+       // public var onEnter:ViewCallback;
+       // public var onExit:ViewCallback;
+        protected var layer:CCScaledLayer;
+        protected var gameManager:HighExplosives;
+        //[Inject]
+    	//protected var timeManager:TimeManager;
+        
+        public function View(gameManager_:HighExplosives){
+        	gameManager=gameManager_;
+        } 
+        
 
-        public function start(layer:CCScaledLayer):void
+        public function start(layer_:CCScaledLayer):void
         {
-            
-        }
-
-        public function exit():void
-        {
-            if(getParent())
-            {
-                getParent().removeChild(this);
-                onExit();
-            }
+        		
         }
 
     }

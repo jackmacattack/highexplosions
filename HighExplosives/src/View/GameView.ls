@@ -10,6 +10,8 @@ package HighExplosives.View
     import HighExplosives.Game.*;
     import Loom.GameFramework.TimeManager;
     
+    import HighExplosives;
+    
     import UI.Label;
   //  import View.View;
     import UI.Label;
@@ -18,8 +20,9 @@ package HighExplosives.View
     {
     	public var timeManager:TimeManager;
     
-    	public function GameView(timeManager_:TimeManager)
+    	public function GameView(gm:HighExplosives,timeManager_:TimeManager)
     	{
+    		super(gm);
     		timeManager = timeManager_;
     	}
         override public function  start(layer:CCScaledLayer):void
@@ -31,10 +34,7 @@ package HighExplosives.View
         }
         
          public function goMainMenu(){
-         	var  test  = new MainMenu(timeManager);
-         	var testLayer = new CCScaledLayer();
-        	Cocos2D.addLayer(testLayer);
-        	test.start(testLayer);
+         	gameManager.mainMenu(layer);
          }
        
     }

@@ -1,30 +1,40 @@
 package HighExplosives.View
 {   
 
+    import Loom.GameFramework.*;
+    import cocos2d.*;
+    import HighExplosives.*;
+    
+    import UI.Label;
+ 	
     import Loom.GameFramework.TimeManager;
-    import cocos2d.CCNode;
-    import cocos2d.Cocos2D;
-    import cocos2d.CCSprite;
-    import cocos2d.CCScaledLayer;
-    import cocos2d.ScaleMode;
-    import UI.Label;
- 	import HighExplosives.View.MainMenu;
-    import UI.Label;
+    
+    import HighExplosives.*;
+    
+    import HighExplosives.View.*;
+    import HighExplosives;
+    
+    
 
     public class MainMenu extends View
     {
     
-    	public var timeManager:TimeManager;
-    	
-    	public function MainMenu(timeManager_:TimeManager)
+    
+    	public function MainMenu(gm:HighExplosives)
     	{
-    		timeManager = timeManager_;
-    	}
+        	super(gm);
+        }
+    
+    	//public var layer:CCScaledLayer;
+    	//public var timeManager:TimeManager;
     	
-        override public function  start(layer:CCScaledLayer)
+    	
+    	
+        override public function  start(layer_:CCScaledLayer)
         {
         
-         
+        
+        	 layer=layer_;
            layer.scaleMode = ScaleMode.LETTERBOX;
 
             var bg = CCSprite.createFromFile("assets/bg.png");
@@ -69,23 +79,17 @@ package HighExplosives.View
         public function goBegin()
         {
         
-       		 var testLayer = new CCScaledLayer();
-        		Cocos2D.addLayer(testLayer);
-       		 var  test  = new GameView(timeManager);
-       		 test.start(testLayer);
-       		 
+        	gameManager.gameView(layer,1);
         	trace("Begin");
         }
       
         
         public function goSelectLevel():void {
+        
+        	gameManager.selectLevel(layer);
        		 
        		 trace("SelectLevel");
-       		 
-       		 var testLayer = new CCScaledLayer();
-        		Cocos2D.addLayer(testLayer);
-       		 var  test  = new SelectLevelView();
-       		 test.start(testLayer);
+       		
         
         }
         
