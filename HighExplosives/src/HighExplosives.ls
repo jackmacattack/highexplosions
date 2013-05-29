@@ -1,13 +1,17 @@
 package
 {
+    import Loom.GameFramework.*;
+    import cocos2d.*;
     import Loom.GameFramework.TimeManager;
-    import cocos2d.Cocos2D;
-    import cocos2d.Cocos2DGame;
-    import cocos2d.CCSprite;
-    import cocos2d.ScaleMode;
-   // import View.View;
-    import HighExplosives.View.MainMenu;
+    
+    import HighExplosives.*;
+    
+    import HighExplosives.View.*;
+    
     import UI.Label;
+	
+	
+
 
     public class HighExplosives extends Cocos2DGame
     {
@@ -19,10 +23,48 @@ package
         {
             
             super.run();
-        	var  test  = new MainMenu(timeManager);
-        	test.start(this.layer);
+            
+        	this.mainMenu(layer);
         	
         }
+        
+        public function mainMenu(layer:CCScaledLayer)
+        {
+       		
+          	layer.removeAllChildrenWithCleanup (true);
+       		
+       		 var test:MainMenu = new MainMenu(this);
+        	test.start(this.layer);
+        
+        }
+        
+        
+        public function selectLevel(layer:CCScaledLayer)
+        {
+        
+        
+        	layer.removeAllChildrenWithCleanup (true);
+        
+        	var selectLevelManu:SelectLevelView=new SelectLevelView(this);
+        	selectLevelManu.start(this.layer);
+        
+        }
+        /*
+        public function otherLayers/levels()
+        {
+        
+        }
+        */
+        public function gameView(layer:CCScaledLayer, numLevel:int):void
+        {
+        	layer.removeAllChildrenWithCleanup (true);
+        
+        	var gameview:GameView=new GameView(this,timeManager);
+        	gameview.start(this.layer);
+        	
+        
+        }
+        
         	 
     }
 }
