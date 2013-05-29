@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="75" height="16" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="template_1" tilewidth="32" tileheight="32">
-  <image source="template_1.png" width="256" height="256"/>
- </tileset>
- <tileset firstgid="65" name="water" tilewidth="32" tileheight="32">
-  <image source="water.png" width="32" height="32"/>
- </tileset>
- <tileset firstgid="66" name="portals" tilewidth="32" tileheight="32">
-  <image source="portals.png" width="128" height="64"/>
- </tileset>
- <tileset firstgid="74" name="pbe_psk_outdoor_tiles" tilewidth="32" tileheight="32">
-  <image source="pbe_psk_outdoor_tiles.png" width="320" height="608"/>
- </tileset>
- <tileset firstgid="264" name="mountain_landscape_23" tilewidth="32" tileheight="32">
-  <image source="mountain_landscape_23.png" width="512" height="512"/>
+ <tileset firstgid="1" name="completeset" tilewidth="32" tileheight="32">
+  <image source="completeset.png" width="900" height="900"/>
  </tileset>
  <layer name="bg" width="75" height="16">
   <data encoding="base64" compression="zlib">
-   eJzNlt1KBDEMhUcFYaew4My9d16oL+G+/0tZYQrx4+SnrLt4EarTpE1PTk72YVmWx39mT1i9b2rvVvbc7dRt7dZutEbWin7K/5pV3ZvFnQ+stiQ/9W0/4tQ6/LbA1qKfFzODLY13Z/7bgdVLkLP6nuWyOr6Ms2fugTHnGfPu93ybuH/UfmCV1XvkTIy8t7Fm9vzXbm/dPoEB+Zlh6OFZxVbhwbixN3hl9SqrCzGyfjxb8W7ceTlqlOmP7Wnuz+Cp8OO5lhNq3/JK1ZNvZg6Ms/cp/wasiEmkf+QrcdoQ5/VF5X0qD6tXxHxmnkW9znsVVpWVvWwx5ExReCrs2hJj7s1Be16U47UzSvWgqqOnxTMYeVxkXTNeK16t+Ju8jjSyOpvIq8qsovZW+RbNW497Fb3yclWaQ03YEae4rLCa/T2Q4dmW32+03FD8U3Mj4tXJxCqcOCPUu5S+e/PQYuXNqmguKt1WWLK3PZysb4Sj7UGVg9I+xWHFH1VL6lVV44i30inWucJBYhTpP7Xd8+O36MyMgxarqsZlb49q5mmJmn2eL/WKM8H7X/Vz5Ms91YNKH7hW3l45Z+Y+e+5P3u/dPu5oXwdW9773L/L+BvkeTEU=
+   eJztl2sKwjAQhKOCt7AFb2FyE+/hMcSLeZAew4gNDMvsttU8KvTHx9IQSTI7ndSdc26/YXKIHCOnSBfpt2rW86iVj4StmjVp1U3Qr6CvrStq5RVQrxz9uUZukUeh/pf2lYdxqaeHZ8m3/Rnc/+UkyyumC44H0BQ1k7/TnlErNs9iLb6ayiwL6UvNf0yrRJhBy9yck1dLYWfEcdRKm6dV1Kulr7R3CyvLs5p5JffZwlesdyy/cvUnaZWr7zXy7L3vC6wn10adQsb+5LwH057ZHVHyHmS5nLyG7+HafMWykp1D3vcabD7LK5a31vfXr74qATvPnG8Sy5fpHax9nwywbi00L1jIfd/d5z9HLZ6jVrXXzbHvF63h3og=
   </data>
  </layer>
  <layer name="angles" width="75" height="16">
   <data encoding="base64" compression="zlib">
-   eJztls0KwjAQhPf5gj9QoWpbr3qt738xwSyG2G2y2SSgzcAQaGWmfKmbngHg1Bx0r33TPmgfnVVBujADhDkc5ejZ2Zw9cX+CN6uL9tVZJd2YAcIcjnL0KMdLQlaD9uiskm7MwP4aqsmqRLc0p7Mu3YMabM5I3OeyUgmmcijdFzIeK79fywvNII4oVpS4+5fCaoJvVqFnjNlbqRqreP07q9AM4uhXWD0zP1eKUmY7dT3XbJ8jM2LzcglZ+edF6e5a310hcc5JZOXv4VZYcd7dxorPyj8vtsKKc04aVua/2lU0wIdVzV6pzWx7AdLgbEY=
+   eJztlX0KwyAMxbX32P3PIfuA7hL7aN0p9scSUCZiFlOtsNYHD0HavPTXNt61Utdu1jfwC3wGX4LVgJfK10CV1JGoRs7RPfeJqGUdqwf4Gawl2b4G6p9YGf11Sp7VBJ6DtSTb1/D5LdSS1RrZVB09KDXC/jD8vhevQb8zeqnR7+Q4zZVYhexznco0RC4KWcY1OK5Uv9wMkohiJe1Jcj3HyiZ4cz3mvNtSdVb52jorbgZJtHVWNbVktlP7tWb7ITHbObVkFZ8Xa2ZzrFpKck56VvE73AsrybfbWclZxefFXlhJzknr/tWxocMZ0TK3Rt8f2RIjfw==
   </data>
  </layer>
  <layer name="fg" width="75" height="16">
   <data encoding="base64" compression="zlib">
-   eJztljdPA0EQRu8OF8Se2BN7YkM22A0VwW7J/FOgQXRgkICOJEFJeifZOrNi2dtwS3F80tPKHu/czKfTjIPgXzq6CoPgOkzOQmSfK5ZNHh2dhfY5jslxAqeKXE/En8PktOmxkSOWL69uHHh1QY5LqClyfcbxKDltemzkiOXLqxcHXt2T4wEeNXO56vGnPNuwBjuSO63U2gbt0AGd0KWov8VBvW884x0+HHlViPQRVamfVcmzu6m1B3qhD/phQFH/rSSedgZlId33zcSrQfoagmEYgVEYU/T6KomnnUE6moW5FL/z4dU4fU3AJEzBNMwoej2XxE1nULPmYaHp8yIspbjnw6tl+irCCqxCCcqKXu8kcdMZ9K0eKBrc8+HVOn1twCZsQQWqhu+VD/0222Xfu5rtu/S9B/twAIdwZPheZSFxX2T5v0jllU+Z7ElxX+TFK5M9Ke6LvHhlsifFfZEXr1zsySxVqp/lP63CTF9/Clbz
+   eJztlllOAkEURbs+ndiFOOzCcReAGuMemIy4B8boIpiMLMdhGw6nP0h3OpY19KP4aG5yqEDz7qPex7tE0UYuaqkoaqvkXKj8XrHy+LjoVqBPBY8q1AxeA54PVXLmuePSI1aoWT0I9Knj0YCmwWvG87lKzjx3XHrECjWrJ4E+XTx60Hf0krqji89W6tyGHdiFPSgZal8Ffu8YjwlMhWa1UO64ah/KcACHcATHhpqOpo/tDlqFXO/uM6sTOIUzOIcLuDTUPGv62O4gF73Bu8X3QsyqAlWowRVcw42h5k7Tx3cHpfUBn6n3X/BtURdiVnVoQBNa0IZ7Q82jpo/vDkrrJ37xqA8xqy70oA8DGMLIUCORg776b7frPpfa7WOYwBRmMIcXQ41EDtoqmxeh/hetWz45mc2LoszKJyezeVGUWfnkZDYvijIriZzc6G/9AiSTX48=
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="75" height="16">
-  <object name="player" x="47" y="211" width="34" height="61"/>
- </objectgroup>
 </map>
