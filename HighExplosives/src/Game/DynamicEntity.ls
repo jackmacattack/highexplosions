@@ -33,37 +33,15 @@ package HighExplosives.Game
 		public var targetX:Number;
 		public var targetY:Number;
 		
-		public function DynamicEntity(x_:Number, y_:Number, accel_:Number, agility_:Number, maxSpeed_:Number, speed_:Number, angle_:Number)	
+		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, scale:Number, accel_:Number, agility_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
 		{
-			super(x_, y_);
+			super(level, x, y, scale);
 			accel = accel_;
 			agility = agility_;
 			maxSpeed = maxSpeed_;
 			speed = speed_;
+			moving = speed != 0;
 			angle = angle_;
-		}
-		
-		private function calculateAngle(x1:Number, y1:Number, x2:Number, y2:Number):Number
-		{
-		
-			var aTan = Math.atan(Math.abs((y2 - y1)/(x2 - x1)));
-			
-			var xCheck = x1 < x2;
-			var yCheck = y1 < y2;
-			
-			if(xCheck && yCheck) {
-				return aTan;
-			}
-			else if(xCheck) {
-				return 2 * Math.PI - aTan;
-			}
-			else if(yCheck) {
-				return Math.PI - aTan;
-			}
-			else {
-				return Math.PI + aTan;
-			}
-			
 		}
 		
 		public function setTarget(newX:Number, newY:Number)
@@ -71,14 +49,10 @@ package HighExplosives.Game
 			targetX = newX; 
 			targetY = newY;
 			
-			var offset:Number = x > targetX ? Math.PI /2 : 0;
-			
-			//angle = calculateAngle(x, y, targetX, targetY);
-			//speed = speed * agility;
-			
 			decel = true;
 			turning = true;
 		}
+		
 		private function distanceToTarget():Number
 		{
 			return (x-targetX)*(x-targetX)+(y-targetY)*(y-targetY);
@@ -93,25 +67,21 @@ package HighExplosives.Game
 		{
 			
 			if(turning) {
-				var targetAngle:Number = calculateAngle(x, y, targetX, targetY);
+				var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
 				if(Math.abs(targetAngle - angle) > Math.PI) {
 					targetAngle -= 2 * Math.PI;
 				}
 				var snap:boolean = false;
 				
 				if(!moving) {
-					Console.print("Snap");
 					snap = true;
 				}
 				else {
 					angle = angle * (1 - agility) + targetAngle * agility;
 					
-					
 					if(angle < 0) {
 						angle += 2 * Math.PI;
 					}
-					
-					Console.print(Math.abs(angle - targetAngle));
 					
 					if(Math.abs(angle - targetAngle) < DynamicEntity.ANGULAR_TOLERANCE) {
 						snap = true;
@@ -133,7 +103,6 @@ package HighExplosives.Game
 			if(!decel) {
 				var check:Number = (speed / (accel + agility - accel * agility) ) * dt;
 				decel = distanceToTarget() < check * check;
-				//Console.print(distanceToTarget() + " ? " + check * check + " " + decel);
 			}
 			
 			if(decel) {
@@ -153,6 +122,7 @@ package HighExplosives.Game
 			renderer.y = y;
 			
 			if(inRangeOfTarget() || speed < DynamicEntity.MIN_SPEED) {
+				speed = 0;
 				moving = false;
 				decel = false;
 			}
@@ -163,9 +133,14 @@ package HighExplosives.Game
 
 	public class TestEntity extends DynamicEntity {
 	
-		public function TestEntity(x_:Number, y_:Number)	
+		public function TestEntity(level:HiExLevel, x:Number, y:Number)	
 		{
-			super(x_, y_, .1, .1, 200, 0, 0);
+			super(level, x, y, 1, .5, .5, 200, 0, 0);
+		}
+		
+		public function throwBomb(speed:Number, angle:Number) 
+		{
+			level.spawnTestExplosive("assets/bomb1.png", x, y, Math.clamp(speed, 0, 500), angle, 1, 3, 0, 0);
 		}
 		
 	}

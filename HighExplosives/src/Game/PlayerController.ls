@@ -31,16 +31,22 @@ package HighExplosives.Game
         public function onGestureSwipe(data:GestureDelegateData)
         {
 			var point:CCPoint = data.positionDelta.deltaPoint;
-			Console.print ("swipe: " + "(" + point.x + "," + point.y + ")");
+			
+			var mag:Number = point.x * point.x + point.y * point.y;
+			var angle:Number = Utils.calculateAngle(point.x, point.y);
+			
+			Console.print(mag + "," + angle);
+			
+			(e as TestEntity).throwBomb(mag, angle);
         }
         
         public function onGestureDoubleTap(data:GestureDelegateData)
         {
 			var point:CCPoint = data.positionDelta.toPoint;
-			Console.print ("tap: " + "(" + point.x + "," + point.y + ")");
+			//Console.print ("tap: " + "(" + point.x + "," + point.y + ")");
 			e.setTarget(point.x, point.y);
         }
-        
+         
 	}
 
 }

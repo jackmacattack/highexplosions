@@ -54,11 +54,12 @@ package HighExplosives.Game
 		public function spawnTestEntity(name:String, x:Number, y:Number)
 		{
 		
-			var e = new TestEntity(x, y);
+			var e = new TestEntity(this, x, y); 
 			dynamicEntityList.push(e);
 			
   			var gestureManager:GestureManager = new GestureManager(layer);
 			var control = new PlayerController(this, e, gestureManager);
+			controllerList.push(control);
 		
 			var renderer = new TestRenderer(name, x, y);
 			renderer.addBinding("x", "@mover.x");
@@ -66,6 +67,42 @@ package HighExplosives.Game
 			renderer.addBinding("scale", "@mover.scale");
 			e.renderer = renderer;
 			layer.addChild(renderer.sprite);
+
+		}
+		
+		public function spawnTestExplosive(name:String, x:Number, y:Number, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
+		{
+		
+			var e:Explosive = new Explosive(this, x, y, 1, speed, angle, time, duration, damage, area);
+			dynamicEntityList.push(e);
+		
+			var renderer = new TestRenderer(name, x, y);
+			renderer.addBinding("x", "@mover.x");
+			renderer.addBinding("y", "@mover.y");
+			renderer.addBinding("scale", "@mover.scale");
+			e.renderer = renderer;
+			layer.addChild(renderer.sprite);
+		}
+		
+		public function spawnExplosion(x:Number, y:Number, duration:Number, damage:Number, area:Number)
+		{
+		
+			var e:Explosion = new Explosion(this, x, y, 1, duration, damage, area);
+			dynamicEntityList.push(e);
+		
+			var renderer = new TestRenderer("assets/bombex2.png", x, y);
+			renderer.addBinding("x", "@mover.x");
+			renderer.addBinding("y", "@mover.y");
+			renderer.addBinding("scale", "@mover.scale");
+			e.renderer = renderer;
+			layer.addChild(renderer.sprite);
+		}
+		
+		public function removeEntity(e:Entity)
+		{
+		
+			dynamicEntityList.remove(e);
+			layer.removeChild(e.renderer.sprite);
 
 		}
 		
