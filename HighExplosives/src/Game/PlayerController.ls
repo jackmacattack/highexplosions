@@ -14,6 +14,12 @@ package HighExplosives.Game
 		
   		public var gestureManager:GestureManager;
   		
+  		public var tapped:boolean = false;
+  		public var tap:CCPoint;
+  		
+  		private var swiped:boolean = false;
+  		public var swipe:CCPoint;
+  		
 		public function PlayerController(level_:HiExLevel, e_:DynamicEntity, gestureManager_:GestureManager) 
 		{
 			super(level_, e_);
@@ -25,26 +31,30 @@ package HighExplosives.Game
 		
 		override public function update() 
 		{
+		
+			if(tapped) {
+				tapped = false;
+				e.setTarget(tap.x, tap.y);
+			}
+			if(swiped) {
+				var mag:Number = swipe.x * swipe.x + swipe.y * swipe.y;
+				var angle:Number = Utils.calculateAngle(swipe.x, swipe.y);
+				(e as TestEntity).throwBomb(mag, angle);
+				swiped = false;
+			}
+			
 		}
 	
-		
-        public function onGestureSwipe(data:GestureDelegateData)
-        {
-			var point:CCPoint = data.positionDelta.deltaPoint;
-			
-			var mag:Number = point.x * point.x + point.y * point.y;
-			var angle:Number = Utils.calculateAngle(point.x, point.y);
-			
-			Console.print(mag + "," + angle);
-			
-			(e as TestEntity).throwBomb(mag, angle);
-        }
-        
         public function onGestureDoubleTap(data:GestureDelegateData)
         {
-			var point:CCPoint = data.positionDelta.toPoint;
-			//Console.print ("tap: " + "(" + point.x + "," + point.y + ")");
-			e.setTarget(point.x, point.y);
+			tap = data.positionDelta.toPoint;
+			tapped = true;
+        }
+        
+        public function onGestureSwipe(data:GestureDelegateData)
+        {
+			swipe = data.positionDelta.deltaPoint;
+			swiped = true;
         }
          
 	}

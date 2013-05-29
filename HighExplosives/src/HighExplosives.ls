@@ -24,8 +24,8 @@ package
             
             super.run();
             
-        	this.mainMenu(layer);
-        	
+        	//this.mainMenu(layer);
+        	gameView(layer, 1);
         }
         
         public function mainMenu(layer:CCScaledLayer)
