@@ -4,6 +4,7 @@ package HighExplosives.Game
     import cocos2d.Cocos2D;
     import cocos2d.CCSprite;
     import cocos2d.CCScaledLayer;
+    import cocos2d.CCTMXTiledMap;
 
 	import Loom.GameFramework.LoomGroup;
 	import Loom.GameFramework.TickedComponent;
@@ -25,6 +26,9 @@ package HighExplosives.Game
   		
 		public var layer:CCScaledLayer;
 		
+		public var map:CCTMXTiledMap;
+		
+		
 		public var controllerList:Vector.<Controller> = new Vector.<Controller>();
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		public var worldList:Vector.<Entity> = new Vector.<Entity>();
@@ -44,6 +48,10 @@ package HighExplosives.Game
             bg.y = Cocos2D.getDisplayHeight() / 2;
             bg.scale = 0.5;
             layer.addChild(bg);
+            
+            trace("Loading test_map_1.tmx...");
+            map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_1.tmx");
+            layer.addChild(map);
             
             spawnTestEntity("assets/logo.png", 240, 240);
 			
