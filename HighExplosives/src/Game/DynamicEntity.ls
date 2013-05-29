@@ -140,7 +140,7 @@ package HighExplosives.Game
 		
 		public function throwBomb(speed:Number, angle:Number) 
 		{
-			level.spawnTestExplosive("assets/bomb1.png", x, y, Math.clamp(speed, 0, 500), angle, 1, 3, 0, 0);
+			level.spawnTestExplosive("assets/bomb1.png", x, y, Math.clamp(speed, 50, 300), angle, 1, 3, 0, 0);
 		}
 		
 	}

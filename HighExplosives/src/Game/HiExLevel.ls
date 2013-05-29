@@ -25,6 +25,7 @@ package HighExplosives.Game
 		
   		
 		public var layer:CCScaledLayer;
+		public var following:Entity;
 		
 		public var map:CCTMXTiledMap;
 		
@@ -43,11 +44,6 @@ package HighExplosives.Game
          	super.initialize(_name);
 		
             // Setup anything else, like UI, or game objects.
-            var bg = CCSprite.createFromFile("assets/bg.png");
-            bg.x = Cocos2D.getDisplayWidth() / 2;
-            bg.y = Cocos2D.getDisplayHeight() / 2;
-            bg.scale = 0.5;
-            layer.addChild(bg);
             
             trace("Loading test_map_1.tmx...");
             map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_1.tmx");
@@ -75,6 +71,11 @@ package HighExplosives.Game
 			renderer.addBinding("scale", "@mover.scale");
 			e.renderer = renderer;
 			layer.addChild(renderer.sprite);
+
+			if(following == null) {
+				following = e;
+				moveCamera();
+			}
 
 		}
 		
@@ -114,9 +115,22 @@ package HighExplosives.Game
 
 		}
 		
+		public function moveCamera()
+		{
+		
+			if(following == null) {
+				return;
+			}
+			
+			layer.x = -1 * (following.getX()-240);
+			layer.y = -1 * (following.getY()-240);
+		
+		}
+		
 		override public function onTick() 
 		{
 			var dt:Number = timeManager.TICK_RATE; 
+			
 			
 			for(var i:int = 0; i < controllerList.length; i++) {
 				controllerList[i].update();
@@ -126,6 +140,7 @@ package HighExplosives.Game
 				dynamicEntityList[j].move(dt);
 			}
 			
+			moveCamera();
 		}
 
 	}
