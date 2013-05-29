@@ -7,10 +7,36 @@ package HighExplosives.Game
 	
 	public class Explosive extends DynamicEntity {
 	
-		public function Explosive()
+		public var time:Number;
+		
+		public var duration:Number;
+		public var damage:Number;
+		public var area:Number;
+		
+		public function Explosive(level:HiExLevel, x:Number, y:Number, scale:Number, speed:Number, angle:Number, time_:Number, duration_:Number, damage_:Number, area_:Number)
 		{
+			super(level, x, y, scale, 0, 0, speed, speed, angle);
+			time = time_;
+			damage = damage_;
+			duration = duration_;
+			area = area_;
 		}
 	
+		public function explode() {
+			level.spawnExplosion(x, y, duration, damage, area);
+			destroy();
+		}
+		
+		override public function move(dt:Number) {
+			time -= dt;
+			
+			if(time < 0) {
+				explode();
+			}
+			else {
+				super.move(dt);
+			}
+		}
 	}
 	
 }

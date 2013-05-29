@@ -26,7 +26,7 @@ package HighExplosives.Game
          * 
          * @param   _texture:String The file name of the sprite within pongSprites.
          */
-        public function TestRenderer(name:String, x:Number, y:Number) // (__texture:String, nodeParent:CCNode)
+        public function TestRenderer(name:String, x:Number, y:Number, scale:Number = 1) // (__texture:String, nodeParent:CCNode)
         {
 //          parent=nodeParent;
 //          _texture = __texture;
@@ -38,6 +38,9 @@ package HighExplosives.Game
 			sprite = CCSprite.createFromFile(name);
 			sprite.setPositionX(x);
 			sprite.setPositionY(y);
+			
+			//sprite.setScaleX(scale);
+			//sprite.setScaleY(scale);
         }
 
         /**
