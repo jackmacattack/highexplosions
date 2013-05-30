@@ -33,9 +33,9 @@ package HighExplosives.Game
 		public var targetX:Number;
 		public var targetY:Number;
 		
-		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, scale:Number, accel_:Number, agility_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
+		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel_:Number, agility_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
 		{
-			super(level, x, y, scale);
+			super(level, x, y, renderer);
 			accel = accel_;
 			agility = agility_;
 			maxSpeed = maxSpeed_;
@@ -115,11 +115,8 @@ package HighExplosives.Game
 			var dx:Number = speed * Math.cos(angle);
 			var dy:Number = speed * Math.sin(angle);
 			
-			x += dx * dt;
-			y += dy * dt;
-			
-			renderer.x = x;
-			renderer.y = y;
+			setX(x + dx * dt);
+			setY(y + dy * dt);
 			
 			if(inRangeOfTarget() || speed < DynamicEntity.MIN_SPEED) {
 				speed = 0;
@@ -133,14 +130,14 @@ package HighExplosives.Game
 
 	public class TestEntity extends DynamicEntity {
 	
-		public function TestEntity(level:HiExLevel, x:Number, y:Number)	
+		public function TestEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
 		{
-			super(level, x, y, 1, .5, .5, 200, 0, 0);
+			super(level, x, y, renderer, .5, .5, 200, 0, 0);
 		}
 		
 		public function throwBomb(speed:Number, angle:Number) 
 		{
-			level.spawnTestExplosive("assets/bomb1.png", x, y, Math.clamp(speed, 50, 300), angle, 1, 3, 0, 0);
+			level.spawnTestExplosive(x, y, Math.clamp(speed, 50, 300), angle, 1, 3, 0, 0);
 		}
 		
 	}

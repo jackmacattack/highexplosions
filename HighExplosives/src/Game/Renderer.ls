@@ -11,7 +11,7 @@ package HighExplosives.Game
     
         public var sprite:CCSprite;         ///< The sprite that the class must render.
         
-        public function TestRenderer(name:String, x:Number, y:Number, scale:Number, rotation:Number) // (__texture:String, nodeParent:CCNode)
+        public function Renderer(name:String, x:Number, y:Number, scale:Number, rotation:Number) // (__texture:String, nodeParent:CCNode)
         {
 
 			sprite = CCSprite.createFromFile(name);

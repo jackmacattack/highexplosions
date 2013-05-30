@@ -9,23 +9,20 @@ package HighExplosives.Game
 		
 		//The level this entity inhabits
    		protected var level:HiExLevel;
-   		public var renderer:TestRenderer;
+   		public var renderer:Renderer;
    		
 		//The current position of the entity
 		protected var x:Number;
 		protected var y:Number;
 		
-		//The scale of the entity sprite. Should most likely remain 1
-		protected var scale:Number;
-		
 		//The object's hitbox for collision detection
 		//private var hitbox:Rectangle;
 		
-		public function Entity(level_:HiExLevel, x_:Number, y_:Number, scale_:Number = 1)	
+		public function Entity(level_:HiExLevel, x_:Number, y_:Number, renderer_:Renderer)	
 		{
 			level = level_;
 			setPosition(x_, y_);
-			scale = scale_;
+			renderer = renderer_;
 		}
 		
 		public function getX():Number 
@@ -38,6 +35,16 @@ package HighExplosives.Game
 			return y;
 		}
 		
+		public function setX(x_:Number) 
+		{
+			x = x_;
+			renderer.x = x_;
+		}
+		public function setY(y_:Number) 
+		{
+			y = y_;
+			renderer.y = y_;
+		}
 		public function setPosition(x_:Number, y_:Number) 
 		{
 			x = x_;

@@ -23,6 +23,7 @@ package HighExplosives.Game
 	
 		public var timeManager:TimeManager;
 		
+  		
 		public var layer:CCScaledLayer;
 		public var following:Entity;
 		
@@ -48,32 +49,25 @@ package HighExplosives.Game
             map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_1.tmx");
             layer.addChild(map);
             
-            spawnTestEntity("assets/logo.png", 240, 160, 1);
+            spawnTestEntity(240, 240);
 			
 			
 			timeManager.addTickedObject(this);
 		}
 		
-		public function spawnTestEntity(name:String, x:Number, y:Number, scale:Number)
+		public function spawnTestEntity(x:Number, y:Number)
 		{
 		
-			var e = new TestEntity(this, x, y); 
+			var renderer = new Renderer("assets/logo.png", x, y, .5, 0);
+			layer.addChild(renderer.sprite);
+			
+			var e = new TestEntity(this, x, y, renderer); 
 			dynamicEntityList.push(e);
 			
   			var gestureManager:GestureManager = new GestureManager(layer);
 			var control = new PlayerController(this, e, gestureManager);
 			controllerList.push(control);
 		
-			var renderer = new TestRenderer(name, x, y, scale);
-			
-			/*
-			renderer.addBinding("x", "@mover.x");
-			renderer.addBinding("y", "@mover.y");
-			renderer.addBinding("scale", "@mover.scale");
-			*/
-			e.renderer = renderer;
-			layer.addChild(renderer.sprite);
-
 			if(following == null) {
 				following = e;
 				moveCamera();
@@ -81,32 +75,25 @@ package HighExplosives.Game
 
 		}
 		
-		public function spawnTestExplosive(name:String, x:Number, y:Number, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
+		public function spawnTestExplosive(x:Number, y:Number, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
 		{
 		
-			var e:Explosive = new Explosive(this, x, y, 1, speed, angle, time, duration, damage, area);
+			var renderer = new Renderer("assets/bomb1.png", x, y, 1, 0);
+			layer.addChild(renderer.sprite);
+			
+			var e:Explosive = new Explosive(this, x, y, renderer, speed, angle, time, duration, damage, area);
 			dynamicEntityList.push(e);
 		
-			var renderer = new TestRenderer(name, x, y, 1);
-			renderer.addBinding("x", "@mover.x");
-			renderer.addBinding("y", "@mover.y");
-			renderer.addBinding("scale", "@mover.scale");
-			e.renderer = renderer;
-			layer.addChild(renderer.sprite);
 		}
 		
 		public function spawnExplosion(x:Number, y:Number, duration:Number, damage:Number, area:Number)
 		{
 		
-			var e:Explosion = new Explosion(this, x, y, 2, duration, damage, area);
-			dynamicEntityList.push(e);
-		
-			var renderer = new TestRenderer("assets/bombex2.png", x, y, 2);
-			renderer.addBinding("x", "@mover.x");
-			renderer.addBinding("y", "@mover.y");
-			renderer.addBinding("scale", "@mover.scale");
-			e.renderer = renderer;
+			var renderer = new Renderer("assets/bombex2.png", x, y, 3, 0);
 			layer.addChild(renderer.sprite);
+			
+			var e:Explosion = new Explosion(this, x, y, renderer, duration, damage, area);
+			dynamicEntityList.push(e);
 		}
 		
 		public function removeEntity(e:Entity)
@@ -124,8 +111,8 @@ package HighExplosives.Game
 				return;
 			}
 			
-			layer.x = -1 * (following.getX()-Cocos2D.getDisplayWidth()/2);
-			layer.y = -1 * (following.getY()-Cocos2D.getDisplayHeight()/2);
+			layer.x = -1 * (following.getX()-240);
+			layer.y = -1 * (following.getY()-160);
 		
 		}
 		

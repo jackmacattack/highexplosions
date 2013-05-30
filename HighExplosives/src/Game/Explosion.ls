@@ -11,9 +11,9 @@ package HighExplosives.Game
 		public var damage:Number;
 		public var area:Number;
 		
-		public function Explosion(level:HiExLevel, x:Number, y:Number, scale:Number, duration_:Number, damage_:Number, area_:Number)
+		public function Explosion(level:HiExLevel, x:Number, y:Number, renderer:Renderer, duration_:Number, damage_:Number, area_:Number)
 		{
-			super(level, x, y, scale, 0, 0, 0, 0, 0);
+			super(level, x, y, renderer, 0, 0, 0, 0, 0);
 			duration = duration_;
 			damage = damage_;
 			area = area_;
