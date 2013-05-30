@@ -23,7 +23,6 @@ package HighExplosives.Game
 	
 		public var timeManager:TimeManager;
 		
-  		
 		public var layer:CCScaledLayer;
 		public var following:Entity;
 		
@@ -49,13 +48,13 @@ package HighExplosives.Game
             map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_1.tmx");
             layer.addChild(map);
             
-            spawnTestEntity("assets/logo.png", 240, 240);
+            spawnTestEntity("assets/logo.png", 240, 160, 1);
 			
 			
 			timeManager.addTickedObject(this);
 		}
 		
-		public function spawnTestEntity(name:String, x:Number, y:Number)
+		public function spawnTestEntity(name:String, x:Number, y:Number, scale:Number)
 		{
 		
 			var e = new TestEntity(this, x, y); 
@@ -65,10 +64,13 @@ package HighExplosives.Game
 			var control = new PlayerController(this, e, gestureManager);
 			controllerList.push(control);
 		
-			var renderer = new TestRenderer(name, x, y);
+			var renderer = new TestRenderer(name, x, y, scale);
+			
+			/*
 			renderer.addBinding("x", "@mover.x");
 			renderer.addBinding("y", "@mover.y");
 			renderer.addBinding("scale", "@mover.scale");
+			*/
 			e.renderer = renderer;
 			layer.addChild(renderer.sprite);
 
@@ -85,7 +87,7 @@ package HighExplosives.Game
 			var e:Explosive = new Explosive(this, x, y, 1, speed, angle, time, duration, damage, area);
 			dynamicEntityList.push(e);
 		
-			var renderer = new TestRenderer(name, x, y);
+			var renderer = new TestRenderer(name, x, y, 1);
 			renderer.addBinding("x", "@mover.x");
 			renderer.addBinding("y", "@mover.y");
 			renderer.addBinding("scale", "@mover.scale");
@@ -96,10 +98,10 @@ package HighExplosives.Game
 		public function spawnExplosion(x:Number, y:Number, duration:Number, damage:Number, area:Number)
 		{
 		
-			var e:Explosion = new Explosion(this, x, y, 1, duration, damage, area);
+			var e:Explosion = new Explosion(this, x, y, 2, duration, damage, area);
 			dynamicEntityList.push(e);
 		
-			var renderer = new TestRenderer("assets/bombex2.png", x, y);
+			var renderer = new TestRenderer("assets/bombex2.png", x, y, 2);
 			renderer.addBinding("x", "@mover.x");
 			renderer.addBinding("y", "@mover.y");
 			renderer.addBinding("scale", "@mover.scale");
@@ -122,8 +124,8 @@ package HighExplosives.Game
 				return;
 			}
 			
-			layer.x = -1 * (following.getX()-240);
-			layer.y = -1 * (following.getY()-240);
+			layer.x = -1 * (following.getX()-Cocos2D.getDisplayWidth()/2);
+			layer.y = -1 * (following.getY()-Cocos2D.getDisplayHeight()/2);
 		
 		}
 		
