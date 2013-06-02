@@ -3,6 +3,7 @@ package HighExplosives.View
 
     import Loom.GameFramework.*;
     import cocos2d.*;
+    import CocosDenshion.SimpleAudioEngine;
     import HighExplosives.*;
     
     import UI.Label;
@@ -23,6 +24,7 @@ package HighExplosives.View
     	public function MainMenu(gm:HighExplosives)
     	{
         	super(gm);
+        	SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Backstory.mp3", true);
         }
     
     	//public var layer:CCScaledLayer;
@@ -78,7 +80,7 @@ package HighExplosives.View
         
         public function goBegin()
         {
-        
+            SimpleAudioEngine.sharedEngine().stopBackgroundMusic(true);
         	gameManager.gameView(layer,1);
         	trace("Begin");
         }
