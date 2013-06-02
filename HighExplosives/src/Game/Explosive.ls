@@ -4,6 +4,7 @@ package HighExplosives.Game
 	import Loom.GameFramework.TickedComponent;
 	import Loom.Animation.Tween;
 	import Loom.Animation.EaseType;
+	import CocosDenshion.SimpleAudioEngine;
 	
 	public class Explosive extends DynamicEntity {
 	
@@ -24,6 +25,7 @@ package HighExplosives.Game
 	
 		public function explode() {
 			level.spawnExplosion(x, y, duration, damage, area);
+			SimpleAudioEngine.sharedEngine().playEffect("assets/Depth Charge Short.mp3");
 			destroy();
 		}
 		

@@ -5,6 +5,7 @@ package HighExplosives.Game
     import cocos2d.CCSprite;
     import cocos2d.CCScaledLayer;
     import cocos2d.CCTMXTiledMap;
+    import CocosDenshion.SimpleAudioEngine;
 
 	import Loom.GameFramework.LoomGroup;
 	import Loom.GameFramework.TickedComponent;
@@ -42,6 +43,7 @@ package HighExplosives.Game
       	public function initialize(_name:String = null):void
       	{
          	super.initialize(_name);
+         	
 		
             // Setup anything else, like UI, or game objects.
             
@@ -50,7 +52,12 @@ package HighExplosives.Game
             layer.addChild(map);
             
             spawnTestEntity("assets/logo.png", 240, 240);
-			
+            /*SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
+            SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
+			SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Tribal.mp3", true);
+			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
+			SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
+			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());*/
 			
 			timeManager.addTickedObject(this);
 		}

@@ -24,7 +24,12 @@ package HighExplosives.View
     	public function MainMenu(gm:HighExplosives)
     	{
         	super(gm);
-        	SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Backstory.mp3", true);
+        	SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Backstory.mp3");
+        	SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
+        	SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Backstory.mp3");
+        	trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
+        
+
         }
     
     	//public var layer:CCScaledLayer;
@@ -83,6 +88,8 @@ package HighExplosives.View
             SimpleAudioEngine.sharedEngine().stopBackgroundMusic(true);
         	gameManager.gameView(layer,1);
         	trace("Begin");
+        	SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Tribal.mp3");
+
         }
       
         
