@@ -4,6 +4,7 @@ package HighExplosives.Game
     import cocos2d.Cocos2D;
     import cocos2d.CCSprite;
     import cocos2d.CCScaledLayer;
+    import cocos2d.CCTMXLayer;
     import cocos2d.CCTMXTiledMap;
     import CocosDenshion.SimpleAudioEngine;
 
@@ -23,13 +24,12 @@ package HighExplosives.Game
 	public class HiExLevel extends LoomGroup implements ITicked {
 	
 		public var timeManager:TimeManager;
-		
   		
 		public var layer:CCScaledLayer;
 		public var following:Entity;
 		
 		public var map:CCTMXTiledMap;
-		
+		public var collide:CCTMXLayer;
 		
 		public var controllerList:Vector.<Controller> = new Vector.<Controller>();
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
@@ -44,22 +44,30 @@ package HighExplosives.Game
       	{
          	super.initialize(_name);
          	
-		
             // Setup anything else, like UI, or game objects.
             
             trace("Loading test_map_1.tmx...");
             map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_1.tmx");
             layer.addChild(map);
             
+            collide = map.layerNamed("angles");
+            
             spawnTestEntity("assets/logo.png", 240, 240);
-            /*SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
+            SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
             SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Tribal.mp3", true);
 			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
 			SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
-			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());*/
+			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
 			
 			timeManager.addTickedObject(this);
+		}
+		
+		public function isCollidingWithWorld(e:Entity):boolean 
+		{
+		
+			return collide.hitTest_loomscript(e.getX(), e.getY());
+		
 		}
 		
 		public function spawnTestEntity(name:String, x:Number, y:Number)

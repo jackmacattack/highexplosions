@@ -66,6 +66,12 @@ package HighExplosives.Game
 		public function move(dt:Number)
 		{
 			
+			if(level.isCollidingWithWorld(this)) {
+			
+				Console.print("Hit!");
+			
+			}
+			
 			if(turning) {
 				var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
 				if(Math.abs(targetAngle - angle) > Math.PI) {
