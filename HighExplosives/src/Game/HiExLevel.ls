@@ -23,7 +23,6 @@ package HighExplosives.Game
 	
 		public var timeManager:TimeManager;
 		
-  		
 		public var layer:CCScaledLayer;
 		public var following:Entity;
 		
@@ -34,7 +33,8 @@ package HighExplosives.Game
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		public var worldList:Vector.<Entity> = new Vector.<Entity>();
 		
-		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) {
+		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) 
+		{
 			layer = layer_;
 			timeManager = timeManager_;
 		}
@@ -111,8 +111,8 @@ package HighExplosives.Game
 				return;
 			}
 			
-			layer.x = -1 * (following.getX()-240);
-			layer.y = -1 * (following.getY()-160);
+			layer.x = -1 * (following.getX()-Cocos2D.getDisplayWidth() / 2);
+			layer.y = -1 * (following.getY()-Cocos2D.getDisplayHeight() / 2);
 		
 		}
 		
