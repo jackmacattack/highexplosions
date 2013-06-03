@@ -24,7 +24,6 @@ package HighExplosives.Game
 	public class HiExLevel extends LoomGroup implements ITicked {
 	
 		public var timeManager:TimeManager;
-  		
 		public var layer:CCScaledLayer;
 		public var following:Entity;
 		
@@ -35,7 +34,8 @@ package HighExplosives.Game
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		public var worldList:Vector.<Entity> = new Vector.<Entity>();
 		
-		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) {
+		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) 
+		{
 			layer = layer_;
 			timeManager = timeManager_;
 		}
@@ -52,13 +52,14 @@ package HighExplosives.Game
             
             collide = map.layerNamed("angles");
             
-            spawnTestEntity("assets/logo.png", 240, 240);
             SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
             SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Tribal.mp3", true);
 			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
 			SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
+
+            spawnTestEntity(240, 240);
 			
 			timeManager.addTickedObject(this);
 		}
@@ -70,23 +71,19 @@ package HighExplosives.Game
 		
 		}
 		
-		public function spawnTestEntity(name:String, x:Number, y:Number)
+		public function spawnTestEntity(x:Number, y:Number)
 		{
 		
-			var e = new TestEntity(this, x, y); 
+			var renderer = new Renderer("assets/logo.png", x, y, .5, 0);
+			layer.addChild(renderer.sprite);
+			
+			var e = new TestEntity(this, x, y, renderer); 
 			dynamicEntityList.push(e);
 			
   			var gestureManager:GestureManager = new GestureManager(layer);
 			var control = new PlayerController(this, e, gestureManager);
 			controllerList.push(control);
 		
-			var renderer = new TestRenderer(name, x, y);
-			renderer.addBinding("x", "@mover.x");
-			renderer.addBinding("y", "@mover.y");
-			renderer.addBinding("scale", "@mover.scale");
-			e.renderer = renderer;
-			layer.addChild(renderer.sprite);
-
 			if(following == null) {
 				following = e;
 				moveCamera();
@@ -94,32 +91,25 @@ package HighExplosives.Game
 
 		}
 		
-		public function spawnTestExplosive(name:String, x:Number, y:Number, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
+		public function spawnTestExplosive(x:Number, y:Number, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
 		{
 		
-			var e:Explosive = new Explosive(this, x, y, 1, speed, angle, time, duration, damage, area);
+			var renderer = new Renderer("assets/bomb1.png", x, y, 1, 0);
+			layer.addChild(renderer.sprite);
+			
+			var e:Explosive = new Explosive(this, x, y, renderer, speed, angle, time, duration, damage, area);
 			dynamicEntityList.push(e);
 		
-			var renderer = new TestRenderer(name, x, y);
-			renderer.addBinding("x", "@mover.x");
-			renderer.addBinding("y", "@mover.y");
-			renderer.addBinding("scale", "@mover.scale");
-			e.renderer = renderer;
-			layer.addChild(renderer.sprite);
 		}
 		
 		public function spawnExplosion(x:Number, y:Number, duration:Number, damage:Number, area:Number)
 		{
 		
-			var e:Explosion = new Explosion(this, x, y, 1, duration, damage, area);
-			dynamicEntityList.push(e);
-		
-			var renderer = new TestRenderer("assets/bombex2.png", x, y);
-			renderer.addBinding("x", "@mover.x");
-			renderer.addBinding("y", "@mover.y");
-			renderer.addBinding("scale", "@mover.scale");
-			e.renderer = renderer;
+			var renderer = new Renderer("assets/bombex2.png", x, y, 3, 0);
 			layer.addChild(renderer.sprite);
+			
+			var e:Explosion = new Explosion(this, x, y, renderer, duration, damage, area);
+			dynamicEntityList.push(e);
 		}
 		
 		public function removeEntity(e:Entity)
@@ -137,8 +127,8 @@ package HighExplosives.Game
 				return;
 			}
 			
-			layer.x = -1 * (following.getX()-240);
-			layer.y = -1 * (following.getY()-240);
+			layer.x = -1 * (following.getX()-Cocos2D.getDisplayWidth() / 2);
+			layer.y = -1 * (following.getY()-Cocos2D.getDisplayHeight() / 2);
 		
 		}
 		
