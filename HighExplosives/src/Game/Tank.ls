@@ -1,5 +1,6 @@
 package HighExplosives.Game 
 {
+	import CocosDenshion.SimpleAudioEngine;
 
 	public class Tank extends DynamicEntity
 	{
@@ -51,7 +52,17 @@ package HighExplosives.Game
 			Console.print(angle);
 			level.spawnTestExplosive(x, y, Math.clamp(Math.pow(speed, 2), minRange, range), angle, time, duration, damage, area);
 		}
-	
+		
+		override function move(dt:Number)
+		{
+			if(moving==false)
+			{
+				SimpleAudioEngine.sharedEngine().playEffect("assets/tank.mp3", true);
+			}
+		
+			super.move(dt);
+
+		}
 	}
 
 }
