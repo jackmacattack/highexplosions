@@ -5,6 +5,10 @@ package HighExplosives.Game
 	import Loom.Animation.Tween;
 	import Loom.Animation.EaseType;
 	
+	import cocos2d.CCSprite;
+    import cocos2d.*;
+    import cocos2d.CCNode;
+	
 	public class DynamicEntity extends Entity {
    		
    		public static final var TOLERANCE:Number = 4;
@@ -61,6 +65,16 @@ package HighExplosives.Game
 		public function inRangeOfTarget():boolean 
 		{
 			return distanceToTarget() <= DynamicEntity.TOLERANCE;
+		}
+		/*
+			Returns true if object2's corners are inside of object1's box
+		*/
+		public function isCollidingWithDynamic(object_1:DynamicEntity):boolean
+		{
+			var object_1Box:CCRect=object_1.renderer.sprite.boundingBox();
+			var object_2Box:CCRect=this.renderer.sprite.boundingBox();
+			
+			return object_1Box.intersectsRect(object_2Box);
 		}
 		
 		public function move(dt:Number)
@@ -123,7 +137,7 @@ package HighExplosives.Game
 			var oldX:Number = x;
 			setX(x + dx * dt);
 			
-			if(level.isCollidingWithWorld(this)) {
+			if(level.isCollidingWithWorld(this)||true) {
 			
 				setX(oldX);
 				Console.print("Hit!");
@@ -162,6 +176,16 @@ package HighExplosives.Game
 			level.spawnTestExplosive(x, y, Math.clamp(speed, 50, 300), angle, 1, 3, 0, 0);
 		}
 		
+	}
+	public class MonsterEntity extends DynamicEntity{
+		
+		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
+		{
+		
+			super(level, x, y, renderer, .25, .25, 200, 0, 0);
+	
+		}
+	
 	}
 	
 }
