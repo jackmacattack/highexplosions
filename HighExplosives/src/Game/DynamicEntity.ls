@@ -77,6 +77,10 @@ package HighExplosives.Game
 			return object_1Box.intersectsRect(object_2Box);
 		}
 		
+		override public function update(dt:Number) {
+			move(dt);
+		}
+		
 		public function move(dt:Number)
 		{
 			var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
@@ -136,20 +140,20 @@ package HighExplosives.Game
 			var dx:Number = speed * Math.cos(angle);
 			var dy:Number = speed * Math.sin(angle);
 			
-			var oldX:Number = x;
-			var oldY:Number = y;
+			var newX:Number = x + dx * dt;
+			var newY:Number = y + dy * dt;
 			
-			setX(x + dx * dt);
-			setY(y + dy * dt);
-			
-			if(level.isCollidingWithWorld(this)) {
-			
-				setX(oldX);
-				setY(oldY);
+			if(!level.isCollidingWithWorld(newX, newY)) {
+			 
+				setX(newX);
+				setY(newY);
 				
-				setTarget(x, y);
-				//Console.print("Hit!");
-				
+			}
+			else {
+			
+				targetX = x;
+				targetY = y;
+			
 			}
 			
 			if(inRangeOfTarget() || speed < DynamicEntity.MIN_SPEED) {

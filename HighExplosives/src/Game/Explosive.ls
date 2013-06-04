@@ -29,14 +29,14 @@ package HighExplosives.Game
 			destroy();
 		}
 		
-		override public function move(dt:Number) {
+		override public function update(dt:Number) {
 			time -= dt;
 			
-			if(time < 0) {
+			if(time <= 0) {
 				explode();
 			}
 			else {
-				super.move(dt);
+				super.update(dt);
 			}
 		}
 	}

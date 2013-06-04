@@ -2,6 +2,7 @@ package HighExplosives.Game
 {
 
 	import cocos2d.CCPoint;
+	import cocos2d.CCScaledLayer;
 
 	import Loom.GameFramework.TickedComponent;
 	
@@ -20,13 +21,16 @@ package HighExplosives.Game
   		private var swiped:boolean = false;
   		public var swipe:CCPoint;
   		
-		public function PlayerController(level_:HiExLevel, e_:Tank, gestureManager_:GestureManager) 
+		public function PlayerController(level_:HiExLevel, e_:Tank, layer:CCScaledLayer, uiLayer:CCScaledLayer) 
 		{
 			super(level_, e_);
 			
-			gestureManager = gestureManager_;
+  			gestureManager = new GestureManager(uiLayer);
+			
 			gestureManager.onGestureSwipe += onGestureSwipe;
 			gestureManager.onGestureDoubleTap += onGestureDoubleTap;
+			
+			layer.onTouchBegan += onTouchBegan;
 		}
 		
 		override public function update() 
@@ -47,7 +51,6 @@ package HighExplosives.Game
 	
         public function onGestureDoubleTap(data:GestureDelegateData)
         {
-			tap = data.positionDelta.toPoint;
 			tapped = true;
         }
         
@@ -56,7 +59,11 @@ package HighExplosives.Game
 			swipe = data.positionDelta.deltaPoint;
 			swiped = true;
         }
-         
+        
+        public function onTouchBegan(id:Number, x:Number, y:Number) 
+        {
+        	tap = new CCPoint(x, y);
+        }
 	}
 
 }

@@ -27,6 +27,7 @@ package HighExplosives.Game
 	
 		public var timeManager:TimeManager;
 		public var layer:CCScaledLayer;
+		public var uiLayer:CCScaledLayer;
 		public var following:Entity;
 		
 		public var map:CCTMXTiledMap;
@@ -66,25 +67,32 @@ package HighExplosives.Game
 			SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
 
+			uiLayer = new CCScaledLayer();
+			
+			//var renderer = new Renderer("assets/logo.png", 240, 240, 1, 0);
+			//uiLayer.addChild(renderer.sprite);
+			
+			Cocos2D.addLayer(uiLayer);
 
             spawnPlayer(240, 240);
 
-            spawnMonsterEntity(300,300);
+            //spawnMonsterEntity(300,300);
 
 			
 			timeManager.addTickedObject(this);
 		}
 		
-		public function isCollidingWithWorld(e:Entity):boolean 
+		public function isCollidingWithWorld(x:Number, y:Number):boolean 
 		{
 
 				var tile:CCSize = map.getTileSize();
 			
-				var p:CCPoint = new CCPoint(Math.floor(e.getX() / tile.width), Math.floor(map.getMapSize().height - (e.getY() / tile.height)));
+				var p:CCPoint = new CCPoint(Math.floor(x / tile.width), Math.floor(map.getMapSize().height - (y / tile.height)));
 				
 				var tileNum:Number = collide.tileGIDAt(p);
 				
 				return tileNum != 0;
+				//return false;
 
 		}
 		
@@ -100,8 +108,7 @@ package HighExplosives.Game
 			var e = new Tank(this, x, y, renderer, .5, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
 			dynamicEntityList.push(e);
 			
-  			var gestureManager:GestureManager = new GestureManager(layer);
-			var control = new PlayerController(this, e, gestureManager);
+			var control = new PlayerController(this, e, layer, uiLayer);
 			controllerList.push(control);
 			
 			following = e;
@@ -111,13 +118,12 @@ package HighExplosives.Game
 		
 		public function dynamicCollides():boolean{
 		
-			for ( var i:int = 1; i <dynamicEntityList.length ; i++)
+			for(var i:int = 1; i < dynamicEntityList.length; i++)
 			{
 				if (dynamicEntityList[i-1].isCollidingWithDynamic(dynamicEntityList[i]))
 					return true;
 			}
-			 
-				return false; 
+			return false; 
 		}
 		
 		public function spawnMonsterEntity(x:Number, y:Number){
@@ -150,15 +156,21 @@ package HighExplosives.Game
 			layer.addChild(renderer.sprite);
 			
 			var e:Explosion = new Explosion(this, x, y, renderer, duration, damage, area);
-			dynamicEntityList.push(e);
+			worldList.push(e);
 		}
 		
 		public function removeEntity(e:Entity)
 		{
-		
 			dynamicEntityList.remove(e);
+ 			worldList.remove(e);
 			layer.removeChild(e.renderer.sprite);
- 
+				
+			for(var i:int = 0; i < controllerList.length; i++) {
+				if(controllerList[i].controllerOf(e as DynamicEntity)) {
+					controllerList.remove(i);
+					break;
+				}
+			}
 		}
 		
 		public function moveCamera()
@@ -177,6 +189,7 @@ package HighExplosives.Game
 		{
 			var dt:Number = timeManager.TICK_RATE; 
 			
+			/*
 			totalTime+=dt;
 			
 			
@@ -193,14 +206,18 @@ package HighExplosives.Game
 				spawnMonsterEntity(550,550);
 				timeTillNextSpawn=2.5;
 			}
-			
+			*/
 			
 			for(var i:int = 0; i < controllerList.length; i++) {
 				controllerList[i].update();
 			}
 			
 			for(var j:int = 0; j < dynamicEntityList.length; j++) {
-				dynamicEntityList[j].move(dt);
+				dynamicEntityList[j].update(dt);
+			}
+			
+			for(var k:int = 0; k < worldList.length; k++) {
+				worldList[k].update(dt);
 			}
 			
 			moveCamera();

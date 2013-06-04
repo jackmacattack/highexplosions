@@ -48,7 +48,6 @@ package HighExplosives.Game
 		public function throwBomb(speed:Number, angle:Number) 
 		{
 			turretRenderer.rotation = angle;
-			Console.print(angle);
 			level.spawnTestExplosive(x, y, Math.clamp(Math.pow(speed, 2), minRange, range), angle, time, duration, damage, area);
 		}
 	

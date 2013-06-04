@@ -17,6 +17,11 @@ package HighExplosives.Game
 			e = e_;
 		}
 		
+		public function controllerOf(e_:DynamicEntity):boolean 
+		{
+			return e == e_;
+		}
+		
 		//Pseudo-abstract method. Called every tick to update entity state
 		public function update() {}
 	

@@ -55,6 +55,9 @@ package HighExplosives.Game
 		{
 			level.removeEntity(this);
 		}
+		
+		public function update(dt:Number)
+		{}
 	}
 	
 }

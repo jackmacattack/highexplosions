@@ -5,7 +5,7 @@ package HighExplosives.Game
 	import Loom.Animation.Tween;
 	import Loom.Animation.EaseType;
 	
-	public class Explosion extends DynamicEntity {
+	public class Explosion extends Entity {
 	
 		public var duration:Number;
 		public var damage:Number;
@@ -13,13 +13,13 @@ package HighExplosives.Game
 		
 		public function Explosion(level:HiExLevel, x:Number, y:Number, renderer:Renderer, duration_:Number, damage_:Number, area_:Number)
 		{
-			super(level, x, y, renderer, 0, 0, 0, 0, 0);
+			super(level, x, y, renderer);
 			duration = duration_;
 			damage = damage_;
 			area = area_;
 		}
 		
-		override public function move(dt:Number) {
+		override public function update(dt:Number) {
 		
 			duration -= dt;
 			
