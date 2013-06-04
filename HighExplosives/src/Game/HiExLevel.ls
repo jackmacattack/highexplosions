@@ -63,9 +63,6 @@ package HighExplosives.Game
             SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
             SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Tribal.mp3", true);
-			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
-			SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
-			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
 
 			uiLayer = new CCScaledLayer();
 			
@@ -73,6 +70,7 @@ package HighExplosives.Game
 			//uiLayer.addChild(renderer.sprite);
 			
 			Cocos2D.addLayer(uiLayer);
+			SimpleAudioEngine.sharedEngine().preloadEffect("assets/tank.mp3");
 
             spawnPlayer(240, 240);
 
@@ -127,7 +125,7 @@ package HighExplosives.Game
 		}
 		
 		public function spawnMonsterEntity(x:Number, y:Number){
-			var renderer = new Renderer("assets/monster.png", x, y, .5, 0);
+			var renderer = new Renderer("assets/sprites/enemy.png", x, y, .5, 0);
 			layer.addChild(renderer.sprite);
 			
 			var e = new MonsterEntity(this, x, y, renderer); 
