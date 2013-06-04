@@ -20,7 +20,7 @@ package HighExplosives.Game
   		private var swiped:boolean = false;
   		public var swipe:CCPoint;
   		
-		public function PlayerController(level_:HiExLevel, e_:DynamicEntity, gestureManager_:GestureManager) 
+		public function PlayerController(level_:HiExLevel, e_:Tank, gestureManager_:GestureManager) 
 		{
 			super(level_, e_);
 			
@@ -39,7 +39,7 @@ package HighExplosives.Game
 			if(swiped) {
 				var mag:Number = swipe.x * swipe.x + swipe.y * swipe.y;
 				var angle:Number = Utils.calculateAngle(swipe.x, swipe.y);
-				(e as TestEntity).throwBomb(mag, angle);
+				(e as Tank).throwBomb(mag, angle);
 				swiped = false;
 			}
 			

@@ -87,7 +87,7 @@ package HighExplosives.Game
         public function set rotation(value:Number):void
         {
             if(sprite)
-                sprite.setRotation(value);
+                sprite.setRotation((-1 * value + Math.PI / 2) / Math.PI * 180);
         }
 
     }

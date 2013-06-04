@@ -61,7 +61,7 @@ package HighExplosives.Game
 			SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
 
-            spawnTestEntity(240, 240);
+            spawnPlayer(240, 240);
 			
 			timeManager.addTickedObject(this);
 		}
@@ -80,23 +80,24 @@ package HighExplosives.Game
 		
 		}
 		
-		public function spawnTestEntity(x:Number, y:Number)
+		public function spawnPlayer(x:Number, y:Number)
 		{
 		
-			var renderer = new Renderer("assets/logo.png", x, y, .5, 0);
+			var renderer = new Renderer("assets/sprites/tankBase.png", x, y, 1, 0);
 			layer.addChild(renderer.sprite);
+		
+			var tRenderer = new Renderer("assets/sprites/tankTurret.png", x, y, 1, 0);
+			layer.addChild(tRenderer.sprite);
 			
-			var e = new TestEntity(this, x, y, renderer); 
+			var e = new Tank(this, x, y, renderer, .5, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
 			dynamicEntityList.push(e);
 			
   			var gestureManager:GestureManager = new GestureManager(layer);
 			var control = new PlayerController(this, e, gestureManager);
 			controllerList.push(control);
-		
-			if(following == null) {
-				following = e;
-				moveCamera();
-			}
+			
+			following = e;
+			moveCamera();
 
 		}
 		

@@ -93,6 +93,8 @@ package HighExplosives.Game
 					turning = false;
 					decel = false;
 					moving = true;
+					
+					renderer.rotation = angle;
 				}
 			}
 			else {
@@ -144,20 +146,6 @@ package HighExplosives.Game
 			
 		}
 			
-	}
-
-	public class TestEntity extends DynamicEntity {
-	
-		public function TestEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
-		{
-			super(level, x, y, renderer, .5, .5, 200, 0, 0);
-		}
-		
-		public function throwBomb(speed:Number, angle:Number) 
-		{
-			level.spawnTestExplosive(x, y, Math.clamp(speed, 50, 300), angle, 1, 3, 0, 0);
-		}
-		
 	}
 	
 }
