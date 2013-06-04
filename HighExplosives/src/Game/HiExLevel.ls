@@ -49,8 +49,8 @@ package HighExplosives.Game
             // Setup anything else, like UI, or game objects.
             
             trace("Loading test_map_1.tmx...");
-            map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_collisions.tmx");
-            collide = map.layerNamed("collide");
+            map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_1.tmx");
+            collide = map.layerNamed("angles");
             layer.addChild(map);
             
             

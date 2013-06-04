@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="completeset" tilewidth="32" tileheight="32">
+  <image source="completeset.png" width="900" height="900"/>
+ </tileset>
+ <layer name="collide" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJw7yMjAcJDKmFpgKJoH4xMKH1x6cZlHqjsoMY8Uewa7ecjipKbdoZj+6GHeQKsjJ94oKa+orY5YQCvzqIkBPltbsw==
+  </data>
+ </layer>
+</map>
