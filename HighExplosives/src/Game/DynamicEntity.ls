@@ -121,23 +121,19 @@ package HighExplosives.Game
 			var dy:Number = speed * Math.sin(angle);
 			
 			var oldX:Number = x;
-			setX(x + dx * dt);
-			
-			if(level.isCollidingWithWorld(this)) {
-			
-				setX(oldX);
-				Console.print("Hit!");
-			
-			}
-			
 			var oldY:Number = y;
+			
+			setX(x + dx * dt);
 			setY(y + dy * dt);
 			
 			if(level.isCollidingWithWorld(this)) {
 			
+				setX(oldX);
 				setY(oldY);
-				Console.print("Hit!");
-			
+				
+				setTarget(x, y);
+				//Console.print("Hit!");
+				
 			}
 			
 			if(inRangeOfTarget() || speed < DynamicEntity.MIN_SPEED) {

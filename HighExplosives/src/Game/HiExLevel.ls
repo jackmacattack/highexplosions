@@ -49,8 +49,8 @@ package HighExplosives.Game
             // Setup anything else, like UI, or game objects.
             
             trace("Loading test_map_1.tmx...");
-            map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_1.tmx");
-            collide = map.layerNamed("angles");
+            map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_collisions.tmx");
+            collide = map.layerNamed("collide");
             layer.addChild(map);
             
             
@@ -68,30 +68,15 @@ package HighExplosives.Game
 		
 		public function isCollidingWithWorld(e:Entity):boolean 
 		{
-			//Console.print(collide.getChildrenCount());
-			//for(var i:int = 0; i < collide.getChildrenCount(); i++) {
 			
 				var tile:CCSize = map.getTileSize();
 			
-				var p:CCPoint = new CCPoint(Math.floor(e.getX() / tile.width), Math.floor(e.getY() / tile.height));
-				//var p:CCPoint = new CCPoint(0, 1);
+				var p:CCPoint = new CCPoint(Math.floor(e.getX() / tile.width), Math.floor(map.getMapSize().height - (e.getY() / tile.height)));
 				
 				var tileNum:Number = collide.tileGIDAt(p);
 				
 				return tileNum != 0;
-				/*
-				if(tileNum != 0) {
-					Console.print(tileNum);
-				}
-				
-				
-				var s:CCSprite = collide.getChildren().objectAtIndex(i) as CCSprite;
-				if(s.boundingBox().containsPoint(p)) {
-					return true;
-				}
-			*/
-			//}
-			//return false; 
+				//return false;  
 		
 		}
 		
@@ -171,7 +156,7 @@ package HighExplosives.Game
 			
 			moveCamera();
 		}
-
+		
 	}
 
 }
