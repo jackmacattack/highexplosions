@@ -77,6 +77,8 @@ package HighExplosives.Game
 			return object_1Box.intersectsRect(object_2Box);
 		}
 		
+		
+		
 		public function move(dt:Number)
 		{
 			var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
@@ -152,12 +154,33 @@ package HighExplosives.Game
 				
 			}
 			
+			var objectCollidesWith : DynamicEntity=level.dynamicCollides(this);
+			
+			if (objectCollidesWith!=null)
+			{
+				setX(oldX);
+				setY(oldY);
+				
+				setTarget(x, y);
+				collision(objectCollidesWith);
+			}
+			
 			if(inRangeOfTarget() || speed < DynamicEntity.MIN_SPEED) {
 				speed = 0;
 				moving = false;
 				decel = false;
 			}
 			
+		}
+		
+		public function collision(objectCollidedWith:DynamicEntity) 
+		{
+			
+		}	
+		
+		public function isMonster():boolean
+		{
+			return false;
 		}
 			
 	}
@@ -166,9 +189,22 @@ package HighExplosives.Game
 		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
 		{
 		
-			super(level, x, y, renderer, .25, .25, 200, 0, 0);
+			super(level, x, y, renderer, .25, .25, 100, 0, 0);
 	
 		}
+		
+		public function collision(objectCollidedWith:DynamicEntity) 
+		{
+			if(!(objectCollidedWith.isMonster())){
+				this.destroy();
+			}
+			
+		}
+		
+		public function isMonster():boolean
+		{
+			return true;
+		}	
 	
 	}
 	

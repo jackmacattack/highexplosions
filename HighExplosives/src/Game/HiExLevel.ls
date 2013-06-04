@@ -106,16 +106,18 @@ package HighExplosives.Game
 
 		}
 		
-		public function dynamicCollides():boolean{
+		public function dynamicCollides(object:DynamicEntity):DynamicEntity{
 		
-			for ( var i:int = 1; i <dynamicEntityList.length ; i++)
+			for ( var i:int = 0; i <dynamicEntityList.length ; i++)
 			{
-				if (dynamicEntityList[i-1].isCollidingWithDynamic(dynamicEntityList[i]))
-					return true;
+				if (object.isCollidingWithDynamic(dynamicEntityList[i])&&(object!=dynamicEntityList[i]))
+					return dynamicEntityList[i];
 			}
 			 
-				return false; 
+				return null; 
 		}
+		
+		
 		
 		public function spawnMonsterEntity(x:Number, y:Number){
 			var renderer = new Renderer("assets/sprites/enemy.png", x, y, .5, 0);
@@ -179,14 +181,14 @@ package HighExplosives.Game
 			
 			timeTillNextSpawn-=dt;
 			if (timeTillNextSpawn<0){
-				trace("new monster");
+				
 				spawnMonsterEntity(600,300);
 				timeTillNextSpawn=5;
 			}
 			
 			if (timeTillNextSpawn<0)
 			{
-				trace("new monster");
+				
 				spawnMonsterEntity(550,550);
 				timeTillNextSpawn=2.5;
 			}

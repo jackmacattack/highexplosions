@@ -49,8 +49,21 @@ package HighExplosives.Game
 		public function throwBomb(speed:Number, angle:Number) 
 		{
 			turretRenderer.rotation = angle;
-			Console.print(angle);
-			level.spawnTestExplosive(x, y, Math.clamp(Math.pow(speed, 2), minRange, range), angle, time, duration, damage, area);
+			//Console.print(angle);
+			//level.spawnTestExplosive(x, y, Math.clamp(Math.pow(speed, 2), minRange, range), angle, time, duration, damage, area);
+		}
+		
+		public function collision(objectCollidedWith:DynamicEntity) 
+		{
+			if(objectCollidedWith.isMonster()){
+				hitPoints=hitPoints-10;
+				trace(hitPoints);
+			}
+			
+		}
+		
+		public function isMonster():Boolean{
+			return false;
 		}
 		
 		override function move(dt:Number)
