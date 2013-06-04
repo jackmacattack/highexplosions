@@ -2,6 +2,8 @@ package HighExplosives.Game
 {
 
     import cocos2d.Cocos2D;
+    import cocos2d.CCPoint;
+    import cocos2d.CCSize;
     import cocos2d.CCSprite;
     import cocos2d.CCScaledLayer;
     import cocos2d.CCTMXLayer;
@@ -48,9 +50,9 @@ package HighExplosives.Game
             
             trace("Loading test_map_1.tmx...");
             map = CCTMXTiledMap.tiledMapWithTMXFile("assets/tilemaps/test_map_1.tmx");
+            collide = map.layerNamed("angles");
             layer.addChild(map);
             
-            collide = map.layerNamed("angles");
             
             SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
             SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
@@ -66,8 +68,30 @@ package HighExplosives.Game
 		
 		public function isCollidingWithWorld(e:Entity):boolean 
 		{
-		
-			return collide.hitTest_loomscript(e.getX(), e.getY());
+			//Console.print(collide.getChildrenCount());
+			//for(var i:int = 0; i < collide.getChildrenCount(); i++) {
+			
+				var tile:CCSize = map.getTileSize();
+			
+				var p:CCPoint = new CCPoint(Math.floor(e.getX() / tile.width), Math.floor(e.getY() / tile.height));
+				//var p:CCPoint = new CCPoint(0, 1);
+				
+				var tileNum:Number = collide.tileGIDAt(p);
+				
+				return tileNum != 0;
+				/*
+				if(tileNum != 0) {
+					Console.print(tileNum);
+				}
+				
+				
+				var s:CCSprite = collide.getChildren().objectAtIndex(i) as CCSprite;
+				if(s.boundingBox().containsPoint(p)) {
+					return true;
+				}
+			*/
+			//}
+			//return false; 
 		
 		}
 		
@@ -117,7 +141,7 @@ package HighExplosives.Game
 		
 			dynamicEntityList.remove(e);
 			layer.removeChild(e.renderer.sprite);
-
+ 
 		}
 		
 		public function moveCamera()

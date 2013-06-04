@@ -65,15 +65,9 @@ package HighExplosives.Game
 		
 		public function move(dt:Number)
 		{
-			
-			if(level.isCollidingWithWorld(this)) {
-			
-				Console.print("Hit!");
-			
-			}
+			var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
 			
 			if(turning) {
-				var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
 				if(Math.abs(targetAngle - angle) > Math.PI) {
 					targetAngle -= 2 * Math.PI;
 				}
@@ -101,6 +95,11 @@ package HighExplosives.Game
 					moving = true;
 				}
 			}
+			else {
+			
+				//angle = targetAngle;
+				
+			}
 			
 			if(!moving) {
 				return;
@@ -121,8 +120,25 @@ package HighExplosives.Game
 			var dx:Number = speed * Math.cos(angle);
 			var dy:Number = speed * Math.sin(angle);
 			
+			var oldX:Number = x;
 			setX(x + dx * dt);
+			
+			if(level.isCollidingWithWorld(this)) {
+			
+				setX(oldX);
+				Console.print("Hit!");
+			
+			}
+			
+			var oldY:Number = y;
 			setY(y + dy * dt);
+			
+			if(level.isCollidingWithWorld(this)) {
+			
+				setY(oldY);
+				Console.print("Hit!");
+			
+			}
 			
 			if(inRangeOfTarget() || speed < DynamicEntity.MIN_SPEED) {
 				speed = 0;
