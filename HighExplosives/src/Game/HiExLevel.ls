@@ -36,6 +36,11 @@ package HighExplosives.Game
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		public var worldList:Vector.<Entity> = new Vector.<Entity>();
 		
+		public var totalTime:Number=0;
+		
+		public var timeTillNextSpawn=3;
+		
+		
 		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) 
 		{
 			layer = layer_;
@@ -61,14 +66,18 @@ package HighExplosives.Game
 			SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
 
+
             spawnPlayer(240, 240);
+
+            spawnMonsterEntity(300,300);
+
 			
 			timeManager.addTickedObject(this);
 		}
 		
 		public function isCollidingWithWorld(e:Entity):boolean 
 		{
-			
+
 				var tile:CCSize = map.getTileSize();
 			
 				var p:CCPoint = new CCPoint(Math.floor(e.getX() / tile.width), Math.floor(map.getMapSize().height - (e.getY() / tile.height)));
@@ -76,8 +85,7 @@ package HighExplosives.Game
 				var tileNum:Number = collide.tileGIDAt(p);
 				
 				return tileNum != 0;
-				//return false;  
-		
+
 		}
 		
 		public function spawnPlayer(x:Number, y:Number)
@@ -99,6 +107,29 @@ package HighExplosives.Game
 			following = e;
 			moveCamera();
 
+		}
+		
+		public function dynamicCollides():boolean{
+		
+			for ( var i:int = 1; i <dynamicEntityList.length ; i++)
+			{
+				if (dynamicEntityList[i-1].isCollidingWithDynamic(dynamicEntityList[i]))
+					return true;
+			}
+			 
+				return false; 
+		}
+		
+		public function spawnMonsterEntity(x:Number, y:Number){
+			var renderer = new Renderer("assets/monster.png", x, y, .5, 0);
+			layer.addChild(renderer.sprite);
+			
+			var e = new MonsterEntity(this, x, y, renderer); 
+			dynamicEntityList.push(e);
+			
+			var control = new MonstersController(this, e, dynamicEntityList[0]);
+			controllerList.push(control);
+			
 		}
 		
 		public function spawnTestExplosive(x:Number, y:Number, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
@@ -146,6 +177,23 @@ package HighExplosives.Game
 		{
 			var dt:Number = timeManager.TICK_RATE; 
 			
+			totalTime+=dt;
+			
+			
+			timeTillNextSpawn-=dt;
+			if (timeTillNextSpawn<0){
+				trace("new monster");
+				spawnMonsterEntity(600,300);
+				timeTillNextSpawn=5;
+			}
+			
+			if (timeTillNextSpawn<0)
+			{
+				trace("new monster");
+				spawnMonsterEntity(550,550);
+				timeTillNextSpawn=2.5;
+			}
+			
 			
 			for(var i:int = 0; i < controllerList.length; i++) {
 				controllerList[i].update();
@@ -158,6 +206,7 @@ package HighExplosives.Game
 			moveCamera();
 		}
 		
+
 	}
 
 }
