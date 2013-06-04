@@ -143,16 +143,22 @@ package HighExplosives.Game
 			var newX:Number = x + dx * dt;
 			var newY:Number = y + dy * dt;
 			
-			if(!level.isCollidingWithWorld(newX, newY)) {
+			var objectCollidesWith : DynamicEntity=level.dynamicCollides(this);
+			
+			if(level.isCollidingWithWorld(newX, newY) || objectCollidesWith != null) {
 			 
-				setX(newX);
-				setY(newY);
+				targetX = x;
+				targetY = y;
 				
+				if(objectCollidesWith != null) {
+				
+					collision(objectCollidesWith);
+				}
 			}
 			else {
 			
-				targetX = x;
-				targetY = y;
+				setX(newX);
+				setY(newY);
 			
 			}
 			
@@ -163,6 +169,16 @@ package HighExplosives.Game
 			}
 			
 		}
+		
+		public function collision(objectCollidedWith:DynamicEntity) 
+		{
+			
+		}	
+		
+		public function isMonster():boolean
+		{
+			return false;
+		}
 			
 	}
 	public class MonsterEntity extends DynamicEntity{
@@ -170,9 +186,22 @@ package HighExplosives.Game
 		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
 		{
 		
-			super(level, x, y, renderer, .25, .25, 200, 0, 0);
+			super(level, x, y, renderer, .25, .25, 100, 0, 0);
 	
 		}
+		
+		public function collision(objectCollidedWith:DynamicEntity) 
+		{
+			if(!(objectCollidedWith.isMonster())){
+				this.destroy();
+			}
+			
+		}
+		
+		public function isMonster():boolean
+		{
+			return true;
+		}	
 	
 	}
 	
