@@ -17,22 +17,54 @@ package HighExplosives.Game
   		public var tapped:boolean = false;
   		public var player:DynamicEntity; 
   		
+  		public var distanceToIntercept: Number = 150;
+  		
+  		public var sizeOfSquare=10;
+  		
+  		public var count:Number;
+  		
+  		
+  		
 		public function MonstersController(level_:HiExLevel, e_:DynamicEntity,player_:DynamicEntity) 
 		{
 			super(level_, e_);
 			player=player_;
+			count =0;
 			
 		}
 		
+		//squared distance 
 		override public function update() 
 		{
-			e.setTarget(player.getX(), player.getY());
-			
+			if(Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY())<distanceToIntercept){
+				this.e.setTarget(player.getX(),player.getY());
+			}
+			else
+				followPath(count);	
+		}
+		
+		public function followPath(count:Number)
+		{
+			if(count==0){
+				this.e.setTarget(this.e.getX()+sizeOfSquare,this.e.getY());
+				count++;
+			}
+			else if (count == 1){
+				this.e.setTarget(this.e.getX(),this.e.getY()+sizeOfSquare);
+				count++;
+			}
+			else if (count == 2)
+			{
+				this.e.setTarget(this.e.getX()-sizeOfSquare,this.e.getY());
+				count++;
+			}
+			else 
+			{
+				this.e.setTarget(this.e.getX(),this.e.getY()-sizeOfSquare);
+				count=0;
+			}
 			
 		}
-	
-       
-         
 	
 	}
 }
