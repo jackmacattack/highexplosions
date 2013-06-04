@@ -118,7 +118,7 @@ package HighExplosives.Game
 		}
 		
 		public function spawnMonsterEntity(x:Number, y:Number){
-			var renderer = new Renderer("assets/monster.png", x, y, .5, 0);
+			var renderer = new Renderer("assets/sprites/enemy.png", x, y, .5, 0);
 			layer.addChild(renderer.sprite);
 			
 			var e = new MonsterEntity(this, x, y, renderer); 
