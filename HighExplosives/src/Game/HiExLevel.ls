@@ -62,10 +62,7 @@ package HighExplosives.Game
             SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
             SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Tribal.mp3", true);
-			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
-			SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
-			trace(SimpleAudioEngine.sharedEngine().getBackgroundMusicVolume());
-
+			SimpleAudioEngine.sharedEngine().preloadEffect("assets/tank.mp3");
 
             spawnPlayer(240, 240);
 
