@@ -146,12 +146,6 @@ package HighExplosives.Game
 			}
 			
 		}
-		/*
-		override public function onCollision(object:DynamicEntity) 
-		{
-			
-		}	
-		*/
 		
 	}
 	

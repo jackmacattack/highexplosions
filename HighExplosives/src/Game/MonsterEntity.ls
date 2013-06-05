@@ -5,12 +5,12 @@ package HighExplosives.Game
 		public var count:Number;
 		public var damage:Number;
 		
+		public var moveCollide:boolean = true;
+		
 		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
 		{
-		
 			super(level, x, y, renderer, .25, 100, 0, 0);
 			damage = 10;
-			
 		}
 		
 		public function explode() {
@@ -24,11 +24,5 @@ package HighExplosives.Game
 			return boundingBoxCheck(object);
 		}
 		
-		public function onCollision(object:DynamicEntity) 
-		{
-			//Console.print("Monster Collide");
-			//this.setX(this.getX()+5);
-			//this.setY(this.getY()-5);
-		}
 	}	
 }
