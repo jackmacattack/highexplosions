@@ -201,6 +201,11 @@ package HighExplosives.Game
 				this.destroy();
 				
 			}
+			else
+			{
+				this.setX(this.getX()+5);
+				this.setY(this.getY()-5);
+			}
 			
 		}
 		
