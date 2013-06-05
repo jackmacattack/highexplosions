@@ -52,12 +52,12 @@ package HighExplosives.Game
 			level.spawnTestExplosive(x, y, this, Math.clamp(Math.pow(speed, 2), minRange, range), angle, time, duration, damage, area);
 		}
 		
-		public function collision(objectCollidedWith:DynamicEntity) 
+		public function onCollision(objectCollidedWith:DynamicEntity) 
 		{
 			if(objectCollidedWith.isMonster()){
 				objectCollidedWith.onCollision(this);
 				hitPoints=hitPoints-10;
-				trace(hitPoints);
+				//trace(hitPoints);
 			}
 			
 		}

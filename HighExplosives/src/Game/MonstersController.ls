@@ -37,7 +37,7 @@ package HighExplosives.Game
 		//squared distance 
 		override public function update() 
 		{
-			if(Math.sqrt(Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY())) < distanceToIntercept){
+			if(Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY()) < distanceToIntercept*distanceToIntercept){
 				this.e.setTarget(player.getX(),player.getY());
 			}
 			else
