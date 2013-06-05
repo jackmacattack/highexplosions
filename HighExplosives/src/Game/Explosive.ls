@@ -18,7 +18,7 @@ package HighExplosives.Game
 		
 		public function Explosive(level:HiExLevel, x:Number, y:Number, renderer:Renderer, owner_:Entity, speed:Number, angle:Number, time_:Number, duration_:Number, damage_:Number, area_:Number)
 		{
-			super(level, x, y, renderer, 0, 0, speed, speed, angle);
+			super(level, x, y, renderer, 0, speed, speed, angle);
 			ownerOf = owner_; 
 			time = time_;
 			damage = damage_;
@@ -46,8 +46,7 @@ package HighExplosives.Game
 		override public function isColliding(object:DynamicEntity):boolean
 		{
 			if(object instanceof Tank) {
-				Console.print("Tank");
-				return (object as Tank) == ownerOf;
+				return (object as Tank) != ownerOf;
 			}
 		
 			if(object instanceof Explosive) {

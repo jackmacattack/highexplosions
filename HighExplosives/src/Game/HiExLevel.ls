@@ -83,7 +83,12 @@ package HighExplosives.Game
 
             spawnPlayer(240, 240);
 
-            spawnMonsterEntity(450,450);
+			for(var i:int = 0; i < 10; i++) {
+            	
+				var spawnX = map.getContentSize().width*Math.random();
+				var spawnY = map.getContentSize().height*Math.random();
+            	spawnMonsterEntity(spawnX,spawnY);
+            }
 			
 			timeManager.addTickedObject(this);
 		}
@@ -104,7 +109,7 @@ package HighExplosives.Game
 		
 		public function dynamicCollides(object:DynamicEntity):DynamicEntity{
 		
-			for(var i:int = 1; i < dynamicEntityList.length; i++)
+			for(var i:int = 0; i < dynamicEntityList.length; i++)
 			{
 				if(object == dynamicEntityList[i]) {
 					continue;
@@ -121,7 +126,7 @@ package HighExplosives.Game
 		
 			var vec:Vector.<Entity> = new Vector.<Entity>();
 		
-			for(var i:int = 1; i < worldList.length; i++)
+			for(var i:int = 0; i < worldList.length; i++)
 			{
 				if (worldList[i].isColliding(object))
 					vec.push(worldList[i]);
@@ -140,7 +145,9 @@ package HighExplosives.Game
 			var tRenderer = new Renderer("assets/sprites/tankTurret.png", x, y, 1, 0);
 			layer.addChild(tRenderer.sprite);
 			
-			var e = new Tank(this, x, y, renderer, .5, .5, 200, tRenderer, 10, 50, 300, 1, 2, 0, 0); 
+
+			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
+
 			dynamicEntityList.push(e);
 			
 			var control = new PlayerController(this, e, layer, uiLayer);
@@ -177,7 +184,7 @@ package HighExplosives.Game
 		public function spawnExplosion(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
 		{
 		
-			var renderer = new Renderer("assets/bombex2.png", x, y, 3, 0);
+			var renderer = new Renderer("assets/bombex2.png", x, y, area, 0);
 			layer.addChild(renderer.sprite);
 			
 			var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
@@ -186,7 +193,7 @@ package HighExplosives.Game
 		
 		public function spawnMonsterDeath(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
 		{
-				var renderer = new Renderer("assets/bombex1.png", x, y, 1.5, 0);
+				var renderer = new Renderer("assets/bombex1.png", x, y, area, 0);
 				layer.addChild(renderer.sprite);
 				
 				var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
@@ -194,14 +201,18 @@ package HighExplosives.Game
 		}
 		
 		public function addToKill(e:Entity) {
-			//if(!killList.contains(e))
-				//killList.push(e);
+			if(!killList.contains(e))
+				killList.push(e);
 				
-				removeEntity(e);
+				//removeEntity(e);
 		}
 		
 		private function removeEntity(e:Entity)
 		{
+			if(e == null) {
+				return;
+			}
+			
 			dynamicEntityList.remove(e);
  			worldList.remove(e);
  			
@@ -235,16 +246,18 @@ package HighExplosives.Game
 			
 			totalTime+=dt;
 			
+			
 			var spawnX = map.getContentSize().width*Math.random();
 			var spawnY = map.getContentSize().height*Math.random();
 			
 			timeTillNextSpawn-=dt;
 			
 			if (timeTillNextSpawn<0){
-			
+				
 				
 				if (!isCollidingWithWorld(spawnX,spawnY))
 				{
+					trace("spawn");
 					spawnMonsterEntity(spawnX,spawnY);
 					timeTillNextSpawn=3;
 				}
@@ -264,12 +277,25 @@ package HighExplosives.Game
 			}
 			
 			for(var l:int = 0; l < worldList.length; l++) {
-				//removeEntity(killList[l]);
+				removeEntity(killList[l]);
 				//killList.remove(l);
 			}
-			//killList.clear();
+			killList.clear();
 			
 			moveCamera();
+			//Console.print("afd");
+		}
+		
+		
+		public function endGame() {
+			//timeManager.stop();
+			layer.cleanup();
+			Cocos2D.removeLayer(this.layer);
+			SimpleAudioEngine.sharedEngine().stopAllEffects();
+			timeManager.removeTickedObject(this);
+			
+			this.gameView.goGameOver();
+			
 		}
 		
 

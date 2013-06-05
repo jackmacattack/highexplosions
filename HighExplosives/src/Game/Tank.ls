@@ -18,10 +18,10 @@ package HighExplosives.Game
 		private var damage:Number;
 		private var area:Number;
 	
-		public function Tank(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel:Number, agility:Number, maxSpeed:Number, turretRenderer_:Renderer, 
+		public function Tank(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel:Number, maxSpeed:Number, turretRenderer_:Renderer, 
 		hitPoints_:Number, minRange_:Number, range_:Number, time_:Number, duration_:Number, damage_:Number, area_:Number)	
 		{
-			super(level, x, y, renderer, accel, agility, maxSpeed, 0, 0);
+			super(level, x, y, renderer, accel, maxSpeed, 0, 0);
 			
 			turretRenderer = turretRenderer_;
 			maxHitPoints = hitPoints_;
@@ -65,9 +65,8 @@ package HighExplosives.Game
 			hitPoints -= value;
 			coolDown = 1;
 			if(hitPoints <= 0) {
-	
-				this.level.gameView.goMainMenu();
-				//TODO Game Over
+			
+				this.level.endGame();
 			}
 			
 		}
@@ -80,6 +79,8 @@ package HighExplosives.Game
 			
 			return boundingBoxCheck(object);
 		}
+		
+		
 		override public function onCollision(object:DynamicEntity) 
 		{
 			if(object instanceof MonsterEntity) {
