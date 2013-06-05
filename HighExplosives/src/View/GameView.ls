@@ -28,7 +28,7 @@ package HighExplosives.View
         override public function  start(layer:CCScaledLayer):void
         {
         
-        	var level:HiExLevel = new HiExLevel(layer, timeManager);
+        	var level:HiExLevel = new HiExLevel(layer, timeManager,this);
         	level.initialize();
         	
         }
@@ -36,6 +36,12 @@ package HighExplosives.View
          public function goMainMenu(){
          	gameManager.mainMenu(layer);
          }
-       
+         /*
+         
+         public function goGameOver()
+         {
+         	gameManager.GameOver(this.layer);
+         }
+       */
     }
 }

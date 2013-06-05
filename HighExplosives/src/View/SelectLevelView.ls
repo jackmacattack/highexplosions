@@ -47,7 +47,6 @@ package HighExplosives.View
        		gameManager.gameView(layer,1);
        	  
        		 
-        	trace("Level 1");
         }
         
          public function goMainMenu(){

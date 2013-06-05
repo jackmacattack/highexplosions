@@ -9,6 +9,8 @@ package HighExplosives.Game
 	
 		private var maxHitPoints:Number;
 		private var hitPoints:Number;
+		private var coolDown:Number;
+		
 		private var minRange:Number;
 		private var range:Number;
 		private var time:Number;
@@ -52,18 +54,37 @@ package HighExplosives.Game
 			level.spawnTestExplosive(x, y, this, Math.clamp(Math.pow(speed, 2), minRange, range), angle, time, duration, damage, area);
 		}
 		
-		public function collision(objectCollidedWith:DynamicEntity) 
-		{
-			if(objectCollidedWith.isMonster()){
-				objectCollidedWith.onCollision(this);
-				hitPoints=hitPoints-10;
-				trace(hitPoints);
+		public function applyDamage(value:Number) {
+		
+			Console.print(hitPoints);
+
+			if(coolDown > 0) {
+				return;
+			}
+			
+			hitPoints -= value;
+			coolDown = 1;
+			if(hitPoints <= 0) {
+	
+				this.level.gameView.goMainMenu();
+				//TODO Game Over
 			}
 			
 		}
 		
-		public function isMonster():Boolean{
-			return false;
+		override public function isColliding(object:DynamicEntity):boolean 
+		{
+			if(object instanceof Explosive) {
+				return this != (object as Explosive).ownerOf
+			}
+			
+			return boundingBoxCheck(object);
+		}
+		override public function onCollision(object:DynamicEntity) 
+		{
+			if(object instanceof MonsterEntity) {
+				(object as MonsterEntity).explode();
+			}
 		}
 		
 		override function move(dt:Number)
@@ -72,6 +93,9 @@ package HighExplosives.Game
 			{
 				SimpleAudioEngine.sharedEngine().playEffect("assets/tank.mp3", true);
 			}
+		
+			if(coolDown > 0)
+				coolDown -= dt;
 		
 			super.move(dt);
 

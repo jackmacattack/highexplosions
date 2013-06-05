@@ -18,7 +18,7 @@ package HighExplosives.View
        // public var onEnter:ViewCallback;
        // public var onExit:ViewCallback;
         protected var layer:CCScaledLayer;
-        protected var gameManager:HighExplosives;
+        public var gameManager:HighExplosives;
         //[Inject]
     	//protected var timeManager:TimeManager;
         

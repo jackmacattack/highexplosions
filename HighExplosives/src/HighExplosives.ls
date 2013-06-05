@@ -24,8 +24,8 @@ package
             
             super.run();
             
-        	//this.mainMenu(layer);
-        	gameView(layer, 1);
+        	this.mainMenu(layer);
+        	//gameView(layer, 1);
         }
         
         public function mainMenu(layer:CCScaledLayer)
@@ -49,12 +49,7 @@ package
         	selectLevelManu.start(this.layer);
         
         }
-        /*
-        public function otherLayers/levels()
-        {
-        
-        }
-        */
+    
         public function gameView(layer:CCScaledLayer, numLevel:int):void
         {
         	layer.removeAllChildrenWithCleanup (true);
@@ -63,6 +58,16 @@ package
         	gameview.start(this.layer);
         	
         
+        }
+        
+        
+        public function gameOver(layer:CCScaledLayer) : void 
+        {
+        
+        	layer.removeAllChildrenWithCleanup (true);
+        
+        	var gameOverView:GameOverView=new GameOverView(this);
+        	gameOverView.start(this.layer);
         }
         
         	 

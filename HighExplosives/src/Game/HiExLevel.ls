@@ -24,6 +24,8 @@ package HighExplosives.Game
     import com.rmc.data.types.GestureDelegateData;
     import com.rmc.applications.AbstractLoomDemo;
     
+    import HighExplosives.View.GameView;
+    
 	public class HiExLevel extends LoomGroup implements ITicked {
 	
 		public var timeManager:TimeManager;
@@ -38,16 +40,21 @@ package HighExplosives.Game
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		public var worldList:Vector.<Entity> = new Vector.<Entity>();
 		
+		public var killList:Vector.<Entity> = new Vector.<Entity>();
+		
 		public var totalTime:Number=0;
 		
 		public var timeTillNextSpawn=3;
 		
 		public var collideWithWorld:boolean = false;
 		
-		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) 
+		public var gameView: GameView ;
+		
+		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager, gameView_: GameView) 
 		{
 			layer = layer_;
 			timeManager = timeManager_;
+			gameView= gameView_;
 		}
 		
       	public function initialize(_name:String = null):void
@@ -133,7 +140,7 @@ package HighExplosives.Game
 			var tRenderer = new Renderer("assets/sprites/tankTurret.png", x, y, 1, 0);
 			layer.addChild(tRenderer.sprite);
 			
-			var e = new Tank(this, x, y, renderer, .5, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
+			var e = new Tank(this, x, y, renderer, .5, .5, 200, tRenderer, 10, 50, 300, 1, 2, 0, 0); 
 			dynamicEntityList.push(e);
 			
 			var control = new PlayerController(this, e, layer, uiLayer);
@@ -186,20 +193,28 @@ package HighExplosives.Game
 				worldList.push(e);
 		}
 		
+		public function addToKill(e:Entity) {
+			//if(!killList.contains(e))
+				//killList.push(e);
+				
+				removeEntity(e);
+		}
 		
-		
-		public function removeEntity(e:Entity)
+		private function removeEntity(e:Entity)
 		{
 			dynamicEntityList.remove(e);
  			worldList.remove(e);
+ 			
 			layer.removeChild(e.renderer.sprite);
-				
+			
 			for(var i:int = 0; i < controllerList.length; i++) {
 				if(controllerList[i].controllerOf(e as DynamicEntity)) {
 					controllerList.remove(i);
 					break;
 				}
 			}
+			
+				
 		}
 		
 		public function moveCamera()
@@ -230,8 +245,8 @@ package HighExplosives.Game
 				
 				if (!isCollidingWithWorld(spawnX,spawnY))
 				{
-				spawnMonsterEntity(spawnX,spawnY);
-				timeTillNextSpawn=3;
+					spawnMonsterEntity(spawnX,spawnY);
+					timeTillNextSpawn=3;
 				}
 			
 			}
@@ -247,6 +262,12 @@ package HighExplosives.Game
 			for(var k:int = 0; k < worldList.length; k++) {
 				worldList[k].update(dt);
 			}
+			
+			for(var l:int = 0; l < worldList.length; l++) {
+				//removeEntity(killList[l]);
+				//killList.remove(l);
+			}
+			//killList.clear();
 			
 			moveCamera();
 		}
