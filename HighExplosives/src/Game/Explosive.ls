@@ -46,8 +46,7 @@ package HighExplosives.Game
 		override public function isColliding(object:DynamicEntity):boolean
 		{
 			if(object instanceof Tank) {
-				Console.print("Tank");
-				return (object as Tank) == ownerOf;
+				return (object as Tank) != ownerOf;
 			}
 		
 			if(object instanceof Explosive) {

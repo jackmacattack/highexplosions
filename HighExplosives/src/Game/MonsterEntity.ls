@@ -15,7 +15,7 @@ package HighExplosives.Game
 		
 		public function explode() {
 			//level.spawnMonsterDeath(level.dynamicEntityList[0].getX(), level.dynamicEntityList[0].getY(), null, .5, damage, 5);
-			level.spawnMonsterDeath(x, y, null, .5, damage, 5);
+			level.spawnMonsterDeath(x, y, null, .5, damage, 2);
 			this.destroy();
 		}
 		
