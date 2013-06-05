@@ -97,7 +97,7 @@ package HighExplosives.Game
                     	var rrenderer = new Renderer("assets/sprites/smallrock.png", objX+16, objY+16, 1, Math.random());
                     	layer.addChild(rrenderer.sprite);
                     	
-                    	Rock r = new Rock(this, objX+16, objY+16, rrenderer);
+                    	var r:Breakable = new Breakable(this, objX+16, objY+16, rrenderer);
                     	breakList.push(r);
                     }
                 }
@@ -127,43 +127,14 @@ package HighExplosives.Game
 		public function isCollidingWithWorld(x:Number, y:Number):boolean 
 		{
 
-				var tile:CCSize = map.getTileSize();
-			
-				var p:CCPoint = new CCPoint(Math.floor(x / tile.width), Math.floor(map.getMapSize().height - (y / tile.height)));
+			var tile:CCSize = map.getTileSize();
+		
+			var p:CCPoint = new CCPoint(Math.floor(x / tile.width), Math.floor(map.getMapSize().height - (y / tile.height)));
 				
-				var tileNum:Number = collide.tileGIDAt(p);
-				collideWithWorld = true;
-				return tileNum != 0;
-				//return false;
-
-		}
-		
-		public function dynamicCollides(object:DynamicEntity):DynamicEntity{
-		
-			for(var i:int = 0; i < dynamicEntityList.length; i++)
-			{
-				if(object == dynamicEntityList[i]) {
-					continue;
-				}
-				
-				if (object.isColliding(dynamicEntityList[i]))
-					return dynamicEntityList[i];
-			}
-			return null; 
-
-		}
-		
-		public function worldCollides(object:DynamicEntity):Vector.<Entity>{
-		
-			var vec:Vector.<Entity> = new Vector.<Entity>();
-		
-			for(var i:int = 0; i < worldList.length; i++)
-			{
-				if (worldList[i].isColliding(object))
-					vec.push(worldList[i]);
-			}
-			
-			return vec; 
+			var tileNum:Number = collide.tileGIDAt(p);
+			collideWithWorld = true;
+			return tileNum != 0;
+			//return false;
 
 		}
 		
@@ -224,11 +195,15 @@ package HighExplosives.Game
 		
 		public function spawnMonsterDeath(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
 		{
-				var renderer = new Renderer("assets/bombex1.png", x, y, area, 0);
-				layer.addChild(renderer.sprite);
-				
-				var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
-				worldList.push(e);
+			if(killList.contains(owner)) {
+				return;
+			}
+			
+			var renderer = new Renderer("assets/bombex1.png", x, y, area, 0);
+			layer.addChild(renderer.sprite);
+			
+			var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
+			worldList.push(e);
 		}
 		
 		public function addToKill(e:Entity) {
@@ -259,7 +234,7 @@ package HighExplosives.Game
 				
 		}
 		
-		public function moveCamera()
+		private function moveCamera()
 		{
 		
 			if(following == null) {
@@ -269,6 +244,38 @@ package HighExplosives.Game
 			layer.x = -1 * (following.getX()-Cocos2D.getDisplayWidth() / 2);
 			layer.y = -1 * (following.getY()-Cocos2D.getDisplayHeight() / 2);
 		
+		}
+		
+		private function collisions() 
+		{
+			for(var i:int = 0; i < dynamicEntityList.length-1; i++)
+			{
+				
+				for(var j:int = i+1; j < dynamicEntityList.length; j++)
+				{
+					
+					if(dynamicEntityList[i].isColliding(dynamicEntityList[j])) {
+					
+						dynamicEntityList[i].setCollide(true);
+						dynamicEntityList[j].setCollide(true);
+						
+						dynamicEntityList[i].onCollision(dynamicEntityList[j]);
+						dynamicEntityList[j].onCollision(dynamicEntityList[i]);
+						
+						//Console.print("Bang");
+					}
+				}
+				
+				for(var k:int = 0; k < worldList.length; k++)
+				{
+					if (worldList[k].isColliding(dynamicEntityList[i])) {
+						//dynamicEntityList[i].setCollide(true);
+						worldList[k].onCollision(dynamicEntityList[i]);
+						//Console.print("Jack");
+					}
+				}
+				
+			}
 		}
 		
 		override public function onTick() 
@@ -294,6 +301,8 @@ package HighExplosives.Game
 				}
 			
 			}
+			
+			collisions();
 			
 			for(var i:int = 0; i < controllerList.length; i++) {
 				controllerList[i].update();

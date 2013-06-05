@@ -1,5 +1,6 @@
 package HighExplosives.Game
 {
+	import cocos2d.CCPoint;
 	import cocos2d.CCRect;
 
 	import Loom.GameFramework.LoomComponent;
@@ -20,13 +21,17 @@ package HighExplosives.Game
 		public var controller:Controller; 
 		
 		//The object's hitbox for collision detection
-		//private var hitbox:Rectangle;
+		private var hitW:Number;
+		private var hitH:Number;
 		
 		public function Entity(level_:HiExLevel, x_:Number, y_:Number, renderer_:Renderer)	
 		{
 			level = level_;
 			setPosition(x_, y_);
 			renderer = renderer_;
+			
+			hitW = renderer.sprite.getContentSize().width * .8;
+			hitH = renderer.sprite.getContentSize().height * .8;
 		}
 		
 		public function getX():Number 
@@ -39,6 +44,15 @@ package HighExplosives.Game
 			return y;
 		}
 		
+		public function getWidth():Number 
+		{
+			return hitW;
+		}
+		
+		public function getHeight():Number 
+		{
+			return hitH;
+		}
 		public function setX(x_:Number) 
 		{
 			x = x_;
@@ -49,6 +63,7 @@ package HighExplosives.Game
 			y = y_;
 			renderer.y = y_;
 		}
+		
 		public function setPosition(x_:Number, y_:Number) 
 		{
 			x = x_;
@@ -63,13 +78,17 @@ package HighExplosives.Game
 		public function update(dt:Number)
 		{}
 		
-		public function boundingBoxCheck(object:Entity):boolean 
+		public function boundingBoxCheck(object:DynamicEntity):boolean 
 		{
 		
-			var objectBox:CCRect=object.renderer.sprite.boundingBox();
-			var objectBox2:CCRect=this.renderer.sprite.boundingBox();
+			var objectBox:CCRect=new CCRect();
+			var objectBox2:CCRect=new CCRect();
+			objectBox.setRect(x, y, hitW, hitH);
+			objectBox2.setRect(object.getX(), object.getY(), object.getWidth(), object.getHeight());
 			
-			return objectBox.intersectsRect(objectBox2);
+			return objectBox2.intersectsRect(objectBox);
+			//return false;
+			
 		}
 		
 		public function isColliding(object:DynamicEntity):boolean

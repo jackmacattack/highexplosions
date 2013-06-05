@@ -43,6 +43,7 @@ package HighExplosives.Game
 		
 		override public function onCollision(object:DynamicEntity)
 		{
+		
 			if(object instanceof Tank) {
 				(object as Tank).applyDamage(damage);
 			}
@@ -50,6 +51,7 @@ package HighExplosives.Game
 				(object as MonsterEntity).explode();
 				//((ownerOf.controller) as PlayerController).increaseScore(10);
 			}
+			
 		}
 		
 	}

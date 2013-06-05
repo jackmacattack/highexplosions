@@ -5,8 +5,6 @@ package HighExplosives.Game
 		public var count:Number;
 		public var damage:Number;
 		
-		public var moveCollide:boolean = true;
-		
 		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
 		{
 			super(level, x, y, renderer, .25, 100, 0, 0);
@@ -14,8 +12,7 @@ package HighExplosives.Game
 		}
 		
 		public function explode() {
-			//level.spawnMonsterDeath(level.dynamicEntityList[0].getX(), level.dynamicEntityList[0].getY(), null, .5, damage, 5);
-			level.spawnMonsterDeath(x, y, null, .5, damage, 2);
+			level.spawnMonsterDeath(x, y, this, .5, damage, 2);
 			this.destroy();
 		}
 		
