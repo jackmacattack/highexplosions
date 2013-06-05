@@ -69,12 +69,7 @@ package HighExplosives.View
             selectLevel.scale = 0.25;
             layer.addChild(selectLevel);
             
-             var highScore = CCSprite.createFromFile("assets/highScore.png");
-            highScore.x = Cocos2D.getDisplayWidth() / 2;
-            highScore.y = Cocos2D.getDisplayHeight() / 5;
-            highScore.onTouchBegan += gohighScore;
-            highScore.scale = 0.25;
-            layer.addChild(highScore);
+             
             
             
             
@@ -102,10 +97,7 @@ package HighExplosives.View
         
         }
         
-        public function gohighScore(){
-        	trace("HighScore");
-        }
-        
+      
       
         
        
