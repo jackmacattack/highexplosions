@@ -43,12 +43,14 @@ package HighExplosives.Game
 		
 		override public function onCollision(object:DynamicEntity)
 		{
+		
 			if(object instanceof Tank) {
 				(object as Tank).applyDamage(damage);
 			}
 			else if(object instanceof MonsterEntity) {
 				(object as MonsterEntity).explode();
 			}
+			
 		}
 		
 	}

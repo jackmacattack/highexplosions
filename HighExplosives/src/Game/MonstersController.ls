@@ -38,6 +38,11 @@ package HighExplosives.Game
 		//squared distance 
 		override public function update() 
 		{
+			/*if((e as MonsterEntity).explosion) {
+				(e as MonsterEntity).explode();
+				return;
+			}*/
+			
 			var dist:Number = Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY());
 			
 			if(dist > distanceToMove * distanceToMove){

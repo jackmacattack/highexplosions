@@ -46,6 +46,11 @@ package HighExplosives.Game
 			angle = angle_;
 		}
 		
+		public function setCollide(collide_:boolean) 
+		{
+			collide = collide_;
+		}
+		
 		public function setTarget(newX:Number, newY:Number)
 		{
 			targetX = newX; 
@@ -71,22 +76,6 @@ package HighExplosives.Game
 		
 		public function move(dt:Number)
 		{
-		
-			var collide:boolean = false;
-			
-			var objectCollidesWith : DynamicEntity=level.dynamicCollides(this);
-			if(objectCollidesWith != null) {
-				collide = true;
-				onCollision(objectCollidesWith);
-			}
-			
-			var vec : Vector.<Entity> = level.worldCollides(this);
-			
-			for(var i:int = 0; i < vec.length; i++) 
-			{
-				vec[i].onCollision(this);
-				
-			}
 			
 			if(turning) {
 			
@@ -129,6 +118,7 @@ package HighExplosives.Game
 			 
 				targetX = x;
 				targetY = y;
+				collide = false;
 				
 			}
 			else {
