@@ -19,6 +19,8 @@ package HighExplosives.View
     public class GameView extends View
     {
     	public var timeManager:TimeManager;
+    	
+    	 var gameLayer:CCScaledLayer;
     
     	public function GameView(gm:HighExplosives,timeManager_:TimeManager)
     	{
@@ -27,14 +29,21 @@ package HighExplosives.View
     	}
         override public function  start(layer:CCScaledLayer):void
         {
-        
-        	var level:HiExLevel = new HiExLevel(layer, timeManager);
+        	 var gameLayer:CCScaledLayer = new CCScaledLayer();
+        	  Cocos2D.addLayer(gameLayer);
+        	var level:HiExLevel = new HiExLevel(gameLayer, timeManager,this);
         	level.initialize();
         	
         }
         
          public function goMainMenu(){
          	gameManager.mainMenu(layer);
+         }
+         
+         
+         public function goGameOver()
+         {
+         	gameManager.gameOver(this.layer);
          }
        
     }

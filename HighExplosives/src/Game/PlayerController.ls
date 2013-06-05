@@ -21,6 +21,8 @@ package HighExplosives.Game
   		private var swiped:boolean = false;
   		public var swipe:CCPoint;
   		
+  		public var score:Number; 
+  		
 		public function PlayerController(level_:HiExLevel, e_:Tank, layer:CCScaledLayer, uiLayer:CCScaledLayer) 
 		{
 			super(level_, e_);
@@ -31,6 +33,8 @@ package HighExplosives.Game
 			gestureManager.onGestureDoubleTap += onGestureDoubleTap;
 			
 			layer.onTouchBegan += onTouchBegan;
+			
+			score = 0 ; 
 		}
 		
 		override public function update() 
@@ -46,6 +50,8 @@ package HighExplosives.Game
 				(e as Tank).throwBomb(mag, angle);
 				swiped = false;
 			}
+			
+			
 			
 		}
 	
@@ -64,6 +70,12 @@ package HighExplosives.Game
         {
         	tap = new CCPoint(x, y);
         }
+        
+        public function increaseScore(amountBy : Number) {
+        	score += amountBy;
+        	trace(score);
+        }
+        
 	}
 
 }

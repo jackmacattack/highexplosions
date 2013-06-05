@@ -49,20 +49,23 @@ package
         	selectLevelManu.start(this.layer);
         
         }
-        /*
-        public function otherLayers/levels()
-        {
-        
-        }
-        */
+    
         public function gameView(layer:CCScaledLayer, numLevel:int):void
         {
         	layer.removeAllChildrenWithCleanup (true);
-        
         	var gameview:GameView=new GameView(this,timeManager);
         	gameview.start(this.layer);
         	
         
+        }
+        
+        
+        public function gameOver(layer:CCScaledLayer) : void 
+        {
+        
+        	//layer.removeAllChildrenWithCleanup (false);
+        	var gameOverView:GameOverView=new GameOverView(this);
+        	gameOverView.start(this.layer);
         }
         
         	 

@@ -17,6 +17,8 @@ package HighExplosives.Game
 		protected var x:Number;
 		protected var y:Number;
 		
+		public var controller:Controller; 
+		
 		//The object's hitbox for collision detection
 		//private var hitbox:Rectangle;
 		

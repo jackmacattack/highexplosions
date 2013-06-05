@@ -48,6 +48,7 @@ package HighExplosives.Game
 			}
 			else if(object instanceof MonsterEntity) {
 				(object as MonsterEntity).explode();
+				//((ownerOf.controller) as PlayerController).increaseScore(10);
 			}
 		}
 		

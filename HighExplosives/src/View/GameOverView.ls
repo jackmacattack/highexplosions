@@ -6,11 +6,11 @@ package HighExplosives.View
     import HighExplosives.*;
 	import HighExplosives;
 	
-    public class SelectLevelView extends View
+    public class GameOverView extends View
     
     {
         
-        public function SelectLevelView(gm:HighExplosives){
+        public function GameOverView(gm:HighExplosives){
         	super(gm);
         }
         
@@ -22,14 +22,14 @@ package HighExplosives.View
        	 var bg = CCSprite.createFromFile("assets/bg.png");
             bg.x = Cocos2D.getDisplayWidth() / 2;
             bg.y = Cocos2D.getDisplayHeight() / 2;
-            bg.scale = 0.5;
+            bg.scale = 1;
             layer.addChild(bg);
             
-          var leval_1 = CCSprite.createFromFile("assets/Leval_1.png");
-              leval_1.x = Cocos2D.getDisplayWidth() / 2;
-              leval_1.y = 3 * Cocos2D.getDisplayHeight() / 4;
-              leval_1.onTouchBegan += goLevel_1;
-              layer.addChild(leval_1);
+          var gameOver = CCSprite.createFromFile("assets/GameOver.png");
+              gameOver.x = Cocos2D.getDisplayWidth() / 2;
+              gameOver.y = 3 * Cocos2D.getDisplayHeight() / 4;
+              
+              layer.addChild(gameOver);
             
             var back = CCSprite.createFromFile("assets/back.png");
             back.x = 55*Cocos2D.getDisplayWidth() / 100;
@@ -40,14 +40,6 @@ package HighExplosives.View
         
         }
         
-        
-        public function goLevel_1(){
-        
-        
-       		gameManager.gameView(layer,1);
-       	  
-       		 
-        }
         
          public function goMainMenu(){
          

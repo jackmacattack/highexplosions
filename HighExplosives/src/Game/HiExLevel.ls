@@ -1,32 +1,16 @@
 package HighExplosives.Game
 {
 
-    import cocos2d.Cocos2D;
-    import cocos2d.CCPoint;
-    import cocos2d.CCSize;
-    import cocos2d.CCSprite;
-    import cocos2d.CCScaledLayer;
-    import cocos2d.CCTMXLayer;
-    import cocos2d.CCTMXTiledMap;
-    import CocosDenshion.SimpleAudioEngine;
-    import System.Math;
-    import cocos2d.CCTMXObjectGroup;
-    import cocos2d.CCDictionary;
-    import cocos2d.CCArray;
-    
-
-	import Loom.GameFramework.LoomGroup;
-	import Loom.GameFramework.TickedComponent;
-	import Loom.GameFramework.ITicked;
-	import Loom.GameFramework.TimeManager;
-	import Loom.GameFramework.LoomGameObject;
-	import Loom.Animation.Tween;
-	import Loom.Animation.EaseType;
+    import Loom.GameFramework.*;
+    import cocos2d.*;
+	import CocosDenshion.SimpleAudioEngine;
 	
 	import com.rmc.data.types.GestureManagerOptions;
     import com.rmc.managers.GestureManager;
     import com.rmc.data.types.GestureDelegateData;
     import com.rmc.applications.AbstractLoomDemo;
+    
+    import HighExplosives.View.GameView;
     
 	public class HiExLevel extends LoomGroup implements ITicked {
 	
@@ -52,10 +36,19 @@ package HighExplosives.Game
 		
 		public var collideWithWorld:boolean = false;
 		
-		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) 
+		public var gameView: GameView ;
+		
+		public var pauseBoolean:boolean = true;
+		
+		public var stopGame :Renderer;
+		public 	var theGameIsPause:Renderer;
+		
+		
+		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager, gameView_: GameView) 
 		{
 			layer = layer_;
 			timeManager = timeManager_;
+			gameView= gameView_;
 		}
 		
       	public function initialize(_name:String = null):void
@@ -112,8 +105,9 @@ package HighExplosives.Game
 
 			uiLayer = new CCScaledLayer();
 			
-			//var renderer = new Renderer("assets/logo.png", 240, 240, 1, 0);
-			//uiLayer.addChild(renderer.sprite);
+			var pauseButton = new Renderer("assets/Pause.png", 25, 15, 1, 0);
+			pauseButton.sprite.onTouchBegan += goPauseBotton;
+			uiLayer.addChild(pauseButton.sprite);
 			
 			Cocos2D.addLayer(uiLayer);
 			SimpleAudioEngine.sharedEngine().preloadEffect("assets/tank.mp3");
@@ -177,7 +171,9 @@ package HighExplosives.Game
 			var tRenderer = new Renderer("assets/sprites/tankTurret.png", x, y, 1, 0);
 			layer.addChild(tRenderer.sprite);
 			
-			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 10, 2); 
+
+			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
+
 			dynamicEntityList.push(e);
 			
 			var control = new PlayerController(this, e, layer, uiLayer);
@@ -283,10 +279,11 @@ package HighExplosives.Game
 			timeTillNextSpawn-=dt;
 			
 			if (timeTillNextSpawn<0){
-			
+				
 				
 				if (!isCollidingWithWorld(spawnX,spawnY))
 				{
+					trace("spawn");
 					spawnMonsterEntity(spawnX,spawnY);
 					timeTillNextSpawn=3;
 				}
@@ -317,6 +314,55 @@ package HighExplosives.Game
 			{
 				trace("Win");
 			}
+		}
+		
+		public function pause(){
+			timeManager.stop();
+		}
+		
+		public function resume(){
+			
+			timeManager.start();
+		}
+		
+		public function goPauseBotton(){
+
+			if(pauseBoolean)
+			{
+				SimpleAudioEngine.sharedEngine().stopAllEffects();
+				pause();
+				pauseBoolean=false;
+				
+			    stopGame = new Renderer("assets/endTheGame.png", Cocos2D.getDisplayWidth()/2, Cocos2D.getDisplayHeight()/2 , 1, 0);
+    	        stopGame.sprite.onTouchBegan += goEndGame;
+            	uiLayer.addChild(stopGame.sprite);
+            	
+                 theGameIsPause = new Renderer("assets/gamePause.png", Cocos2D.getDisplayWidth()/2, 3*Cocos2D.getDisplayHeight()/4 , 1, 0);
+				uiLayer.addChild(theGameIsPause.sprite);
+			}
+			else
+			{	
+				uiLayer.removeChild(stopGame.sprite);
+				uiLayer.removeChild(theGameIsPause.sprite);
+				resume();
+				pauseBoolean = true;	
+			}
+		}
+		
+		public function goEndGame(){
+			endGame();
+		}
+		
+		public function endGame() {
+			//timeManager.stop();
+			layer.cleanup();
+			Cocos2D.removeLayer(this.layer);
+			Cocos2D.removeLayer(uiLayer);
+			SimpleAudioEngine.sharedEngine().stopAllEffects();
+			timeManager.removeTickedObject(this);
+			
+			this.gameView.goGameOver();
+			
 		}
 		
 

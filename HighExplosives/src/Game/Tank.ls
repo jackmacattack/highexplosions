@@ -55,7 +55,9 @@ package HighExplosives.Game
 		}
 		
 		public function applyDamage(value:Number) {
-			
+		
+			Console.print(hitPoints);
+
 			if(coolDown > 0) {
 				return;
 			}
@@ -63,10 +65,10 @@ package HighExplosives.Game
 			hitPoints -= value;
 			coolDown = 1;
 			if(hitPoints <= 0) {
-				//TODO Game Over
+			
+				this.level.endGame();
 			}
 			
-			Console.print(hitPoints);
 		}
 		
 		override public function isColliding(object:DynamicEntity):boolean 
@@ -77,6 +79,8 @@ package HighExplosives.Game
 			
 			return boundingBoxCheck(object);
 		}
+		
+		
 		override public function onCollision(object:DynamicEntity) 
 		{
 			if(object instanceof MonsterEntity) {
