@@ -18,11 +18,12 @@ package HighExplosives.Game {
     	
     	override public function isColliding(object:DynamicEntity):boolean
     	{
-    		var objectBox:CCRect=object.renderer.sprite.boundingBox();
-			var objectBox2:CCRect=this.renderer.sprite.boundingBox();
-			
-			return objectBox.intersectsRect(objectBox2);
+    		return boundingBoxCheck(object) && (object.controller instanceof PlayerController);
     	}
     
+    	override public function onCollision(object:DynamicEntity)
+    	{
+    		level.onWin();
+    	}
     }
 }

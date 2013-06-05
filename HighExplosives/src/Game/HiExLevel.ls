@@ -25,6 +25,7 @@ package HighExplosives.Game
 		public var controllerList:Vector.<Controller> = new Vector.<Controller>();
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		public var worldList:Vector.<Entity> = new Vector.<Entity>();
+		public var breakList:Vector.<Breakable> = new Vector.<Breakable>();
 		
 		public var killList:Vector.<Entity> = new Vector.<Entity>();
 		
@@ -89,11 +90,15 @@ package HighExplosives.Game
                     	layer.addChild(erenderer.sprite);
                     	
                     	endPortal = new Portal(this, objX, objY, erenderer);
+                    	worldList.push(endPortal);
                     }
                     else if (objType == "smallrock")
                     {
                     	var rrenderer = new Renderer("assets/sprites/smallrock.png", objX+16, objY+16, 1, Math.random());
                     	layer.addChild(rrenderer.sprite);
+                    	
+                    	Rock r = new Rock(this, objX+16, objY+16, rrenderer);
+                    	breakList.push(r);
                     }
                 }
             }
@@ -309,11 +314,6 @@ package HighExplosives.Game
 			killList.clear();
 			
 			moveCamera();
-			
-			if(endPortal.isColliding(dynamicEntityList[0]))
-			{
-				trace("Win");
-			}
 		}
 		
 		public function pause(){
@@ -365,7 +365,10 @@ package HighExplosives.Game
 			
 		}
 		
-
+		public function onWin()
+		{
+			Console.print("Win");
+		}
 	}
 
 }
