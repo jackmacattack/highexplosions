@@ -181,7 +181,7 @@ package HighExplosives.Game
 		
 		public function spawnMonsterDeath(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
 		{
-				var renderer = new Renderer("assets/bombex1.png", x, y, 1.5, 0);
+				var renderer = new Renderer("assets/bombex1.png", x, y, 2, 0);
 				layer.addChild(renderer.sprite);
 				
 				var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
@@ -189,14 +189,18 @@ package HighExplosives.Game
 		}
 		
 		public function addToKill(e:Entity) {
-			//if(!killList.contains(e))
-				//killList.push(e);
+			if(!killList.contains(e))
+				killList.push(e);
 				
-				removeEntity(e);
+				//removeEntity(e);
 		}
 		
 		private function removeEntity(e:Entity)
 		{
+			if(e == null) {
+				return;
+			}
+			
 			dynamicEntityList.remove(e);
  			worldList.remove(e);
  			
@@ -259,10 +263,10 @@ package HighExplosives.Game
 			}
 			
 			for(var l:int = 0; l < worldList.length; l++) {
-				//removeEntity(killList[l]);
+				removeEntity(killList[l]);
 				//killList.remove(l);
 			}
-			//killList.clear();
+			killList.clear();
 			
 			moveCamera();
 		}

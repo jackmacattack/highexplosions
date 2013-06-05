@@ -14,7 +14,8 @@ package HighExplosives.Game
 		}
 		
 		public function explode() {
-			level.spawnMonsterDeath(level.dynamicEntityList[0].getX(), level.dynamicEntityList[0].getY(), null, .5, damage, 5);
+			//level.spawnMonsterDeath(level.dynamicEntityList[0].getX(), level.dynamicEntityList[0].getY(), null, .5, damage, 5);
+			level.spawnMonsterDeath(x, y, null, .5, damage, 5);
 			this.destroy();
 		}
 		
@@ -25,7 +26,7 @@ package HighExplosives.Game
 		
 		public function onCollision(object:DynamicEntity) 
 		{
-			Console.print("Monster Collide");
+			//Console.print("Monster Collide");
 			//this.setX(this.getX()+5);
 			//this.setY(this.getY()-5);
 		}
