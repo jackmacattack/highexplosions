@@ -19,7 +19,7 @@ package HighExplosives.Game
   		
   		public var distanceToIntercept: Number = 150;
   		
-  		public var sizeOfSquare=10;
+  		public var sizeOfSquare = 100;
   		
   		public var count:Number;
   		
@@ -29,39 +29,48 @@ package HighExplosives.Game
 		{
 			super(level_, e_);
 			player=player_;
-			count =0;
+			
+			e.setTarget(this.e.getX()+sizeOfSquare,this.e.getY());
 			
 		}
 		
 		//squared distance 
 		override public function update() 
 		{
-			if(Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY())<distanceToIntercept){
+			if(Math.sqrt(Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY())) < distanceToIntercept){
 				this.e.setTarget(player.getX(),player.getY());
 			}
 			else
-				followPath(count);	
+				followPath();	
 		}
 		
-		public function followPath(count:Number)
+		public function followPath()
 		{
-			if(count==0){
-				this.e.setTarget(this.e.getX()+sizeOfSquare,this.e.getY());
-				count++;
-			}
-			else if (count == 1){
-				this.e.setTarget(this.e.getX(),this.e.getY()+sizeOfSquare);
-				count++;
-			}
-			else if (count == 2)
+			if (this.e.distanceToTarget()<5)
 			{
-				this.e.setTarget(this.e.getX()-sizeOfSquare,this.e.getY());
-				count++;
-			}
-			else 
-			{
-				this.e.setTarget(this.e.getX(),this.e.getY()-sizeOfSquare);
-				count=0;
+				if(count==0){
+					
+					this.e.setTarget(this.e.getX()+sizeOfSquare,this.e.getY());
+					count++;
+				}
+				else if (count == 1){
+					
+					this.e.setTarget(this.e.getX(),this.e.getY()+sizeOfSquare);
+					count++;
+					
+				}
+				else if (count == 2)
+				{
+					
+					this.e.setTarget(this.e.getX()-sizeOfSquare,this.e.getY());
+					count++;
+				}
+				else 
+				{
+							
+					this.e.setTarget(this.e.getX(),this.e.getY()-sizeOfSquare);
+					count=0;
+				}
 			}
 			
 		}

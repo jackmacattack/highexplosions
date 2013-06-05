@@ -37,6 +37,8 @@ package HighExplosives.Game
 		public var targetX:Number;
 		public var targetY:Number;
 		
+		public var collideWithWorld:boolean = false;
+		
 		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel_:Number, agility_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
 		{
 			super(level, x, y, renderer);
@@ -57,7 +59,7 @@ package HighExplosives.Game
 			turning = true;
 		}
 		
-		private function distanceToTarget():Number
+		public function distanceToTarget():Number
 		{
 			return (x-targetX)*(x-targetX)+(y-targetY)*(y-targetY);
 		}
@@ -182,6 +184,8 @@ package HighExplosives.Game
 			
 	}
 	public class MonsterEntity extends DynamicEntity{
+	
+		public var count:Number;
 		
 		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
 		{
@@ -193,7 +197,9 @@ package HighExplosives.Game
 		public function collision(objectCollidedWith:DynamicEntity) 
 		{
 			if(!(objectCollidedWith.isMonster())){
+				level.spawnMonsterDeath(level.dynamicEntityList[0].getX(), level.dynamicEntityList[0].getY(), .5, 10,5);
 				this.destroy();
+				
 			}
 			
 		}

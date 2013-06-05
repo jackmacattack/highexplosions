@@ -55,6 +55,7 @@ package HighExplosives.Game
 		public function collision(objectCollidedWith:DynamicEntity) 
 		{
 			if(objectCollidedWith.isMonster()){
+				objectCollidedWith.collision(this);
 				hitPoints=hitPoints-10;
 				trace(hitPoints);
 			}
