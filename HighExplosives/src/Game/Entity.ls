@@ -58,6 +58,18 @@ package HighExplosives.Game
 		
 		public function update(dt:Number)
 		{}
+		
+		public function isColliding(object:DynamicEntity):boolean
+		{
+		
+			return false;
+		
+		}
+		
+		public function onCollision(object:DynamicEntity)
+		{
+			Console.print("Bang");
+		}
 	}
 	
 }

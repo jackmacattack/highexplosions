@@ -1,31 +1,44 @@
 package HighExplosives.Game
 {
-	import Loom.GameFramework.LoomComponent;
-	import Loom.GameFramework.TickedComponent;
-	import Loom.Animation.Tween;
-	import Loom.Animation.EaseType;
+	import cocos2d.CCRect;
 	
 	public class Explosion extends Entity {
+	
+		public var ownerOf:Entity;
 	
 		public var duration:Number;
 		public var damage:Number;
 		public var area:Number;
 		
-		public function Explosion(level:HiExLevel, x:Number, y:Number, renderer:Renderer, duration_:Number, damage_:Number, area_:Number)
+		public function Explosion(level:HiExLevel, x:Number, y:Number, renderer:Renderer, owner_:Entity, duration_:Number, damage_:Number, area_:Number)
 		{
 			super(level, x, y, renderer);
+			ownerOf = owner_;
 			duration = duration_;
 			damage = damage_;
 			area = area_;
 		}
 		
-		override public function update(dt:Number) {
+		override public function update(dt:Number) 
+		{
 		
 			duration -= dt;
 			
 			if(duration <= 0) {
 				destroy();
 			}
+		}
+		override public function isColliding(object:DynamicEntity):boolean 
+		{
+			if(object == ownerOf) {
+				//return false;
+			}
+		
+			var objectBox:CCRect=object.renderer.sprite.boundingBox();
+			var objectBox2:CCRect=this.renderer.sprite.boundingBox();
+			
+			return objectBox.intersectsRect(objectBox2);
+			
 		}
 		
 	}

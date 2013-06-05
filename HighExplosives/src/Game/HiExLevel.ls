@@ -74,7 +74,7 @@ package HighExplosives.Game
 
             spawnPlayer(240, 240);
 
-            //spawnMonsterEntity(300,300);
+            spawnMonsterEntity(300,300);
 
 			
 			timeManager.addTickedObject(this);
@@ -91,6 +91,35 @@ package HighExplosives.Game
 				
 				return tileNum != 0;
 				//return false;
+
+		}
+		
+		public function dynamicCollides(object:DynamicEntity):DynamicEntity{
+		
+			for(var i:int = 1; i < dynamicEntityList.length; i++)
+			{
+				if(object == dynamicEntityList[i]) {
+					continue;
+				}
+				
+				if (object.isColliding(dynamicEntityList[i]))
+					return dynamicEntityList[i];
+			}
+			return null; 
+
+		}
+		
+		public function worldCollides(object:DynamicEntity):Vector.<Entity>{
+		
+			var vec:Vector.<Entity> = new Vector.<Entity>();
+		
+			for(var i:int = 1; i < worldList.length; i++)
+			{
+				if (worldList[i].isColliding(object))
+					vec.push(worldList[i]);
+			}
+			
+			return vec; 
 
 		}
 		
@@ -114,17 +143,6 @@ package HighExplosives.Game
 
 		}
 		
-		public function dynamicCollides(object:DynamicEntity):DynamicEntity{
-		
-			for(var i:int = 1; i < dynamicEntityList.length; i++)
-			{
-				if (object.isCollidingWithDynamic(dynamicEntityList[i])&&(object!=dynamicEntityList[i]))
-					return dynamicEntityList[i];
-			}
-			return null; 
-
-		}
-		
 		public function spawnMonsterEntity(x:Number, y:Number){
 			var renderer = new Renderer("assets/sprites/enemy.png", x, y, .5, 0);
 			layer.addChild(renderer.sprite);
@@ -137,24 +155,24 @@ package HighExplosives.Game
 			
 		}
 		
-		public function spawnTestExplosive(x:Number, y:Number, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
+		public function spawnTestExplosive(x:Number, y:Number, owner:Entity, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
 		{
 		
 			var renderer = new Renderer("assets/bomb1.png", x, y, 1, 0);
 			layer.addChild(renderer.sprite);
 			
-			var e:Explosive = new Explosive(this, x, y, renderer, speed, angle, time, duration, damage, area);
+			var e:Explosive = new Explosive(this, x, y, renderer, owner, speed, angle, time, duration, damage, area);
 			dynamicEntityList.push(e);
 		
 		}
 		
-		public function spawnExplosion(x:Number, y:Number, duration:Number, damage:Number, area:Number)
+		public function spawnExplosion(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
 		{
 		
 			var renderer = new Renderer("assets/bombex2.png", x, y, 3, 0);
 			layer.addChild(renderer.sprite);
 			
-			var e:Explosion = new Explosion(this, x, y, renderer, duration, damage, area);
+			var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
 			worldList.push(e);
 		}
 		
@@ -188,9 +206,7 @@ package HighExplosives.Game
 		{
 			var dt:Number = timeManager.TICK_RATE; 
 			
-			/*
 			totalTime+=dt;
-			
 			
 			timeTillNextSpawn-=dt;
 			if (timeTillNextSpawn<0){
@@ -205,7 +221,6 @@ package HighExplosives.Game
 				spawnMonsterEntity(550,550);
 				timeTillNextSpawn=2.5;
 			}
-			*/
 			
 			for(var i:int = 0; i < controllerList.length; i++) {
 				controllerList[i].update();

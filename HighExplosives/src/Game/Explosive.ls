@@ -8,15 +8,18 @@ package HighExplosives.Game
 	
 	public class Explosive extends DynamicEntity {
 	
+		public var ownerOf:Entity;
+	
 		public var time:Number;
 		
 		public var duration:Number;
 		public var damage:Number;
 		public var area:Number;
 		
-		public function Explosive(level:HiExLevel, x:Number, y:Number, renderer:Renderer, speed:Number, angle:Number, time_:Number, duration_:Number, damage_:Number, area_:Number)
+		public function Explosive(level:HiExLevel, x:Number, y:Number, renderer:Renderer, owner_:Entity, speed:Number, angle:Number, time_:Number, duration_:Number, damage_:Number, area_:Number)
 		{
 			super(level, x, y, renderer, 0, 0, speed, speed, angle);
+			ownerOf = owner_; 
 			time = time_;
 			damage = damage_;
 			duration = duration_;
@@ -24,7 +27,7 @@ package HighExplosives.Game
 		}
 	
 		public function explode() {
-			level.spawnExplosion(x, y, duration, damage, area);
+			level.spawnExplosion(x, y, ownerOf, duration, damage, area);
 			SimpleAudioEngine.sharedEngine().playEffect("assets/Depth Charge Short.mp3");
 			destroy();
 		}
@@ -39,6 +42,16 @@ package HighExplosives.Game
 				super.update(dt);
 			}
 		}
+		
+		override public function isColliding(object:DynamicEntity):boolean
+		{
+			if(object == ownerOf) {
+				return false;
+			}
+		
+			return super.isColliding(object);
+		}
+		
 	}
 	
 }
