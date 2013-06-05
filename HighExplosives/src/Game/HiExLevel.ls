@@ -45,6 +45,7 @@ package HighExplosives.Game
 		public var totalTime:Number=0;
 		public var xStart:Number;
 		public var yStart:Number;
+		public var endPortal:Portal;
 		public var timeTillNextSpawn=3;
 		
 		public var collideWithWorld:boolean = false;
@@ -91,6 +92,8 @@ package HighExplosives.Game
                     {
                     	var erenderer = new Renderer("assets/sprites/end.png", objX, objY, 1, 0);
                     	layer.addChild(erenderer.sprite);
+                    	
+                    	endPortal = new Portal(this, objX, objY, erenderer);
                     }
                     else if (objType == "smallrock")
                     {
@@ -288,6 +291,11 @@ package HighExplosives.Game
 			}
 			
 			moveCamera();
+			
+			if(endPortal.isColliding(dynamicEntityList[0]))
+			{
+				trace("Win");
+			}
 		}
 		
 

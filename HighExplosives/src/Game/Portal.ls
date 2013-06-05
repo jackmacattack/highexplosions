@@ -15,6 +15,14 @@ package HighExplosives.Game {
     	{
     		super(level, x, y, renderer);
     	}
+    	
+    	override public function isColliding(object:DynamicEntity):boolean
+    	{
+    		var objectBox:CCRect=object.renderer.sprite.boundingBox();
+			var objectBox2:CCRect=this.renderer.sprite.boundingBox();
+			
+			return objectBox.intersectsRect(objectBox2);
+    	}
     
     }
 }
