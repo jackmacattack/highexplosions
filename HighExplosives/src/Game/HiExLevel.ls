@@ -38,6 +38,8 @@ package HighExplosives.Game
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		public var worldList:Vector.<Entity> = new Vector.<Entity>();
 		
+		public var killList:Vector.<Entity> = new Vector.<Entity>();
+		
 		public var totalTime:Number=0;
 		
 		public var timeTillNextSpawn=3;
@@ -186,20 +188,28 @@ package HighExplosives.Game
 				worldList.push(e);
 		}
 		
+		public function addToKill(e:Entity) {
+			//if(!killList.contains(e))
+				//killList.push(e);
+				
+				removeEntity(e);
+		}
 		
-		
-		public function removeEntity(e:Entity)
+		private function removeEntity(e:Entity)
 		{
 			dynamicEntityList.remove(e);
  			worldList.remove(e);
+ 			
 			layer.removeChild(e.renderer.sprite);
-				
+			
 			for(var i:int = 0; i < controllerList.length; i++) {
 				if(controllerList[i].controllerOf(e as DynamicEntity)) {
 					controllerList.remove(i);
 					break;
 				}
 			}
+			
+				
 		}
 		
 		public function moveCamera()
@@ -230,8 +240,8 @@ package HighExplosives.Game
 				
 				if (!isCollidingWithWorld(spawnX,spawnY))
 				{
-				spawnMonsterEntity(spawnX,spawnY);
-				timeTillNextSpawn=3;
+					spawnMonsterEntity(spawnX,spawnY);
+					timeTillNextSpawn=3;
 				}
 			
 			}
@@ -247,6 +257,12 @@ package HighExplosives.Game
 			for(var k:int = 0; k < worldList.length; k++) {
 				worldList[k].update(dt);
 			}
+			
+			for(var l:int = 0; l < worldList.length; l++) {
+				//removeEntity(killList[l]);
+				//killList.remove(l);
+			}
+			//killList.clear();
 			
 			moveCamera();
 		}

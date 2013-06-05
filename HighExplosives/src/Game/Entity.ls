@@ -1,5 +1,7 @@
 package HighExplosives.Game
 {
+	import cocos2d.CCRect;
+
 	import Loom.GameFramework.LoomComponent;
 	import Loom.GameFramework.TickedComponent;
 	import Loom.Animation.Tween;
@@ -53,11 +55,20 @@ package HighExplosives.Game
 		
 		public function destroy() 
 		{
-			level.removeEntity(this);
+			level.addToKill(this);
 		}
 		
 		public function update(dt:Number)
 		{}
+		
+		public function boundingBoxCheck(object:Entity):boolean 
+		{
+		
+			var objectBox:CCRect=object.renderer.sprite.boundingBox();
+			var objectBox2:CCRect=this.renderer.sprite.boundingBox();
+			
+			return objectBox.intersectsRect(objectBox2);
+		}
 		
 		public function isColliding(object:DynamicEntity):boolean
 		{
@@ -68,7 +79,7 @@ package HighExplosives.Game
 		
 		public function onCollision(object:DynamicEntity)
 		{
-			Console.print("Bang");
+			//Console.print("Bang");
 		}
 	}
 	

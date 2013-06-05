@@ -69,23 +69,29 @@ package HighExplosives.Game
 			return distanceToTarget() <= DynamicEntity.TOLERANCE;
 		}
 		
-		/*
-			Returns true if object2's corners are inside of object1's box
-		*/
-		public function isColliding(object:DynamicEntity):boolean
-		{
-			var objectBox:CCRect=object.renderer.sprite.boundingBox();
-			var objectBox2:CCRect=this.renderer.sprite.boundingBox();
-			
-			return objectBox.intersectsRect(objectBox2);
-		}
-		
 		override public function update(dt:Number) {
 			move(dt);
 		}
 		
 		public function move(dt:Number)
 		{
+		
+			var collide:boolean = false;
+		
+			var objectCollidesWith : DynamicEntity=level.dynamicCollides(this);
+			if(objectCollidesWith != null) {
+				collide = true;
+				onCollision(objectCollidesWith);
+			}
+			
+			var vec : Vector.<Entity> = level.worldCollides(this);
+			
+			for(var i:int = 0; i < vec.length; i++) 
+			{
+				vec[i].onCollision(this);
+				
+			}
+			
 			var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
 			
 			if(turning) {
@@ -146,17 +152,11 @@ package HighExplosives.Game
 			var newX:Number = x + dx * dt;
 			var newY:Number = y + dy * dt;
 			
-			var objectCollidesWith : DynamicEntity=level.dynamicCollides(this);
-			
 			if(level.isCollidingWithWorld(newX, newY) || objectCollidesWith != null) {
 			 
 				targetX = x;
 				targetY = y;
 				
-				if(objectCollidesWith != null) {
-				
-					onCollision(objectCollidesWith);
-				}
 			}
 			else {
 			
@@ -165,12 +165,6 @@ package HighExplosives.Game
 			
 			}
 			
-			var vec : Vector.<Entity> = level.worldCollides(this);
-			
-			for(var i:int = 0; i < vec.length; i++) 
-			{
-				vec[i].onCollision(this);
-			}
 			
 			if(inRangeOfTarget() || speed < DynamicEntity.MIN_SPEED) {
 				speed = 0;
@@ -185,46 +179,7 @@ package HighExplosives.Game
 			
 		}	
 		*/
-		public function isMonster():boolean
-		{
-			return false;
-		}
-			
-<<<<<<< HEAD
-=======
-	}
-	public class MonsterEntity extends DynamicEntity{
-	
-		public var count:Number;
 		
-		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
-		{
-		
-			super(level, x, y, renderer, .25, .25, 100, 0, 0);
-	
-		}
-		
-		public function collision(objectCollidedWith:DynamicEntity) 
-		{
-			if(!(objectCollidedWith.isMonster())){
-				level.spawnMonsterDeath(level.dynamicEntityList[0].getX(), level.dynamicEntityList[0].getY(), .5, 10,5);
-				this.destroy();
-				
-			}
-			else
-			{
-				this.setX(this.getX()+5);
-				this.setY(this.getY()-5);
-			}
-			
-		}
-		
-		public function isMonster():boolean
-		{
-			return true;
-		}	
-	
->>>>>>> refs/remotes/origin/master
 	}
 	
 }

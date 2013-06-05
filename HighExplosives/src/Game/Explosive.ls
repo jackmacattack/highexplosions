@@ -45,11 +45,16 @@ package HighExplosives.Game
 		
 		override public function isColliding(object:DynamicEntity):boolean
 		{
-			if(object == ownerOf) {
+			if(object instanceof Tank) {
+				Console.print("Tank");
+				return (object as Tank) == ownerOf;
+			}
+		
+			if(object instanceof Explosive) {
 				return false;
 			}
 		
-			return super.isColliding(object);
+			return boundingBoxCheck(object);
 		}
 		
 	}

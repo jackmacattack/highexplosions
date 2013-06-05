@@ -30,15 +30,23 @@ package HighExplosives.Game
 		}
 		override public function isColliding(object:DynamicEntity):boolean 
 		{
+			/*
 			if(object == ownerOf) {
-				//return false;
+				return false;
 			}
+			*/
+			return boundingBoxCheck(object); 
+			
+		}
 		
-			var objectBox:CCRect=object.renderer.sprite.boundingBox();
-			var objectBox2:CCRect=this.renderer.sprite.boundingBox();
-			
-			return objectBox.intersectsRect(objectBox2);
-			
+		override public function onCollision(object:DynamicEntity)
+		{
+			if(object instanceof Tank) {
+				(object as Tank).applyDamage(damage);
+			}
+			else if(object instanceof MonsterEntity) {
+				(object as MonsterEntity).explode();
+			}
 		}
 		
 	}
