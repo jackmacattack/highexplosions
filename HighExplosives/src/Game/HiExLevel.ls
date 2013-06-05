@@ -10,6 +10,10 @@ package HighExplosives.Game
     import cocos2d.CCTMXTiledMap;
     import CocosDenshion.SimpleAudioEngine;
     import System.Math;
+    import cocos2d.CCTMXObjectGroup;
+    import cocos2d.CCDictionary;
+    import cocos2d.CCArray;
+    
 
 	import Loom.GameFramework.LoomGroup;
 	import Loom.GameFramework.TickedComponent;
@@ -41,7 +45,9 @@ package HighExplosives.Game
 		public var killList:Vector.<Entity> = new Vector.<Entity>();
 		
 		public var totalTime:Number=0;
-		
+		public var xStart:Number;
+		public var yStart:Number;
+		public var endPortal:Portal;
 		public var timeTillNextSpawn=3;
 		
 		public var collideWithWorld:boolean = false;
@@ -63,6 +69,42 @@ package HighExplosives.Game
             collide = map.layerNamed("angles");
             layer.addChild(map);
             
+            var objGroups:CCArray = map.getObjectGroups();
+            for (var groupCnt = 0; groupCnt < objGroups.count(); groupCnt++)
+            {
+            	var objGroup:CCTMXObjectGroup = objGroups.objectAtIndex(groupCnt) as CCTMXObjectGroup;
+                var objs:CCArray = objGroup.getObjects();
+                for (var objCnt = 0; objCnt < objs.count(); objCnt++)
+                {
+                	var obj:CCDictionary = objs.objectAtIndex(objCnt) as CCDictionary;
+
+                    var objType:String = obj.valueForKey("type");
+                    var objName:String = obj.valueForKey("name");
+                    var objX:int = obj.valueForKey("x").toNumber();
+                    var objY:int = obj.valueForKey("y").toNumber();
+                    
+                    if (objType == "start")
+                    {
+                    	var srenderer = new Renderer("assets/sprites/start.png", objX, objY, 1, 0);
+						layer.addChild(srenderer.sprite);
+						xStart = objX;
+						yStart = objY;
+                    }
+                    else if (objType == "end")
+                    {
+                    	var erenderer = new Renderer("assets/sprites/end.png", objX, objY, 1, 0);
+                    	layer.addChild(erenderer.sprite);
+                    	
+                    	endPortal = new Portal(this, objX, objY, erenderer);
+                    }
+                    else if (objType == "smallrock")
+                    {
+                    	var rrenderer = new Renderer("assets/sprites/smallrock.png", objX+16, objY+16, 1, Math.random());
+                    	layer.addChild(rrenderer.sprite);
+                    }
+                }
+            }
+            
             
             SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
             SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
@@ -76,9 +118,9 @@ package HighExplosives.Game
 			Cocos2D.addLayer(uiLayer);
 			SimpleAudioEngine.sharedEngine().preloadEffect("assets/tank.mp3");
 
-            spawnPlayer(240, 240);
-            	
-            spawnMonsterEntity(460, 460);
+            spawnPlayer(xStart, yStart);
+
+            spawnMonsterEntity(450,450);
 			
 			timeManager.addTickedObject(this);
 		}
@@ -270,6 +312,11 @@ package HighExplosives.Game
 			killList.clear();
 			
 			moveCamera();
+			
+			if(endPortal.isColliding(dynamicEntityList[0]))
+			{
+				trace("Win");
+			}
 		}
 		
 
