@@ -140,7 +140,7 @@ package HighExplosives.Game
 			var tRenderer = new Renderer("assets/sprites/tankTurret.png", x, y, 1, 0);
 			layer.addChild(tRenderer.sprite);
 			
-			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
+			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 10, 2); 
 			dynamicEntityList.push(e);
 			
 			var control = new PlayerController(this, e, layer, uiLayer);
@@ -177,7 +177,7 @@ package HighExplosives.Game
 		public function spawnExplosion(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
 		{
 		
-			var renderer = new Renderer("assets/bombex2.png", x, y, 3, 0);
+			var renderer = new Renderer("assets/bombex2.png", x, y, area, 0);
 			layer.addChild(renderer.sprite);
 			
 			var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
@@ -186,7 +186,7 @@ package HighExplosives.Game
 		
 		public function spawnMonsterDeath(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
 		{
-				var renderer = new Renderer("assets/bombex1.png", x, y, 2, 0);
+				var renderer = new Renderer("assets/bombex1.png", x, y, area, 0);
 				layer.addChild(renderer.sprite);
 				
 				var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
