@@ -77,13 +77,8 @@ package HighExplosives.Game
 			SimpleAudioEngine.sharedEngine().preloadEffect("assets/tank.mp3");
 
             spawnPlayer(240, 240);
-
-			for(var i:int = 0; i < 20; i++) {
             	
-				var spawnX = map.getContentSize().width*Math.random();
-				var spawnY = map.getContentSize().height*Math.random();
-            	spawnMonsterEntity(spawnX,spawnY);
-            }
+            spawnMonsterEntity(460, 460);
 			
 			timeManager.addTickedObject(this);
 		}
