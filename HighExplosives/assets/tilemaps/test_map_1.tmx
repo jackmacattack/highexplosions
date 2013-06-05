@@ -15,7 +15,66 @@
  </layer>
  <layer name="fg" width="75" height="16">
   <data encoding="base64" compression="zlib">
-   eJztlllOAkEURbs+ndiFOOzCcReAGuMemIy4B8boIpiMLMdhGw6nP0h3OpY19KP4aG5yqEDz7qPex7tE0UYuaqkoaqvkXKj8XrHy+LjoVqBPBY8q1AxeA54PVXLmuePSI1aoWT0I9Knj0YCmwWvG87lKzjx3XHrECjWrJ4E+XTx60Hf0krqji89W6tyGHdiFPSgZal8Ffu8YjwlMhWa1UO64ah/KcACHcATHhpqOpo/tDlqFXO/uM6sTOIUzOIcLuDTUPGv62O4gF73Bu8X3QsyqAlWowRVcw42h5k7Tx3cHpfUBn6n3X/BtURdiVnVoQBNa0IZ7Q82jpo/vDkrrJ37xqA8xqy70oA8DGMLIUCORg776b7frPpfa7WOYwBRmMIcXQ41EDtoqmxeh/hetWz45mc2LoszKJyezeVGUWfnkZDYvijIriZzc6G/9AiSTX48=
+   eJztlltOAkEQRac/VWAXirILQN0FoMawB15G3QMvI4vgZWR3nvkgQyZpa7qnaBLHm5x0MpO6NX0/qiaK/uWioYmikUnOncnvFSuPj4ueFfq08GhDR/Ca8X5ukjPPHfcesUJl9arQp4dHHwaC14b3W5Ocee6494gVKqtPhT5jPCYwdfTSuqOLz9nBeQ4XUIIyVITab4XvXeKxgrVSVjvjjqsu4QqqcA03UBNq3ix9ss6gY8j17j5Z1aEBTbiFO7gXahaWPlln0DEUIqsWtKEDD/AIT0JN19LHdwZpKERWPejDAIYwgheh5t3Sx3cGaShEVmOYwBRmMIcPoUZjD/rqt9lue64125ewgjVsYAtfQo3GHsyq9L4I9V90avnsyfS+KEpWPnsyvS+KkpXPnkzvi6Jkdco9+df1AxZGWQo=
   </data>
  </layer>
+ <objectgroup name="objects" width="75" height="16">
+  <object name="start_portal" x="32" y="192" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object name="end_portal" x="2304" y="192" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object name="small_rock" x="208" y="158" width="32" height="32"/>
+  <object name="small_rock" x="257" y="159" width="32" height="32"/>
+  <object name="small_rock" x="307" y="158" width="32" height="32"/>
+  <object name="small_rock" x="162" y="244" width="32" height="32"/>
+  <object name="small_rock" x="161" y="204" width="32" height="32"/>
+  <object name="small_rock" x="162" y="283" width="32" height="32"/>
+  <object name="small_rock" x="202" y="321" width="32" height="32"/>
+  <object name="small_rock" x="254" y="320" width="32" height="32"/>
+  <object name="small_rock" x="307" y="319" width="32" height="32"/>
+  <object name="small_rock" x="217" y="212" width="32" height="32"/>
+  <object name="small_rock" x="268" y="208" width="32" height="32"/>
+  <object name="small_rock" x="229" y="261" width="32" height="32"/>
+  <object name="small_rock" x="309" y="230" width="32" height="32"/>
+  <object name="small_rock" x="281" y="274" width="32" height="32"/>
+  <object name="small_rock" x="396" y="319" width="32" height="32"/>
+  <object name="small_rock" x="444" y="319" width="32" height="32"/>
+  <object name="small_rock" x="494" y="321" width="32" height="32"/>
+  <object name="small_rock" x="359" y="401" width="32" height="32"/>
+  <object name="small_rock" x="268" y="434" width="32" height="32"/>
+  <object name="small_rock" x="456" y="442" width="32" height="32"/>
+  <object name="small_rock" x="520" y="376" width="32" height="32"/>
+  <object name="small_rock" x="610" y="432" width="32" height="32"/>
+  <object name="small_rock" x="681" y="391" width="32" height="32"/>
+  <object name="small_rock" x="891" y="99" width="32" height="32"/>
+  <object name="small_rock" x="954" y="40" width="32" height="32"/>
+  <object name="small_rock" x="865" y="242" width="32" height="32"/>
+  <object name="small_rock" x="1203" y="43" width="32" height="32"/>
+  <object name="small_rock" x="1250" y="88" width="32" height="32"/>
+  <object name="small_rock" x="1280" y="23" width="32" height="32"/>
+  <object name="small_rock" x="1188" y="106" width="32" height="32"/>
+  <object name="small_rock" x="1302" y="79" width="32" height="32"/>
+  <object name="small_rock" x="1181" y="382" width="32" height="32"/>
+  <object name="small_rock" x="1235" y="366" width="32" height="32"/>
+  <object name="small_rock" x="1206" y="420" width="32" height="32"/>
+  <object name="small_rock" x="1166" y="463" width="32" height="32"/>
+  <object name="small_rock" x="1262" y="446" width="32" height="32"/>
+  <object name="small_rock" x="1288" y="385" width="32" height="32"/>
+  <object name="small_rock" x="1681" y="437" width="32" height="32"/>
+  <object name="small_rock" x="1685" y="326" width="32" height="32"/>
+  <object name="small_rock" x="1607" y="400" width="32" height="32"/>
+  <object name="small_rock" x="1806" y="372" width="32" height="32"/>
+  <object name="small_rock" x="1926" y="280" width="32" height="32"/>
+  <object name="small_rock" x="1911" y="429" width="32" height="32"/>
+  <object name="small_rock" x="1666" y="130" width="32" height="32"/>
+  <object name="small_rock" x="1784" y="58" width="32" height="32"/>
+  <object name="small_rock" x="2242" y="383" width="32" height="32"/>
+  <object name="small_rock" x="2170" y="419" width="32" height="32"/>
+  <object name="small_rock" x="2316" y="415" width="32" height="32"/>
+  <object name="small_rock" x="2322" y="25" width="32" height="32"/>
+  <object name="small_rock" x="2245" y="71" width="32" height="32"/>
+  <object name="small_rock" x="1969" y="31" width="32" height="32"/>
+ </objectgroup>
 </map>

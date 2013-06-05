@@ -1,7 +1,8 @@
 package HighExplosives.Game
 {
-
-	public class MonsterEntity extends DynamicEntity {
+	public class MonsterEntity extends DynamicEntity{
+	
+		public var count:Number;
 		
 		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
 		{
@@ -10,27 +11,24 @@ package HighExplosives.Game
 	
 		}
 		
-		public function isColliding(object:DynamicEntity):boolean
+		public function collision(objectCollidedWith:DynamicEntity) 
 		{
-			if(object instanceof MonsterEntity) {
-				return false;
-			}
-			
-			return super.isColliding(object);
-		}
-		
-		public function onCollision(object:DynamicEntity) 
-		{
-			//if(!(objectCollidedWith.isMonster())){
+			if(!(objectCollidedWith.isMonster())){
+				level.spawnMonsterDeath(level.dynamicEntityList[0].getX(), level.dynamicEntityList[0].getY(), this, .5, 10,5);
 				this.destroy();
-			//}
+				
+			}
+			else
+			{
+				this.setX(this.getX()+5);
+				this.setY(this.getY()-5);
+			}
 			
 		}
 		
 		public function isMonster():boolean
 		{
 			return true;
-		}	
-	
-	}
+		}
+	}	
 }

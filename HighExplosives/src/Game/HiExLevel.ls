@@ -9,6 +9,7 @@ package HighExplosives.Game
     import cocos2d.CCTMXLayer;
     import cocos2d.CCTMXTiledMap;
     import CocosDenshion.SimpleAudioEngine;
+    import System.Math;
 
 	import Loom.GameFramework.LoomGroup;
 	import Loom.GameFramework.TickedComponent;
@@ -41,6 +42,7 @@ package HighExplosives.Game
 		
 		public var timeTillNextSpawn=3;
 		
+		public var collideWithWorld:boolean = false;
 		
 		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager) 
 		{
@@ -74,8 +76,7 @@ package HighExplosives.Game
 
             spawnPlayer(240, 240);
 
-            spawnMonsterEntity(300,300);
-
+            spawnMonsterEntity(450,450);
 			
 			timeManager.addTickedObject(this);
 		}
@@ -88,7 +89,7 @@ package HighExplosives.Game
 				var p:CCPoint = new CCPoint(Math.floor(x / tile.width), Math.floor(map.getMapSize().height - (y / tile.height)));
 				
 				var tileNum:Number = collide.tileGIDAt(p);
-				
+				collideWithWorld = true;
 				return tileNum != 0;
 				//return false;
 
@@ -176,6 +177,17 @@ package HighExplosives.Game
 			worldList.push(e);
 		}
 		
+		public function spawnMonsterDeath(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
+		{
+				var renderer = new Renderer("assets/bombex1.png", x, y, 1.5, 0);
+				layer.addChild(renderer.sprite);
+				
+				var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
+				worldList.push(e);
+		}
+		
+		
+		
 		public function removeEntity(e:Entity)
 		{
 			dynamicEntityList.remove(e);
@@ -208,18 +220,20 @@ package HighExplosives.Game
 			
 			totalTime+=dt;
 			
-			timeTillNextSpawn-=dt;
-			if (timeTillNextSpawn<0){
-				
-				spawnMonsterEntity(600,300);
-				timeTillNextSpawn=5;
-			}
+			var spawnX = map.getContentSize().width*Math.random();
+			var spawnY = map.getContentSize().height*Math.random();
 			
-			if (timeTillNextSpawn<0)
-			{
+			timeTillNextSpawn-=dt;
+			
+			if (timeTillNextSpawn<0){
+			
 				
-				spawnMonsterEntity(550,550);
-				timeTillNextSpawn=2.5;
+				if (!isCollidingWithWorld(spawnX,spawnY))
+				{
+				spawnMonsterEntity(spawnX,spawnY);
+				timeTillNextSpawn=3;
+				}
+			
 			}
 			
 			for(var i:int = 0; i < controllerList.length; i++) {
