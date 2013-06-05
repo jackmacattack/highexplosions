@@ -17,6 +17,7 @@ package HighExplosives.Game
   		public var tapped:boolean = false;
   		public var player:DynamicEntity; 
   		
+  		public var distanceToMove: Number = 1000;
   		public var distanceToIntercept: Number = 150;
   		
   		public var sizeOfSquare = 100;
@@ -37,7 +38,12 @@ package HighExplosives.Game
 		//squared distance 
 		override public function update() 
 		{
-			if(Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY()) < distanceToIntercept * distanceToIntercept){
+			var dist:Number = Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY());
+			
+			if(dist > distanceToMove * distanceToMove){
+				this.e.setTarget(e.getX(), e.getY());
+			}
+			if(dist < distanceToIntercept * distanceToIntercept){
 				this.e.setTarget(player.getX(),player.getY());
 			}
 			else

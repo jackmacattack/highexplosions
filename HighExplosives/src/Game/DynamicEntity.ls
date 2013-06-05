@@ -34,7 +34,7 @@ package HighExplosives.Game
 		public var targetX:Number;
 		public var targetY:Number;
 		
-		public var collideWithWorld:boolean = false;
+		private var collide:boolean = false;
 		
 		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
 		{
