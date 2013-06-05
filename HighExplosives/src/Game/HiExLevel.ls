@@ -10,6 +10,11 @@ package HighExplosives.Game
     import cocos2d.CCTMXTiledMap;
     import CocosDenshion.SimpleAudioEngine;
     import System.Math;
+    
+    import Loom.GameFramework.*;
+    import cocos2d.*;
+   
+    import HighExplosives.*;
 
 	import Loom.GameFramework.LoomGroup;
 	import Loom.GameFramework.TickedComponent;
@@ -50,6 +55,12 @@ package HighExplosives.Game
 		
 		public var gameView: GameView ;
 		
+		public var pauseBoolean:boolean = true;
+		
+		public var stopGame :Renderer;
+		public 	var theGameIsPause:Renderer;
+		
+		
 		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager, gameView_: GameView) 
 		{
 			layer = layer_;
@@ -75,8 +86,9 @@ package HighExplosives.Game
 
 			uiLayer = new CCScaledLayer();
 			
-			//var renderer = new Renderer("assets/logo.png", 240, 240, 1, 0);
-			//uiLayer.addChild(renderer.sprite);
+			var pauseButton = new Renderer("assets/Pause.png", 25, 15, 1, 0);
+			pauseButton.sprite.onTouchBegan += goPauseBotton;
+			uiLayer.addChild(pauseButton.sprite);
 			
 			Cocos2D.addLayer(uiLayer);
 			SimpleAudioEngine.sharedEngine().preloadEffect("assets/tank.mp3");
@@ -286,11 +298,48 @@ package HighExplosives.Game
 			//Console.print("afd");
 		}
 		
+		public function pause(){
+			timeManager.stop();
+		}
+		
+		public function resume(){
+			
+			timeManager.start();
+		}
+		
+		public function goPauseBotton(){
+
+			if(pauseBoolean)
+			{
+				SimpleAudioEngine.sharedEngine().stopAllEffects();
+				pause();
+				pauseBoolean=false;
+				
+			    stopGame = new Renderer("assets/endTheGame.png", Cocos2D.getDisplayWidth()/2, Cocos2D.getDisplayHeight()/2 , 1, 0);
+    	        stopGame.sprite.onTouchBegan += goEndGame;
+            	uiLayer.addChild(stopGame.sprite);
+            	
+                 theGameIsPause = new Renderer("assets/gamePause.png", Cocos2D.getDisplayWidth()/2, 3*Cocos2D.getDisplayHeight()/4 , 1, 0);
+				uiLayer.addChild(theGameIsPause.sprite);
+			}
+			else
+			{	
+				uiLayer.removeChild(stopGame.sprite);
+				uiLayer.removeChild(theGameIsPause.sprite);
+				resume();
+				pauseBoolean = true;	
+			}
+		}
+		
+		public function goEndGame(){
+			endGame();
+		}
 		
 		public function endGame() {
 			//timeManager.stop();
 			layer.cleanup();
 			Cocos2D.removeLayer(this.layer);
+			Cocos2D.removeLayer(uiLayer);
 			SimpleAudioEngine.sharedEngine().stopAllEffects();
 			timeManager.removeTickedObject(this);
 			

@@ -5,10 +5,6 @@ package HighExplosives.Game
 
 	import Loom.GameFramework.TickedComponent;
 	
-	import com.rmc.data.types.GestureManagerOptions;
-    import com.rmc.managers.GestureManager;
-    import com.rmc.data.types.GestureDelegateData;
-    import com.rmc.applications.AbstractLoomDemo;
 	
 	public class MonstersController extends Controller {
 		
