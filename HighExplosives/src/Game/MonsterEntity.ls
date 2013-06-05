@@ -11,7 +11,7 @@ package HighExplosives.Game
 	
 		}
 		
-		public function collision(objectCollidedWith:DynamicEntity) 
+		public function onCollision(objectCollidedWith:DynamicEntity) 
 		{
 			if(!(objectCollidedWith.isMonster())){
 				level.spawnMonsterDeath(level.dynamicEntityList[0].getX(), level.dynamicEntityList[0].getY(), this, .5, 10,5);

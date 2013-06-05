@@ -15,6 +15,7 @@ package HighExplosives.Game
 		{
 			level = level_;
 			e = e_;
+			e.controller= this;
 		}
 		
 		public function controllerOf(e_:DynamicEntity):boolean 
