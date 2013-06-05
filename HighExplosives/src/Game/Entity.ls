@@ -28,8 +28,8 @@ package HighExplosives.Game
 			setPosition(x_, y_);
 			renderer = renderer_;
 			
-			hitW = renderer.sprite.getContentSize().width / 2;
-			hitH = renderer.sprite.getContentSize().height / 2;
+			hitW = renderer.sprite.getContentSize().width * .8;
+			hitH = renderer.sprite.getContentSize().height * .8;
 		}
 		
 		public function getX():Number 
@@ -42,26 +42,15 @@ package HighExplosives.Game
 			return y;
 		}
 		
-		public function getMinX():Number 
+		public function getWidth():Number 
 		{
-			return x - hitW;
+			return hitW;
 		}
 		
-		public function getMinY():Number 
+		public function getHeight():Number 
 		{
-			return y - hitH;
+			return hitH;
 		}
-		
-		public function getMaxX():Number 
-		{
-			return x + hitW;
-		}
-		
-		public function getMaxY():Number 
-		{
-			return y + hitH;
-		}
-		
 		public function setX(x_:Number) 
 		{
 			x = x_;
@@ -72,6 +61,7 @@ package HighExplosives.Game
 			y = y_;
 			renderer.y = y_;
 		}
+		
 		public function setPosition(x_:Number, y_:Number) 
 		{
 			x = x_;
@@ -89,29 +79,14 @@ package HighExplosives.Game
 		public function boundingBoxCheck(object:DynamicEntity):boolean 
 		{
 		
-			var objectBox:CCRect=object.renderer.sprite.boundingBox();
-			var objectBox2:CCRect=this.renderer.sprite.boundingBox();
+			var objectBox:CCRect=new CCRect();
+			var objectBox2:CCRect=new CCRect();
+			objectBox.setRect(x, y, hitW, hitH);
+			objectBox2.setRect(object.getX(), object.getY(), object.getWidth(), object.getHeight());
 			
 			return objectBox2.intersectsRect(objectBox);
 			//return false;
-			/*
 			
-			if(object.angle > 3 * Math.PI / 2) {
-				
-			}
-			else if() {
-			
-			}
-			*/
-			
-			/*
-			var right:boolean = getMaxX() > object.getMinX();
-			var left:boolean = getMinX() < object.getMaxX();
-			var down:boolean = getMaxY() > object.getMinY();
-			var up:boolean = getMinX() < object.getMaxY();
-			
-			return right && left && up && down;
-			*/
 		}
 		
 		public function isColliding(object:DynamicEntity):boolean
