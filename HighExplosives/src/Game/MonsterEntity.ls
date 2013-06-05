@@ -8,7 +8,7 @@ package HighExplosives.Game
 		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
 		{
 		
-			super(level, x, y, renderer, .25, .25, 100, 0, 0);
+			super(level, x, y, renderer, .25, 100, 0, 0);
 			damage = 10;
 			
 		}

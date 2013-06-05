@@ -22,9 +22,6 @@ package HighExplosives.Game
 		//The acceleration index of the entity
 		public var accel:Number;
 		
-		//The agility of the entity 
-		public var agility:Number;
-		
 		//The maximum speed of the entity
 		public var maxSpeed:Number;
 		
@@ -39,11 +36,10 @@ package HighExplosives.Game
 		
 		public var collideWithWorld:boolean = false;
 		
-		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel_:Number, agility_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
+		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
 		{
 			super(level, x, y, renderer);
 			accel = accel_;
-			agility = agility_;
 			maxSpeed = maxSpeed_;
 			speed = speed_;
 			moving = speed != 0;
@@ -77,7 +73,7 @@ package HighExplosives.Game
 		{
 		
 			var collide:boolean = false;
-		
+			
 			var objectCollidesWith : DynamicEntity=level.dynamicCollides(this);
 			if(objectCollidesWith != null) {
 				collide = true;
@@ -92,59 +88,36 @@ package HighExplosives.Game
 				
 			}
 			
-			var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
-			
 			if(turning) {
-				if(Math.abs(targetAngle - angle) > Math.PI) {
-					targetAngle -= 2 * Math.PI;
-				}
-				var snap:boolean = false;
-				
-				if(!moving) {
-					snap = true;
-				}
-				else {
-					angle = angle * (1 - agility) + targetAngle * agility;
-					
-					if(angle < 0) {
-						angle += 2 * Math.PI;
-					}
-					
-					if(Math.abs(angle - targetAngle) < DynamicEntity.ANGULAR_TOLERANCE) {
-						snap = true;
-					}
-				}
-				
-				if(snap) {
-					angle = targetAngle;
-					turning = false;
-					decel = false;
-					moving = true;
-					
-					renderer.rotation = angle;
-				}
-			}
-			else {
 			
-				//angle = targetAngle;
-				
+				var targetAngle:Number = Utils.calculateAngle(targetX, targetY, x, y);
+				angle = targetAngle;
+				turning = false;
+				decel = false;
+				moving = true;
+					
+				renderer.rotation = angle;
 			}
 			
 			if(!moving) {
 				return;
 			}
 			
+			//Deceleration
+			
 			if(!decel) {
-				var check:Number = (speed / (accel + agility - accel * agility) ) * dt;
+				var check:Number = (speed / accel) * dt;
 				decel = distanceToTarget() < check * check;
 			}
 			
 			if(decel) {
-				speed = speed * (1 - accel) * (1 - agility);
+				speed = speed * (1 - accel);
 			}
 			else {
 				speed = speed * (1 - accel) + maxSpeed * accel;
 			}
+			
+			//Calculating the actual movement
 			
 			var dx:Number = speed * Math.cos(angle);
 			var dy:Number = speed * Math.sin(angle);
@@ -152,7 +125,7 @@ package HighExplosives.Game
 			var newX:Number = x + dx * dt;
 			var newY:Number = y + dy * dt;
 			
-			if(level.isCollidingWithWorld(newX, newY) || objectCollidesWith != null) {
+			if(level.isCollidingWithWorld(newX, newY) || collide) {
 			 
 				targetX = x;
 				targetY = y;

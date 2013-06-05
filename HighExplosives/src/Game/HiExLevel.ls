@@ -78,7 +78,12 @@ package HighExplosives.Game
 
             spawnPlayer(240, 240);
 
-            spawnMonsterEntity(450,450);
+			for(var i:int = 0; i < 20; i++) {
+            	
+				var spawnX = map.getContentSize().width*Math.random();
+				var spawnY = map.getContentSize().height*Math.random();
+            	spawnMonsterEntity(spawnX,spawnY);
+            }
 			
 			timeManager.addTickedObject(this);
 		}
@@ -99,7 +104,7 @@ package HighExplosives.Game
 		
 		public function dynamicCollides(object:DynamicEntity):DynamicEntity{
 		
-			for(var i:int = 1; i < dynamicEntityList.length; i++)
+			for(var i:int = 0; i < dynamicEntityList.length; i++)
 			{
 				if(object == dynamicEntityList[i]) {
 					continue;
@@ -116,7 +121,7 @@ package HighExplosives.Game
 		
 			var vec:Vector.<Entity> = new Vector.<Entity>();
 		
-			for(var i:int = 1; i < worldList.length; i++)
+			for(var i:int = 0; i < worldList.length; i++)
 			{
 				if (worldList[i].isColliding(object))
 					vec.push(worldList[i]);
@@ -135,7 +140,7 @@ package HighExplosives.Game
 			var tRenderer = new Renderer("assets/sprites/tankTurret.png", x, y, 1, 0);
 			layer.addChild(tRenderer.sprite);
 			
-			var e = new Tank(this, x, y, renderer, .5, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
+			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
 			dynamicEntityList.push(e);
 			
 			var control = new PlayerController(this, e, layer, uiLayer);
@@ -233,6 +238,7 @@ package HighExplosives.Game
 			var dt:Number = timeManager.TICK_RATE; 
 			
 			totalTime+=dt;
+			
 			
 			var spawnX = map.getContentSize().width*Math.random();
 			var spawnY = map.getContentSize().height*Math.random();
