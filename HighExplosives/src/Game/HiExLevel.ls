@@ -148,7 +148,7 @@ package HighExplosives.Game
 			layer.addChild(tRenderer.sprite);
 			
 
-			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
+			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 10, 2); 
 
 			dynamicEntityList.push(e);
 			
@@ -221,6 +221,7 @@ package HighExplosives.Game
 			
 			dynamicEntityList.remove(e);
  			worldList.remove(e);
+ 			breakList.remove(e);
  			
 			layer.removeChild(e.renderer.sprite);
 			
