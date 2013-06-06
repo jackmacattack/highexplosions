@@ -6,11 +6,11 @@ package HighExplosives.View
     import HighExplosives.*;
 	import HighExplosives;
 	
-    public class GameOverView extends View
+    public class WinView extends View
     
     {
         
-        public function GameOverView(gm:HighExplosives){
+        public function WinView(gm:HighExplosives){
         	super(gm);
         	
         }
@@ -26,9 +26,9 @@ package HighExplosives.View
             bg.scale = 1;
             layer.addChild(bg);
             
-          var gameOver = CCSprite.createFromFile("assets/GameOver.png");
+          var gameOver = CCSprite.createFromFile("assets/winning.png");
               gameOver.x = Cocos2D.getDisplayWidth() / 2;
-              gameOver.y = 3 * Cocos2D.getDisplayHeight() / 4;
+              gameOver.y =  Cocos2D.getDisplayHeight() / 2;
               
               layer.addChild(gameOver);
             

@@ -45,6 +45,11 @@ package HighExplosives.View
          {
          	gameManager.gameOver(this.layer);
          }
+         
+         public function goWinView()
+         {
+         	gameManager.gameOver(layer);
+         }
        
     }
 }
