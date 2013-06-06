@@ -33,6 +33,8 @@ package HighExplosives.Game
 		public var yStart:Number;
 		public var endPortal:Portal;
 		public var timeTillNextSpawn=3;
+		public var monsterCount:Number=0;
+		public var spawnPoint:Vector.<CCPoint> = new Vector.<CCPoint>();
 		
 		public var collideWithWorld:boolean = false;
 		
@@ -102,6 +104,13 @@ package HighExplosives.Game
             SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
             SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Tribal.mp3", true);
+			
+			spawnPoint.push(new CCPoint(576,416), new CCPoint(480,384), new CCPoint(384,416), new CCPoint(256,416), new CCPoint(672,256));
+			spawnPoint.push(new CCPoint(576,224), new CCPoint(512,256), new CCPoint(416,224), new CCPoint(256,32), new CCPoint(416,96));
+			spawnPoint.push(new CCPoint(800,64), new CCPoint(832,224), new CCPoint(832,416), new CCPoint(1024,384), new CCPoint(1056,256));
+			spawnPoint.push(new CCPoint(1024,96), new CCPoint(1376,416), new CCPoint(1472,352), new CCPoint(1408,256), new CCPoint(1376,96));
+			spawnPoint.push(new CCPoint(1504,64), new CCPoint(1504,288), new CCPoint(1920,224), new CCPoint(1984,416), new CCPoint(2112,224));
+
 
 			uiLayer = new CCScaledLayer();
 			
@@ -114,7 +123,7 @@ package HighExplosives.Game
 
             spawnPlayer(xStart, yStart);
 
-            spawnMonsterEntity(450,450);
+            spawnMonsterEntity(554,416);
 			
 			timeManager.addTickedObject(this);
 		}
@@ -194,6 +203,9 @@ package HighExplosives.Game
 			var control = new MonstersController(this, e, dynamicEntityList[0]);
 			controllerList.push(control);
 			
+			monsterCount++;
+			trace("Monster Count: " + monsterCount);
+			
 		}
 		
 		public function spawnTestExplosive(x:Number, y:Number, owner:Entity, speed:Number, angle:Number, time:Number, duration:Number, damage:Number, area:Number)
@@ -224,6 +236,8 @@ package HighExplosives.Game
 				
 				var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
 				worldList.push(e);
+				
+				monsterCount--;
 		}
 		
 		public function addToKill(e:Entity) {
@@ -266,24 +280,32 @@ package HighExplosives.Game
 		
 		}
 		
+		public function randomSpawn():CCPoint
+		{
+			var index:Number = Math.floor(Math.random()*spawnPoint.length)
+			return spawnPoint[index];
+		}
+		
 		override public function onTick() 
 		{
 			var dt:Number = timeManager.TICK_RATE; 
 			
 			totalTime+=dt;
 			
-			
-			var spawnX = map.getContentSize().width*Math.random();
-			var spawnY = map.getContentSize().height*Math.random();
+			var point:CCPoint = new CCPoint;
+			point = randomSpawn();
+			var spawnX = point.x;
+			var spawnY = point.y;
 			
 			timeTillNextSpawn-=dt;
 			
-			if (timeTillNextSpawn<0){
+			if (timeTillNextSpawn<0 && monsterCount<50){
 				
 				
 				if (!isCollidingWithWorld(spawnX,spawnY))
 				{
 					trace("spawn");
+
 					spawnMonsterEntity(spawnX,spawnY);
 					timeTillNextSpawn=3;
 				}
