@@ -48,6 +48,8 @@ package HighExplosives.Game
 		public var rule:Renderer;
 		public var ruleButton:Renderer;
 		
+		public var healthBar:Renderer;
+		public var fullHealth:Number;
 		
 		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager, gameView_: GameView) 
 		{
@@ -132,6 +134,13 @@ package HighExplosives.Game
 
             spawnMonsterEntity(554,416);
 			
+			var redBar:Renderer = new Renderer("assets/sprites/death.png", Cocos2D.getDisplayWidth(),10,1,0);
+			healthBar = new Renderer("assets/sprites/health.png", Cocos2D.getDisplayWidth(),10,1,0);
+			fullHealth = healthBar.sprite.getContentSize().width;
+			
+			uiLayer.addChild(redBar.sprite);
+			uiLayer.addChild(healthBar.sprite);
+			
 			timeManager.addTickedObject(this);
 		}
 		
@@ -182,7 +191,7 @@ package HighExplosives.Game
 			controllerList.push(control);
 			
 			monsterCount++;
-			trace("Monster Count: " + monsterCount);
+			//trace("Monster Count: " + monsterCount);
 			
 		}
 		
@@ -217,7 +226,7 @@ package HighExplosives.Game
 			var renderer = new Renderer("assets/bombex1.png", x, y, area, 0);
 			layer.addChild(renderer.sprite);
 			
-			var e:Explosion = new Explosion(this, x, y, renderer, .8, owner, duration, damage, area);
+			var e:Explosion = new Explosion(this, x, y, renderer, 1.2, owner, duration, damage, area);
 			worldList.push(e);
 			
 			monsterCount--;
@@ -331,7 +340,7 @@ package HighExplosives.Game
 				
 				if (!isCollidingWithWorld(spawnX,spawnY))
 				{
-					trace("spawn");
+					//trace("spawn");
 
 					spawnMonsterEntity(spawnX,spawnY);
 					timeTillNextSpawn=3;
@@ -360,6 +369,7 @@ package HighExplosives.Game
 			killList.clear();
 			
 			moveCamera();
+			
 		}
 		
 		public function pause(){
@@ -442,6 +452,12 @@ package HighExplosives.Game
 			
 			this.gameView.goGameOver();
 			
+		}
+		
+		public function updateHealthBar(percent:Number)
+		{
+			Console.print(percent + "," + fullHealth * percent);
+			healthBar.scaleX = percent;
 		}
 	}
 

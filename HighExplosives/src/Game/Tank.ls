@@ -67,6 +67,8 @@ package HighExplosives.Game
 			}
 			
 			Console.print(hitPoints);
+			
+			level.updateHealthBar(getPercentHealth());
 		}
 		
 		override public function isColliding(object:Entity):boolean 
@@ -88,16 +90,17 @@ package HighExplosives.Game
 		
 		override function move(dt:Number)
 		{
-			if(moving==false)
-			{
-				SimpleAudioEngine.sharedEngine().playEffect("assets/tank.mp3", true);
-			}
 		
 			if(coolDown > 0)
 				coolDown -= dt;
 		
 			super.move(dt);
 
+		}
+		
+		public function getPercentHealth():Number
+		{
+			return hitPoints / maxHitPoints;
 		}
 	}
 
