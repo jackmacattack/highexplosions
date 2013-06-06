@@ -76,6 +76,11 @@ package
         	gameOverView.start(this.layer);
         }
         
+        public function win(layer:CCScaledLayer): void 
+        {
+        	var winning:WinView=new WinView(this);
+        	winning.start(this.layer);
+        }
         	 
     }
 }
