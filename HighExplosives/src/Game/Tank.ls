@@ -69,7 +69,7 @@ package HighExplosives.Game
 			Console.print(hitPoints);
 		}
 		
-		override public function isColliding(object:DynamicEntity):boolean 
+		override public function isColliding(object:Entity):boolean 
 		{
 			if(object instanceof Explosive) {
 				return this != (object as Explosive).ownerOf

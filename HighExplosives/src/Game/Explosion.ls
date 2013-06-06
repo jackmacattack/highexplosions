@@ -28,7 +28,7 @@ package HighExplosives.Game
 				destroy();
 			}
 		}
-		override public function isColliding(object:DynamicEntity):boolean 
+		override public function isColliding(object:Entity):boolean 
 		{
 			
 			if(object instanceof Tank) {

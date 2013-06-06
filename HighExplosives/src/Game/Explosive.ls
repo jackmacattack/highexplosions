@@ -43,7 +43,7 @@ package HighExplosives.Game
 			}
 		}
 		
-		override public function isColliding(object:DynamicEntity):boolean
+		override public function isColliding(object:Entity):boolean
 		{
 			if(object instanceof Tank) {
 				return (object as Tank) != ownerOf;

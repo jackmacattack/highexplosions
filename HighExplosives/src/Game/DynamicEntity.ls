@@ -34,6 +34,9 @@ package HighExplosives.Game
 		public var targetX:Number;
 		public var targetY:Number;
 		
+		public var oldX:Number;
+		public var oldY:Number;
+		
 		private var collide:boolean = false;
 		
 		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
@@ -44,6 +47,9 @@ package HighExplosives.Game
 			speed = speed_;
 			moving = speed != 0;
 			angle = angle_;
+			
+			oldX = x;
+			oldY = y;
 		}
 		
 		public function setCollide(collide_:boolean) 
@@ -114,15 +120,16 @@ package HighExplosives.Game
 			var newX:Number = x + dx * dt;
 			var newY:Number = y + dy * dt;
 			
-			if(level.isCollidingWithWorld(newX, newY) || collide) {
+			if(level.isCollidingWithWorld(newX, newY)) {
 			 
 				targetX = x;
 				targetY = y;
-				collide = false;
 				
 			}
 			else {
 			
+				oldX = x;
+				oldY = y;
 				setX(newX);
 				setY(newY);
 			
@@ -135,6 +142,15 @@ package HighExplosives.Game
 				decel = false;
 			}
 			
+		}
+		
+		public function resetMovement()
+		{
+			x = oldX;
+			y = oldY;
+			targetX = x;
+			targetY = y;
+			collide = false;
 		}
 		
 	}

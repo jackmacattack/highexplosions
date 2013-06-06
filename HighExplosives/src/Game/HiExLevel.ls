@@ -256,25 +256,36 @@ package HighExplosives.Game
 					
 					if(dynamicEntityList[i].isColliding(dynamicEntityList[j])) {
 					
-						dynamicEntityList[i].setCollide(true);
-						dynamicEntityList[j].setCollide(true);
+						dynamicEntityList[i].resetMovement();
+						dynamicEntityList[j].resetMovement();
 						
 						dynamicEntityList[i].onCollision(dynamicEntityList[j]);
 						dynamicEntityList[j].onCollision(dynamicEntityList[i]);
-						
-						//Console.print("Bang");
 					}
 				}
 				
 				for(var k:int = 0; k < worldList.length; k++)
 				{
 					if (worldList[k].isColliding(dynamicEntityList[i])) {
-						//dynamicEntityList[i].setCollide(true);
 						worldList[k].onCollision(dynamicEntityList[i]);
-						//Console.print("Jack");
 					}
 				}
 				
+				for(var l:int = 0; l < breakList.length; l++) {
+				
+					if (breakList[l].isColliding(dynamicEntityList[i])) {
+						dynamicEntityList[i].resetMovement(); 
+					}
+				}
+			}
+			for(var m:int = 0; m < breakList.length; m++) {
+			
+				for(var n:int = 0; n < worldList.length; n++)
+				{
+					if (worldList[n].isColliding(breakList[m])) {
+						breakList[m].destroy();
+					}
+				}
 			}
 		}
 		

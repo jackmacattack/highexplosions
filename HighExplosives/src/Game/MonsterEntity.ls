@@ -16,7 +16,7 @@ package HighExplosives.Game
 			this.destroy();
 		}
 		
-		public function isColliding(object:DynamicEntity):boolean
+		public function isColliding(object:Entity):boolean
 		{
 			return boundingBoxCheck(object);
 		}

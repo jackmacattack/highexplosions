@@ -9,7 +9,7 @@ package HighExplosives.Game
 			super(level, x, y, renderer);
 		}
 		
-		override public function isColliding(object:DynamicEntity):boolean 
+		override public function isColliding(object:Entity):boolean 
 		{
 			
 			return boundingBoxCheck(object); 

@@ -78,7 +78,7 @@ package HighExplosives.Game
 		public function update(dt:Number)
 		{}
 		
-		public function boundingBoxCheck(object:DynamicEntity):boolean 
+		public function boundingBoxCheck(object:Entity):boolean 
 		{
 		
 			var objectBox:CCRect=new CCRect();
@@ -91,7 +91,7 @@ package HighExplosives.Game
 			
 		}
 		
-		public function isColliding(object:DynamicEntity):boolean
+		public function isColliding(object:Entity):boolean
 		{
 		
 			return false;
