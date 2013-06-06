@@ -282,6 +282,11 @@ package HighExplosives.Game
 				for(var j:int = i+1; j < dynamicEntityList.length; j++)
 				{
 					
+					if(!(dynamicEntityList[i].moving || dynamicEntityList[j].moving))
+					{
+						continue;
+					}
+					
 					if(dynamicEntityList[i].isColliding(dynamicEntityList[j])) {
 					
 						dynamicEntityList[i].resetMovement();
@@ -290,6 +295,11 @@ package HighExplosives.Game
 						dynamicEntityList[i].onCollision(dynamicEntityList[j]);
 						dynamicEntityList[j].onCollision(dynamicEntityList[i]);
 					}
+				}
+				
+				if(!dynamicEntityList[i])
+				{
+					continue;
 				}
 				
 				for(var k:int = 0; k < worldList.length; k++)
@@ -306,6 +316,7 @@ package HighExplosives.Game
 					}
 				}
 			}
+			
 			for(var m:int = 0; m < breakList.length; m++) {
 			
 				for(var n:int = 0; n < worldList.length; n++)
@@ -329,24 +340,23 @@ package HighExplosives.Game
 			
 			totalTime+=dt;
 			
-			var point:CCPoint = new CCPoint;
-			point = randomSpawn();
-			var spawnX = point.x;
-			var spawnY = point.y;
-			
 			timeTillNextSpawn-=dt;
 			
-			if (timeTillNextSpawn<0 && monsterCount<50){
+			if (timeTillNextSpawn<0 && monsterCount<30){
 				
+				var point:CCPoint = randomSpawn();
+				if(point != null) {
+					var spawnX = point.x;
+					var spawnY = point.y;
 				
-				if (!isCollidingWithWorld(spawnX,spawnY))
-				{
-					//trace("spawn");
+					if (!isCollidingWithWorld(spawnX,spawnY))
+					{
+						//trace("spawn");
 
-					spawnMonsterEntity(spawnX,spawnY);
-					timeTillNextSpawn=3;
+						spawnMonsterEntity(spawnX,spawnY);
+						timeTillNextSpawn=3;
+					}
 				}
-			
 			}
 			
 			collisions();

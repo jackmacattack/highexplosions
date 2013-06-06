@@ -42,9 +42,9 @@ package HighExplosives.Game
 			var dist:Number = Utils.calculateDistance(player.getX(),player.getY(),this.e.getX(),this.e.getY());
 			
 			if(dist > distanceToMove * distanceToMove){
-				this.e.setTarget(e.getX(), e.getY());
+				//this.e.setTarget(e.getX(), e.getY());
 			}
-			if(dist < distanceToIntercept * distanceToIntercept){
+			else if(dist < distanceToIntercept * distanceToIntercept){
 
 				this.e.setTarget(player.getX(),player.getY());
 			}
