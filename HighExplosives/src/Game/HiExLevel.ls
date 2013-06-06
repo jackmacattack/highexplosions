@@ -359,6 +359,17 @@ package HighExplosives.Game
 		
 		}
 		
+		public function onWin(){
+			layer.cleanup();
+			Cocos2D.removeLayer(this.layer);
+			Cocos2D.removeLayer(uiLayer);
+			SimpleAudioEngine.sharedEngine().stopAllEffects();
+			timeManager.removeTickedObject(this);
+			
+			this.gameView.goWinView();
+		
+		}
+		
 		public function endGame() {
 			//timeManager.stop();
 			layer.cleanup();
