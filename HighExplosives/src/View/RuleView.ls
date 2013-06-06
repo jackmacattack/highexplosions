@@ -36,7 +36,6 @@ package HighExplosives.View
         
         
          	layer=layer_;
-           layer.scaleMode = ScaleMode.LETTERBOX;
 
             var bg = CCSprite.createFromFile("assets/bg.png");
             bg.x = Cocos2D.getDisplayWidth() / 2;

@@ -135,8 +135,8 @@ package HighExplosives.Game
 
             spawnMonsterEntity(554,416);
 			
-			var redBar:Renderer = new Renderer("assets/sprites/death.png", Cocos2D.getDisplayWidth(),10,1,0);
-			healthBar = new Renderer("assets/sprites/health.png", Cocos2D.getDisplayWidth(),10,1,0);
+			var redBar:Renderer = new Renderer("assets/sprites/death.png", Cocos2D.getDisplayWidth() / 2,10,1,0);
+			healthBar = new Renderer("assets/sprites/health.png", Cocos2D.getDisplayWidth() / 2,10,1,0);
 			fullHealth = healthBar.sprite.getContentSize().width;
 			
 			uiLayer.addChild(redBar.sprite);

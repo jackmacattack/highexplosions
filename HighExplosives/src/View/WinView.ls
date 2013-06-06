@@ -33,7 +33,7 @@ package HighExplosives.View
               layer.addChild(gameOver);
             
             var back = CCSprite.createFromFile("assets/back.png");
-            back.x = 55*Cocos2D.getDisplayWidth() / 100;
+            back.x = Cocos2D.getDisplayWidth() / 2;
             back.y = Cocos2D.getDisplayHeight() / 5;
             back.onTouchBegan += goMainMenu;
             back.scale = 0.75;
