@@ -24,14 +24,14 @@ package HighExplosives.Game
 		private var hitW:Number;
 		private var hitH:Number;
 		
-		public function Entity(level_:HiExLevel, x_:Number, y_:Number, renderer_:Renderer)	
+		public function Entity(level_:HiExLevel, x_:Number, y_:Number, renderer_:Renderer, hitScale:Number)	
 		{
 			level = level_;
 			setPosition(x_, y_);
 			renderer = renderer_;
 			
-			hitW = renderer.sprite.getContentSize().width * .8;
-			hitH = renderer.sprite.getContentSize().height * .8;
+			hitW = renderer.sprite.getContentSize().width * hitScale;
+			hitH = renderer.sprite.getContentSize().height * hitScale;
 		}
 		
 		public function getX():Number 

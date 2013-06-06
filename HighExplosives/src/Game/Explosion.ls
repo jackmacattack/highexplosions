@@ -10,9 +10,9 @@ package HighExplosives.Game
 		public var damage:Number;
 		public var area:Number;
 		
-		public function Explosion(level:HiExLevel, x:Number, y:Number, renderer:Renderer, owner_:Entity, duration_:Number, damage_:Number, area_:Number)
+		public function Explosion(level:HiExLevel, x:Number, y:Number, renderer:Renderer, hitScale:Number, owner_:Entity, duration_:Number, damage_:Number, area_:Number)
 		{
-			super(level, x, y, renderer);
+			super(level, x, y, renderer, hitScale);
 			ownerOf = owner_;
 			duration = duration_;
 			damage = damage_;

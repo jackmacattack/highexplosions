@@ -148,7 +148,7 @@ package HighExplosives.Game
 			layer.addChild(tRenderer.sprite);
 			
 
-			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 10, 2); 
+			var e = new Tank(this, x, y, renderer, .9, .5, 200, tRenderer, 100, 50, 300, 1, 2, 10, 2); 
 
 			dynamicEntityList.push(e);
 			
@@ -164,7 +164,7 @@ package HighExplosives.Game
 			var renderer = new Renderer("assets/sprites/enemy.png", x, y, .5, 0);
 			layer.addChild(renderer.sprite);
 			
-			var e = new MonsterEntity(this, x, y, renderer); 
+			var e = new MonsterEntity(this, x, y, renderer, 1); 
 			dynamicEntityList.push(e);
 			
 			var control = new MonstersController(this, e, dynamicEntityList[0]);
@@ -189,7 +189,7 @@ package HighExplosives.Game
 			var renderer = new Renderer("assets/bombex2.png", x, y, area, 0);
 			layer.addChild(renderer.sprite);
 			
-			var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
+			var e:Explosion = new Explosion(this, x, y, renderer, 1, owner, duration, damage, area);
 			worldList.push(e);
 		}
 		
@@ -202,7 +202,7 @@ package HighExplosives.Game
 			var renderer = new Renderer("assets/bombex1.png", x, y, area, 0);
 			layer.addChild(renderer.sprite);
 			
-			var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
+			var e:Explosion = new Explosion(this, x, y, renderer, .8, owner, duration, damage, area);
 			worldList.push(e);
 		}
 		
@@ -239,7 +239,7 @@ package HighExplosives.Game
 		{
 		
 			if(following == null) {
-				return;
+				return; 
 			}
 			
 			layer.x = -1 * (following.getX()-Cocos2D.getDisplayWidth() / 2);
@@ -275,6 +275,10 @@ package HighExplosives.Game
 				for(var l:int = 0; l < breakList.length; l++) {
 				
 					if (breakList[l].isColliding(dynamicEntityList[i])) {
+						if(dynamicEntityList[i] instanceof Explosive) 
+						{
+							Console.print("Rock");
+						}
 						dynamicEntityList[i].resetMovement(); 
 					}
 				}

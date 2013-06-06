@@ -13,7 +13,7 @@ package HighExplosives.Game {
     	
     	public function Portal(level:HiExLevel, x:Number, y:Number, renderer:Renderer)
     	{
-    		super(level, x, y, renderer);
+    		super(level, x, y, renderer, 1);
     	}
     	
     	override public function isColliding(object:Entity):boolean

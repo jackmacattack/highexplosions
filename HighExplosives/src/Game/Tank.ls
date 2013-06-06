@@ -18,10 +18,10 @@ package HighExplosives.Game
 		private var damage:Number;
 		private var area:Number;
 	
-		public function Tank(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel:Number, maxSpeed:Number, turretRenderer_:Renderer, 
+		public function Tank(level:HiExLevel, x:Number, y:Number, renderer:Renderer, hitScale:Number, accel:Number, maxSpeed:Number, turretRenderer_:Renderer, 
 		hitPoints_:Number, minRange_:Number, range_:Number, time_:Number, duration_:Number, damage_:Number, area_:Number)	
 		{
-			super(level, x, y, renderer, accel, maxSpeed, 0, 0);
+			super(level, x, y, renderer, hitScale, accel, maxSpeed, 0, 0);
 			
 			turretRenderer = turretRenderer_;
 			maxHitPoints = hitPoints_;

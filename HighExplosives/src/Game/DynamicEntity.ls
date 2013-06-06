@@ -39,9 +39,9 @@ package HighExplosives.Game
 		
 		private var collide:boolean = false;
 		
-		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
+		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, hitScale:Number, accel_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
 		{
-			super(level, x, y, renderer);
+			super(level, x, y, renderer, hitScale);
 			accel = accel_;
 			maxSpeed = maxSpeed_;
 			speed = speed_;

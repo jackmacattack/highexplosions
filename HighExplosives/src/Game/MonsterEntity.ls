@@ -1,13 +1,13 @@
 package HighExplosives.Game
 {
-	public class MonsterEntity extends DynamicEntity{
+	public class MonsterEntity extends DynamicEntity {
 	
 		public var count:Number;
 		public var damage:Number;
 		
-		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer)	
+		public function MonsterEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, hitScale:Number)	
 		{
-			super(level, x, y, renderer, .25, 100, 0, 0);
+			super(level, x, y, renderer, hitScale, .25, 100, 0, 0);
 			damage = 10;
 		}
 		
