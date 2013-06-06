@@ -34,16 +34,27 @@ package HighExplosives.Game
 		public var targetX:Number;
 		public var targetY:Number;
 		
-		public var collideWithWorld:boolean = false;
+		public var oldX:Number;
+		public var oldY:Number;
 		
-		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
+		private var collide:boolean = false;
+		
+		public function DynamicEntity(level:HiExLevel, x:Number, y:Number, renderer:Renderer, hitScale:Number, accel_:Number, maxSpeed_:Number, speed_:Number = 0, angle_:Number = 0)	
 		{
-			super(level, x, y, renderer);
+			super(level, x, y, renderer, hitScale);
 			accel = accel_;
 			maxSpeed = maxSpeed_;
 			speed = speed_;
 			moving = speed != 0;
 			angle = angle_;
+			
+			oldX = x;
+			oldY = y;
+		}
+		
+		public function setCollide(collide_:boolean) 
+		{
+			collide = collide_;
 		}
 		
 		public function setTarget(newX:Number, newY:Number)
@@ -71,22 +82,6 @@ package HighExplosives.Game
 		
 		public function move(dt:Number)
 		{
-		
-			var collide:boolean = false;
-			
-			var objectCollidesWith : DynamicEntity=level.dynamicCollides(this);
-			if(objectCollidesWith != null) {
-				collide = true;
-				onCollision(objectCollidesWith);
-			}
-			
-			var vec : Vector.<Entity> = level.worldCollides(this);
-			
-			for(var i:int = 0; i < vec.length; i++) 
-			{
-				vec[i].onCollision(this);
-				
-			}
 			
 			if(turning) {
 			
@@ -125,14 +120,17 @@ package HighExplosives.Game
 			var newX:Number = x + dx * dt;
 			var newY:Number = y + dy * dt;
 			
-			if(level.isCollidingWithWorld(newX, newY) || collide) {
+			if(level.isCollidingWithWorld(newX, newY)) {
 			 
 				targetX = x;
 				targetY = y;
+				speed = 0;
 				
 			}
 			else {
 			
+				oldX = x;
+				oldY = y;
 				setX(newX);
 				setY(newY);
 			
@@ -146,12 +144,16 @@ package HighExplosives.Game
 			}
 			
 		}
-		/*
-		override public function onCollision(object:DynamicEntity) 
+		
+		public function resetMovement()
 		{
-			
-		}	
-		*/
+			x = oldX;
+			y = oldY;
+			targetX = x;
+			targetY = y;
+			collide = false;
+		}
+		
 	}
 	
 }

@@ -10,9 +10,9 @@ package HighExplosives.Game
 		public var damage:Number;
 		public var area:Number;
 		
-		public function Explosion(level:HiExLevel, x:Number, y:Number, renderer:Renderer, owner_:Entity, duration_:Number, damage_:Number, area_:Number)
+		public function Explosion(level:HiExLevel, x:Number, y:Number, renderer:Renderer, hitScale:Number, owner_:Entity, duration_:Number, damage_:Number, area_:Number)
 		{
-			super(level, x, y, renderer);
+			super(level, x, y, renderer, hitScale);
 			ownerOf = owner_;
 			duration = duration_;
 			damage = damage_;
@@ -28,7 +28,7 @@ package HighExplosives.Game
 				destroy();
 			}
 		}
-		override public function isColliding(object:DynamicEntity):boolean 
+		override public function isColliding(object:Entity):boolean 
 		{
 			
 			if(object instanceof Tank) {
@@ -43,6 +43,7 @@ package HighExplosives.Game
 		
 		override public function onCollision(object:DynamicEntity)
 		{
+		
 			if(object instanceof Tank) {
 				(object as Tank).applyDamage(damage);
 			}
@@ -50,6 +51,7 @@ package HighExplosives.Game
 				(object as MonsterEntity).explode();
 				//((ownerOf.controller) as PlayerController).increaseScore(10);
 			}
+			
 		}
 		
 	}

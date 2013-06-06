@@ -9,7 +9,7 @@ package HighExplosives.Game
 	
 		private var maxHitPoints:Number;
 		private var hitPoints:Number;
-		private var coolDown:Number;
+		private var coolDown:Number = 0;
 		
 		private var minRange:Number;
 		private var range:Number;
@@ -18,10 +18,10 @@ package HighExplosives.Game
 		private var damage:Number;
 		private var area:Number;
 	
-		public function Tank(level:HiExLevel, x:Number, y:Number, renderer:Renderer, accel:Number, maxSpeed:Number, turretRenderer_:Renderer, 
+		public function Tank(level:HiExLevel, x:Number, y:Number, renderer:Renderer, hitScale:Number, accel:Number, maxSpeed:Number, turretRenderer_:Renderer, 
 		hitPoints_:Number, minRange_:Number, range_:Number, time_:Number, duration_:Number, damage_:Number, area_:Number)	
 		{
-			super(level, x, y, renderer, accel, maxSpeed, 0, 0);
+			super(level, x, y, renderer, hitScale, accel, maxSpeed, 0, 0);
 			
 			turretRenderer = turretRenderer_;
 			maxHitPoints = hitPoints_;
@@ -55,9 +55,6 @@ package HighExplosives.Game
 		}
 		
 		public function applyDamage(value:Number) {
-		
-			Console.print(hitPoints);
-
 			if(coolDown > 0) {
 				return;
 			}
@@ -69,9 +66,12 @@ package HighExplosives.Game
 				this.level.endGame();
 			}
 			
+			Console.print(hitPoints);
+			
+			level.updateHealthBar(getPercentHealth());
 		}
 		
-		override public function isColliding(object:DynamicEntity):boolean 
+		override public function isColliding(object:Entity):boolean 
 		{
 			if(object instanceof Explosive) {
 				return this != (object as Explosive).ownerOf
@@ -90,16 +90,17 @@ package HighExplosives.Game
 		
 		override function move(dt:Number)
 		{
-			if(moving==false)
-			{
-				SimpleAudioEngine.sharedEngine().playEffect("assets/tank.mp3", true);
-			}
 		
 			if(coolDown > 0)
 				coolDown -= dt;
 		
 			super.move(dt);
 
+		}
+		
+		public function getPercentHealth():Number
+		{
+			return hitPoints / maxHitPoints;
 		}
 	}
 

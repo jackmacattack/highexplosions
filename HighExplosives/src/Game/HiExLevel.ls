@@ -1,28 +1,9 @@
 package HighExplosives.Game
 {
 
-    import cocos2d.Cocos2D;
-    import cocos2d.CCPoint;
-    import cocos2d.CCSize;
-    import cocos2d.CCSprite;
-    import cocos2d.CCScaledLayer;
-    import cocos2d.CCTMXLayer;
-    import cocos2d.CCTMXTiledMap;
-    import CocosDenshion.SimpleAudioEngine;
-    import System.Math;
-    
     import Loom.GameFramework.*;
     import cocos2d.*;
-   
-    import HighExplosives.*;
-
-	import Loom.GameFramework.LoomGroup;
-	import Loom.GameFramework.TickedComponent;
-	import Loom.GameFramework.ITicked;
-	import Loom.GameFramework.TimeManager;
-	import Loom.GameFramework.LoomGameObject;
-	import Loom.Animation.Tween;
-	import Loom.Animation.EaseType;
+	import CocosDenshion.SimpleAudioEngine;
 	
 	import com.rmc.data.types.GestureManagerOptions;
     import com.rmc.managers.GestureManager;
@@ -44,12 +25,17 @@ package HighExplosives.Game
 		public var controllerList:Vector.<Controller> = new Vector.<Controller>();
 		public var dynamicEntityList:Vector.<DynamicEntity> = new Vector.<DynamicEntity>();
 		public var worldList:Vector.<Entity> = new Vector.<Entity>();
+		public var breakList:Vector.<Breakable> = new Vector.<Breakable>();
 		
 		public var killList:Vector.<Entity> = new Vector.<Entity>();
 		
 		public var totalTime:Number=0;
-		
+		public var xStart:Number;
+		public var yStart:Number;
+		public var endPortal:Portal;
 		public var timeTillNextSpawn=3;
+		public var monsterCount:Number=0;
+		public var spawnPoint:Vector.<CCPoint> = new Vector.<CCPoint>();
 		
 		public var collideWithWorld:boolean = false;
 		
@@ -63,6 +49,8 @@ package HighExplosives.Game
 		public var ruleButton:Renderer;
 		public var resueme :Renderer;
 		
+		public var healthBar:Renderer;
+		public var fullHealth:Number;
 		
 		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager, gameView_: GameView) 
 		{
@@ -82,10 +70,57 @@ package HighExplosives.Game
             collide = map.layerNamed("angles");
             layer.addChild(map);
             
+            var objGroups:CCArray = map.getObjectGroups();
+            for (var groupCnt = 0; groupCnt < objGroups.count(); groupCnt++)
+            {
+            	var objGroup:CCTMXObjectGroup = objGroups.objectAtIndex(groupCnt) as CCTMXObjectGroup;
+                var objs:CCArray = objGroup.getObjects();
+                for (var objCnt = 0; objCnt < objs.count(); objCnt++)
+                {
+                	var obj:CCDictionary = objs.objectAtIndex(objCnt) as CCDictionary;
+
+                    var objType:String = obj.valueForKey("type");
+                    var objName:String = obj.valueForKey("name");
+                    var objX:int = obj.valueForKey("x").toNumber();
+                    var objY:int = obj.valueForKey("y").toNumber();
+                    
+                    if (objType == "start")
+                    {
+                    	var srenderer = new Renderer("assets/sprites/start.png", objX, objY, 1, 0);
+						layer.addChild(srenderer.sprite);
+						xStart = objX;
+						yStart = objY;
+                    }
+                    else if (objType == "end")
+                    {
+                    	var erenderer = new Renderer("assets/sprites/end.png", objX, objY, 1, 0);
+                    	layer.addChild(erenderer.sprite);
+                    	
+                    	endPortal = new Portal(this, objX, objY, erenderer);
+                    	worldList.push(endPortal);
+                    }
+                    else if (objType == "smallrock")
+                    {
+                    	var rrenderer = new Renderer("assets/sprites/smallrock.png", objX+16, objY+16, 1, 0);
+                    	layer.addChild(rrenderer.sprite);
+                    	
+                    	var r:Breakable = new Breakable(this, objX+16, objY+16, rrenderer);
+                    	breakList.push(r);
+                    }
+                }
+            }
+            
             
             SimpleAudioEngine.sharedEngine().preloadBackgroundMusic("assets/Tribal.mp3");
             SimpleAudioEngine.sharedEngine().setBackgroundMusicVolume(0.0);
 			SimpleAudioEngine.sharedEngine().playBackgroundMusic("assets/Tribal.mp3", true);
+			
+			spawnPoint.push(new CCPoint(576,416), new CCPoint(480,384), new CCPoint(384,416), new CCPoint(256,416), new CCPoint(672,256));
+			spawnPoint.push(new CCPoint(576,224), new CCPoint(512,256), new CCPoint(416,224), new CCPoint(256,32), new CCPoint(416,96));
+			spawnPoint.push(new CCPoint(800,64), new CCPoint(832,224), new CCPoint(832,416), new CCPoint(1024,384), new CCPoint(1056,256));
+			spawnPoint.push(new CCPoint(1024,96), new CCPoint(1376,416), new CCPoint(1472,352), new CCPoint(1408,256), new CCPoint(1376,96));
+			spawnPoint.push(new CCPoint(1504,64), new CCPoint(1504,288), new CCPoint(1920,224), new CCPoint(1984,416), new CCPoint(2112,224));
+
 
 			uiLayer = new CCScaledLayer();
 			
@@ -96,14 +131,16 @@ package HighExplosives.Game
 			Cocos2D.addLayer(uiLayer);
 			SimpleAudioEngine.sharedEngine().preloadEffect("assets/tank.mp3");
 
-            spawnPlayer(240, 240);
+            spawnPlayer(xStart, yStart);
 
-			for(var i:int = 0; i < 10; i++) {
-            	
-				var spawnX = map.getContentSize().width*Math.random();
-				var spawnY = map.getContentSize().height*Math.random();
-            	spawnMonsterEntity(spawnX,spawnY);
-            }
+            spawnMonsterEntity(554,416);
+			
+			var redBar:Renderer = new Renderer("assets/sprites/death.png", Cocos2D.getDisplayWidth(),10,1,0);
+			healthBar = new Renderer("assets/sprites/health.png", Cocos2D.getDisplayWidth(),10,1,0);
+			fullHealth = healthBar.sprite.getContentSize().width;
+			
+			uiLayer.addChild(redBar.sprite);
+			uiLayer.addChild(healthBar.sprite);
 			
 			timeManager.addTickedObject(this);
 		}
@@ -111,43 +148,14 @@ package HighExplosives.Game
 		public function isCollidingWithWorld(x:Number, y:Number):boolean 
 		{
 
-				var tile:CCSize = map.getTileSize();
-			
-				var p:CCPoint = new CCPoint(Math.floor(x / tile.width), Math.floor(map.getMapSize().height - (y / tile.height)));
+			var tile:CCSize = map.getTileSize();
+		
+			var p:CCPoint = new CCPoint(Math.floor(x / tile.width), Math.floor(map.getMapSize().height - (y / tile.height)));
 				
-				var tileNum:Number = collide.tileGIDAt(p);
-				collideWithWorld = true;
-				return tileNum != 0;
-				//return false;
-
-		}
-		
-		public function dynamicCollides(object:DynamicEntity):DynamicEntity{
-		
-			for(var i:int = 0; i < dynamicEntityList.length; i++)
-			{
-				if(object == dynamicEntityList[i]) {
-					continue;
-				}
-				
-				if (object.isColliding(dynamicEntityList[i]))
-					return dynamicEntityList[i];
-			}
-			return null; 
-
-		}
-		
-		public function worldCollides(object:DynamicEntity):Vector.<Entity>{
-		
-			var vec:Vector.<Entity> = new Vector.<Entity>();
-		
-			for(var i:int = 0; i < worldList.length; i++)
-			{
-				if (worldList[i].isColliding(object))
-					vec.push(worldList[i]);
-			}
-			
-			return vec; 
+			var tileNum:Number = collide.tileGIDAt(p);
+			collideWithWorld = true;
+			return tileNum != 0;
+			//return false;
 
 		}
 		
@@ -161,7 +169,7 @@ package HighExplosives.Game
 			layer.addChild(tRenderer.sprite);
 			
 
-			var e = new Tank(this, x, y, renderer, .5, 200, tRenderer, 100, 50, 300, 1, 2, 0, 0); 
+			var e = new Tank(this, x, y, renderer, .9, .5, 200, tRenderer, 100, 50, 300, 1, 2, 10, 2); 
 
 			dynamicEntityList.push(e);
 			
@@ -177,11 +185,14 @@ package HighExplosives.Game
 			var renderer = new Renderer("assets/sprites/enemy.png", x, y, .5, 0);
 			layer.addChild(renderer.sprite);
 			
-			var e = new MonsterEntity(this, x, y, renderer); 
+			var e = new MonsterEntity(this, x, y, renderer, 1); 
 			dynamicEntityList.push(e);
 			
 			var control = new MonstersController(this, e, dynamicEntityList[0]);
 			controllerList.push(control);
+			
+			monsterCount++;
+			//trace("Monster Count: " + monsterCount);
 			
 		}
 		
@@ -202,17 +213,24 @@ package HighExplosives.Game
 			var renderer = new Renderer("assets/bombex2.png", x, y, area, 0);
 			layer.addChild(renderer.sprite);
 			
-			var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
+			var e:Explosion = new Explosion(this, x, y, renderer, 1, owner, duration, damage, area);
 			worldList.push(e);
 		}
 		
 		public function spawnMonsterDeath(x:Number, y:Number, owner:Entity, duration:Number, damage:Number, area:Number)
 		{
-				var renderer = new Renderer("assets/bombex1.png", x, y, area, 0);
-				layer.addChild(renderer.sprite);
-				
-				var e:Explosion = new Explosion(this, x, y, renderer, owner, duration, damage, area);
-				worldList.push(e);
+
+			if(killList.contains(owner)) {
+				return;
+			}
+			
+			var renderer = new Renderer("assets/bombex1.png", x, y, area, 0);
+			layer.addChild(renderer.sprite);
+			
+			var e:Explosion = new Explosion(this, x, y, renderer, 1.2, owner, duration, damage, area);
+			worldList.push(e);
+			
+			monsterCount--;
 		}
 		
 		public function addToKill(e:Entity) {
@@ -230,6 +248,7 @@ package HighExplosives.Game
 			
 			dynamicEntityList.remove(e);
  			worldList.remove(e);
+ 			breakList.remove(e);
  			
 			layer.removeChild(e.renderer.sprite);
 			
@@ -243,16 +262,65 @@ package HighExplosives.Game
 				
 		}
 		
-		public function moveCamera()
+		private function moveCamera()
 		{
 		
 			if(following == null) {
-				return;
+				return; 
 			}
 			
 			layer.x = -1 * (following.getX()-Cocos2D.getDisplayWidth() / 2);
 			layer.y = -1 * (following.getY()-Cocos2D.getDisplayHeight() / 2);
 		
+		}
+		
+		private function collisions() 
+		{
+			for(var i:int = 0; i < dynamicEntityList.length-1; i++)
+			{
+				
+				for(var j:int = i+1; j < dynamicEntityList.length; j++)
+				{
+					
+					if(dynamicEntityList[i].isColliding(dynamicEntityList[j])) {
+					
+						dynamicEntityList[i].resetMovement();
+						dynamicEntityList[j].resetMovement();
+						
+						dynamicEntityList[i].onCollision(dynamicEntityList[j]);
+						dynamicEntityList[j].onCollision(dynamicEntityList[i]);
+					}
+				}
+				
+				for(var k:int = 0; k < worldList.length; k++)
+				{
+					if (worldList[k].isColliding(dynamicEntityList[i])) {
+						worldList[k].onCollision(dynamicEntityList[i]);
+					}
+				}
+				
+				for(var l:int = 0; l < breakList.length; l++) {
+				
+					if (breakList[l].isColliding(dynamicEntityList[i])) {
+						dynamicEntityList[i].resetMovement(); 
+					}
+				}
+			}
+			for(var m:int = 0; m < breakList.length; m++) {
+			
+				for(var n:int = 0; n < worldList.length; n++)
+				{
+					if (worldList[n].isColliding(breakList[m])) {
+						breakList[m].destroy();
+					}
+				}
+			}
+		}
+		
+		public function randomSpawn():CCPoint
+		{
+			var index:Number = Math.floor(Math.random()*spawnPoint.length);
+			return spawnPoint[index];
 		}
 		
 		override public function onTick() 
@@ -261,23 +329,27 @@ package HighExplosives.Game
 			
 			totalTime+=dt;
 			
-			
-			var spawnX = map.getContentSize().width*Math.random();
-			var spawnY = map.getContentSize().height*Math.random();
+			var point:CCPoint = new CCPoint;
+			point = randomSpawn();
+			var spawnX = point.x;
+			var spawnY = point.y;
 			
 			timeTillNextSpawn-=dt;
 			
-			if (timeTillNextSpawn<0){
+			if (timeTillNextSpawn<0 && monsterCount<50){
 				
 				
 				if (!isCollidingWithWorld(spawnX,spawnY))
 				{
-					trace("spawn");
+					//trace("spawn");
+
 					spawnMonsterEntity(spawnX,spawnY);
 					timeTillNextSpawn=3;
 				}
 			
 			}
+			
+			collisions();
 			
 			for(var i:int = 0; i < controllerList.length; i++) {
 				controllerList[i].update();
@@ -298,7 +370,7 @@ package HighExplosives.Game
 			killList.clear();
 			
 			moveCamera();
-			//Console.print("afd");
+			
 		}
 		
 		public function pause(){
@@ -369,7 +441,7 @@ package HighExplosives.Game
 		
 		}
 		
-		public function onWin(){
+		public function onWin() {
 			layer.cleanup();
 			Cocos2D.removeLayer(this.layer);
 			Cocos2D.removeLayer(uiLayer);
@@ -392,7 +464,11 @@ package HighExplosives.Game
 			
 		}
 		
-
+		public function updateHealthBar(percent:Number)
+		{
+			Console.print(percent + "," + fullHealth * percent);
+			healthBar.scaleX = percent;
+		}
 	}
 
 }
