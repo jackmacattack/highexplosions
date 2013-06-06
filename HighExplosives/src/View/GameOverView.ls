@@ -12,6 +12,7 @@ package HighExplosives.View
         
         public function GameOverView(gm:HighExplosives){
         	super(gm);
+        	
         }
         
         override public function  start(layer_:CCScaledLayer):void

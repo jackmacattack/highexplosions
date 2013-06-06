@@ -68,10 +68,15 @@ package HighExplosives.View
             selectLevel.onTouchBegan += goSelectLevel;
             selectLevel.scale = 0.25;
             layer.addChild(selectLevel);
-            
+           
              
-            
-            
+     		var rules = CCSprite.createFromFile("assets/rulesbutton.png");
+            rules.x = Cocos2D.getDisplayWidth() / 2;
+            rules.y = 15*Cocos2D.getDisplayHeight() / 100;
+            rules.onTouchBegan += goRules;
+            rules.scale = 1;
+            layer.addChild(rules);       
+         
             
             
         	
@@ -95,6 +100,11 @@ package HighExplosives.View
        		 trace("SelectLevel");
        		
         
+        }
+        
+        public function goRules():void {
+        
+        	gameManager.rules(layer);
         }
         
       

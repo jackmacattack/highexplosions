@@ -59,10 +59,18 @@ package
         
         }
         
+        public function rules(layer:CCScaledLayer) : void 
+        {
+        	layer.removeAllChildrenWithCleanup(true);
+        	var test2 : RuleView;
+        	test2= new RuleView(this);
+        	test2.start(this.layer);
+        	
+        }
+        
         
         public function gameOver(layer:CCScaledLayer) : void 
         {
-        
         	//layer.removeAllChildrenWithCleanup (false);
         	var gameOverView:GameOverView=new GameOverView(this);
         	gameOverView.start(this.layer);

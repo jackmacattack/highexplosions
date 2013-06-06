@@ -59,6 +59,8 @@ package HighExplosives.Game
 		
 		public var stopGame :Renderer;
 		public 	var theGameIsPause:Renderer;
+		public var rule:Renderer;
+		public var ruleButton:Renderer;
 		
 		
 		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager, gameView_: GameView) 
@@ -321,11 +323,16 @@ package HighExplosives.Game
             	
                  theGameIsPause = new Renderer("assets/gamePause.png", Cocos2D.getDisplayWidth()/2, 3*Cocos2D.getDisplayHeight()/4 , 1, 0);
 				uiLayer.addChild(theGameIsPause.sprite);
+				
+				ruleButton = new Renderer("assets/rulesbutton.png", Cocos2D.getDisplayWidth()/2, Cocos2D.getDisplayHeight()/4 , 1, 0);
+				ruleButton.sprite.onTouchBegan += goRule;
+				uiLayer.addChild(ruleButton.sprite);
 			}
 			else
 			{	
 				uiLayer.removeChild(stopGame.sprite);
 				uiLayer.removeChild(theGameIsPause.sprite);
+				uiLayer.removeChild(ruleButton.sprite);
 				resume();
 				pauseBoolean = true;	
 			}
@@ -333,6 +340,23 @@ package HighExplosives.Game
 		
 		public function goEndGame(){
 			endGame();
+		}
+		
+		public function goRule(){
+			uiLayer.removeChild(stopGame.sprite);
+			uiLayer.removeChild(theGameIsPause.sprite);
+			uiLayer.removeChild(ruleButton.sprite);
+			rule = new Renderer("assets/Rules.png", Cocos2D.getDisplayWidth()/2, Cocos2D.getDisplayHeight()/2 , .5, 0);
+			rule.sprite.onTouchBegan += goPause;
+			uiLayer.addChild(rule.sprite);
+		}
+		
+		public function goPause()
+		{
+			pauseBoolean= true;
+			uiLayer.removeChild(rule.sprite);
+			 goPauseBotton();
+		
 		}
 		
 		public function endGame() {
