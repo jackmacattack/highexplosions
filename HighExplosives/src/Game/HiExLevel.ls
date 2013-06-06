@@ -61,6 +61,7 @@ package HighExplosives.Game
 		public 	var theGameIsPause:Renderer;
 		public var rule:Renderer;
 		public var ruleButton:Renderer;
+		public var resueme :Renderer;
 		
 		
 		public function HiExLevel(layer_:CCScaledLayer, timeManager_:TimeManager, gameView_: GameView) 
@@ -327,15 +328,24 @@ package HighExplosives.Game
 				ruleButton = new Renderer("assets/rulesbutton.png", Cocos2D.getDisplayWidth()/2, Cocos2D.getDisplayHeight()/4 , 1, 0);
 				ruleButton.sprite.onTouchBegan += goRule;
 				uiLayer.addChild(ruleButton.sprite);
+				
+				resueme = new Renderer("assets/resume.png", Cocos2D.getDisplayWidth()/2, 10*Cocos2D.getDisplayHeight()/100 , 1, 0);
+				resueme.sprite.onTouchBegan += goResume;
+				uiLayer.addChild(resueme.sprite);
 			}
 			else
 			{	
 				uiLayer.removeChild(stopGame.sprite);
 				uiLayer.removeChild(theGameIsPause.sprite);
 				uiLayer.removeChild(ruleButton.sprite);
+				uiLayer.removeChild(resueme.sprite);
 				resume();
 				pauseBoolean = true;	
 			}
+		}
+		
+		public function goResume(){
+			goPauseBotton();
 		}
 		
 		public function goEndGame(){

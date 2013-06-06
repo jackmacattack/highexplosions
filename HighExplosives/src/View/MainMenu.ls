@@ -72,7 +72,7 @@ package HighExplosives.View
              
      		var rules = CCSprite.createFromFile("assets/rulesbutton.png");
             rules.x = Cocos2D.getDisplayWidth() / 2;
-            rules.y = 15*Cocos2D.getDisplayHeight() / 100;
+            rules.y = Cocos2D.getDisplayHeight() / 5;
             rules.onTouchBegan += goRules;
             rules.scale = 1;
             layer.addChild(rules);       
