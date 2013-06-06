@@ -6,7 +6,7 @@ package HighExplosives.Game
 		
 		public function Breakable(level:HiExLevel, x:Number, y:Number, renderer:Renderer)
 		{
-			super(level, x, y, renderer, 1.1);
+			super(level, x, y, renderer, 1);
 		}
 		
 		override public function isColliding(object:Entity):boolean 

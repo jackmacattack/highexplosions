@@ -292,10 +292,6 @@ package HighExplosives.Game
 				for(var l:int = 0; l < breakList.length; l++) {
 				
 					if (breakList[l].isColliding(dynamicEntityList[i])) {
-						if(dynamicEntityList[i] instanceof Explosive) 
-						{
-							Console.print("Rock");
-						}
 						dynamicEntityList[i].resetMovement(); 
 					}
 				}
@@ -425,7 +421,7 @@ package HighExplosives.Game
 		
 		}
 		
-		public function onWin(){
+		public function onWin() {
 			layer.cleanup();
 			Cocos2D.removeLayer(this.layer);
 			Cocos2D.removeLayer(uiLayer);
@@ -446,11 +442,6 @@ package HighExplosives.Game
 			
 			this.gameView.goGameOver();
 			
-		}
-		
-		public function onWin()
-		{
-			Console.print("Win");
 		}
 	}
 

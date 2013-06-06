@@ -124,6 +124,7 @@ package HighExplosives.Game
 			 
 				targetX = x;
 				targetY = y;
+				speed = 0;
 				
 			}
 			else {
